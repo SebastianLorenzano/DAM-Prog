@@ -17,12 +17,10 @@ namespace basurapintar16_10_2023
             public void OnLoad(GameDelegateEvent gameEvent)
             {
                 characters = new List<Character>();
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     Character player;
                     player = new Character();
-                    player.x = 25.0;
-                    player.y = 25.0;
                     if (i == 0)
                     {
                         player.red = 1.0;
@@ -77,7 +75,7 @@ namespace basurapintar16_10_2023
                 y1 += 0.002 * ydirection;
                 */
 
-                //characters[2].x += Utils.GetRandom(-0.0002, -0.0001);
+                characters[2].x += Utils.GetRandom(-0.000000001, 0.00000000000001);
             }
             public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
             {
@@ -88,12 +86,7 @@ namespace basurapintar16_10_2023
                 //canvas.DrawRectangle(x1, y1, 2, 2);
                 for (int i = 0; i < characters.Count; i++)
                 {   if (i != 0)
-                        if (characters[1].x == characters[i].x - 3.99)
-                        {
-                            characters.RemoveAt(i);   /* No Probado */
-                            break;
-                        }
-                            
+                        
                     canvas.FillShader.SetColor(characters[i].red, characters[i].green, characters[i].blue, characters[i].alpha);
                     canvas.DrawRectangle(characters[i].x, characters[i].y, 2, 2);
                 }
