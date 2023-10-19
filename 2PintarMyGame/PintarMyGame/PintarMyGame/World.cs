@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PintarMyGame
 {
-    internal class World
+    public class World
     {
+
     }
 }
