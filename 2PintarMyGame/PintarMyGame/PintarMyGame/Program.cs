@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            MyGame game = new MyGame();
+            UDK.Game.Launch(game);
         }
     }
 }
