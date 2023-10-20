@@ -11,7 +11,7 @@ internal class Utils
 
     private static Random r = new Random();
 
-    public static double GetRandom(double min, double max)
+    public static double GetRandom()
     {
 
         return r.NextDouble();

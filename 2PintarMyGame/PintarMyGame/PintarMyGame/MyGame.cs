@@ -34,10 +34,11 @@ namespace PintarMyGame
                 if (keyboard.IsKeyDown(Keys.S))
                     p1.y -= 0.05;
         }
-
+       
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
-
+            for (int i = 1; i < world.characters.Count; i++)
+                world.MoveEnemies(i);
         }
 
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)

@@ -32,8 +32,8 @@ namespace PintarMyGame
         public void AddPlayer()
         {
             Character player = new Character();
-            player.x = 10;
-            player.y = 10;
+            player.x = 4.5;
+            player.y = 4.5;
             player.r = 0;
             player.g = 0;
             player.b = 1;
@@ -43,13 +43,42 @@ namespace PintarMyGame
         public void AddEnemies()
         {
             Character enemy = new Character();
-            enemy.x = Utils.GetRandom2(4, 46);
-            enemy.y = Utils.GetRandom2(4, 46);
-            enemy.r = Utils.GetRandom(0.2, 0.8);
-            enemy.g = Utils.GetRandom(0.2, 0.8);
-            enemy.b = Utils.GetRandom(0.2, 0.8);
+            enemy.x = Utils.GetRandom2(6, 44);
+            enemy.y = Utils.GetRandom2(6, 44);
+            enemy.r = Utils.GetRandom2(0.2, 0.8);
+            enemy.g = Utils.GetRandom2(0.2, 0.8);
+            enemy.b = Utils.GetRandom2(0.2, 0.8);
             enemy.a = 1;
             characters.Add(enemy);
+        }
+
+        public void MoveEnemies(int i)
+        {
+            Character ch = characters[i];
+            double k = Utils.GetRandom();
+            double j = Utils.GetRandom();
+            if (k > 0.5)
+            { 
+                if (HitRightWall(ch) != true)
+                    ch.x += Utils.GetRandom2(0, 0.05);
+            }
+            else 
+            {
+                if (HitLeftWall(ch) != true)
+                    ch.x -= Utils.GetRandom2(0, 0.05);
+            }
+            if (j > 0.5)
+            {
+                if (HitTopWall(ch) != true)
+                    ch.y += Utils.GetRandom2(0, 0.05);
+            }
+            else
+            {
+                if (HitBottomWall(ch) != true)
+                    ch.y -= Utils.GetRandom2(0, 0.05);
+            }
+                    
+ 
         }
 
         public void DrawAll(ICanvas canvas)
