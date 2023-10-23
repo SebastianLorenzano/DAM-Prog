@@ -22,21 +22,20 @@ namespace PintarMyGame
         {
             Character? p1 = world.GetCharacterAt(0);
             if (p1 != null)
-                if (world.HitLeftWall(p1) == false && keyboard.IsKeyDown(Keys.A))
-                    p1.x -= 0.05;
-                if (world.HitRightWall(p1) == false && keyboard.IsKeyDown(Keys.D))
-                    p1.x += 0.05;
-                if (world.HitTopWall(p1) == false && keyboard.IsKeyDown(Keys.W))
-                    p1.y += 0.05;
-                if (world.HitBottomWall(p1) == false && keyboard.IsKeyDown(Keys.S))
-                    p1.y -= 0.05;
+                if (world.map.HitLeftWall(p1.rect) == false && keyboard.IsKeyDown(Keys.A))
+                    p1.rect.x -= 0.05;
+                if (world.map.HitRightWall(p1.rect) == false && keyboard.IsKeyDown(Keys.D))
+                    p1.rect.x += 0.05;
+                if (world.map.HitTopWall(p1.rect) == false && keyboard.IsKeyDown(Keys.W))
+                    p1.rect.y += 0.05;
+                if (world.map.HitBottomWall(p1.rect) == false && keyboard.IsKeyDown(Keys.S))
+                    p1.rect.y -= 0.05;
         }
         
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
             for (int i = 1; i < world.GetCharacterCount(); i++)
-                world.
-                    (i);
+                world.MoveEnemies(i);
         }
 
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
