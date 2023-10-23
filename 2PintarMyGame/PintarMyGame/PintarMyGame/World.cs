@@ -26,8 +26,20 @@ namespace PintarMyGame
     }
     public class World
     {
-        public List<Character> characters = new List<Character>();
+        private List<Character> characters = new List<Character>();
         Map map = new Map();
+
+        public int GetCharacterCount()
+        {
+            return characters.Count;
+        }
+
+        public Character GetCharacterAt(int index)
+        {
+            if (index < 0 || index >= characters.Count)
+                return null;
+            return characters[index];
+        }
 
         public void AddPlayer()
         {
@@ -88,7 +100,6 @@ namespace PintarMyGame
         }
         public void DrawMap(ICanvas canvas)                 
         {
-            canvas.Clear(0.0, 0.0, 0.0, 1);
             canvas.FillShader.SetColor(map.r, map.g, map.b, 1);         
             canvas.Camera.SetRectangle(0, 0, 50, 50);
             canvas.DrawRectangle(map.x, map.y, map.width, map.height);
