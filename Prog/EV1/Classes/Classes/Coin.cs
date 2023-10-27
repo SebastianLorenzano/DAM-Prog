@@ -62,7 +62,7 @@ namespace Classes
                 return 1;
             return 0;
         }
-        
+
         public static Moneda ToMoneda(int centimos)
         {
             if (50000 == centimos)
@@ -140,8 +140,11 @@ namespace Classes
             while (centimos > 0)
             {
                 Moneda valor = Coin.ToMoneda2(centimos);
-                monedas.Add(valor);
-                centimos -= Coin.ToNumber(valor);
+                if (valor != 0)
+                {
+                    monedas.Add(valor);
+                    centimos -= Coin.ToNumber(valor);
+                }
             }
             return monedas;
         }
