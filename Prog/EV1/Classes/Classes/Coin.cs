@@ -30,38 +30,20 @@ namespace Classes
     {
         public static int ToNumber(Moneda value)
         {
-            if (Moneda.e500 == value)
-                return 50000;
-            if (Moneda.e200 == value)
-                return 20000;
-            if (Moneda.e100 == value)
-                return 10000;
-            if (Moneda.e50 == value)
-                return 5000;
-            if (Moneda.e20 == value)
-                return 2000;
-            if (Moneda.e10 == value)
-                return 1000;
-            if (Moneda.e5 == value)
-                return 500;
-            if (Moneda.e2 == value)
-                return 200;
-            if (Moneda.e1 == value)
-                return 100;
-            if (Moneda.e05 == value)
-                return 50;
-            if (Moneda.e02 == value)
-                return 20;
-            if (Moneda.e01 == value)
-                return 10;
-            if (Moneda.e005 == value)
-                return 5;
-            if (Moneda.e002 == value)
-                return 2;
-            if (Moneda.e001 == value)
-                return 1;
-            return 0;
+            return (int)value;
+
+            /* se puede hacer lo mismo en la funcion anterior */
         }
+
+            /* Otra manera */
+
+        /* private static int[] _monedasValue = {10000, 1000, 100, 10, 1}
+         * 
+         * public static int ToNumber(Moneda moneda)
+         * {
+         *  return _monedasValue[(int)moneda];
+         *  }
+         */
 
         public static Moneda ToMoneda(int centimos)
         {
@@ -135,8 +117,7 @@ namespace Classes
         public static List<Moneda> GetCoins(int centimos)
         {
             List<Moneda> monedas = new List<Moneda>();
-            if (centimos <= 0)
-                return monedas;
+
             while (centimos > 0)
             {
                 Moneda valor = Coin.ToMoneda2(centimos);
