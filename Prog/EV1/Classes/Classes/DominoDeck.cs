@@ -8,64 +8,77 @@ namespace Classes
 {
     public class DominoDeck
     {
-        private List<DominoPiece> dominoPieces = new List<DominoPiece>();
+        private List<DominoPiece> _pieceList = new List<DominoPiece>();
+        /* Funciones                                        1 == hecho    2 == comprobado
+    + ExtractPiece(index:int) : DominoPiece             2
+    + ExtractPiece(): DominoPiece                       2
+    + GetPieceCount(): int                              2
+    + AddPiece(piece: DominoPiece)                      2
+    + ContainsPiece(piece:DominoPiece) bool             2
+    + GetPieceAt(index:int): Piece?                     2
+    + Shuffle()                                         2
 
-        /* Funciones 
-            + ExtractPiece(index:int) : DominoPiece
-            + ExtractPiece(): DominoPiece
-            + GetPieceCount(): int
-            + AddPiece(piece: DominoPiece)
-            + GetPieceAt(index:int): Piece? 
-            + ContainsPiece()
-            + Shuffle()
         */
         public DominoPiece? ExtractPiece(int index)
         {
-            if (index < 0 || index >= dominoPieces.Count)
+            if (index < 0 || index >= _pieceList.Count)
                 return null;
-            var piece = dominoPieces[index];
-            dominoPieces.RemoveAt(index);
+            var piece = _pieceList[index];
+            _pieceList.RemoveAt(index);
             return piece;
         }
 
-        public DominoPiece ExtractPiece()
+        public DominoPiece? ExtractPiece()
         {
-            int random = Utils.GetRandomInt(0, dominoPieces.Count() - 1);
+            var random = Utils.GetRandomInt(0, GetPieceCount() - 1);
             return ExtractPiece(random);
-           
         }
+        
+        public int GetPieceCount()
+            { return _pieceList.Count; }
 
-        public int? GetPieceCount()
-        {
-            return dominoPieces.Count;
-        }
 
         public DominoPiece? GetPieceAt(int index)
         {
-            if (index < 0 || index >= GetPieceCount())
+            if (index < 0 || index >= _pieceList.Count)
                 return null;
-            return dominoPieces[index];
+            return _pieceList[index];
+        }
+
+        public int ContainsPiece(DominoPiece piece)
+        {
+        /* Me parece que no es necesario un if null ya que no entra en el for */
+            for (int i = 0;  i < GetPieceCount(); i++)
+            {
+                if (piece.IsEqualTo(GetPieceAt(i)))
+                    return -1;
+            }
+            return 0;
         }
 
         public void AddPiece(DominoPiece piece)
         {
-
-            dominoPieces.Add(piece);
-        }
-
-        public bool ContainsPiece(DominoPiece piece)
-        {
             if (piece == null)
-                return false;
-            for (int i = 0; i < dominoPieces.Count; i++)
-                if (dominoPieces[i] == piece)
-                    return true;
-            return false;
+                return;
+            if (ContainsPiece(piece) >= 0)
+                _pieceList.Add(piece);
         }
 
         public void Shuffle()
         {
-
+            for (int i = 0; i < 50; i++)
+            {
+                var random1 = Utils.GetRandomInt(0, GetPieceCount() - 1);
+                var random2 = Utils.GetRandomInt(0, GetPieceCount() - 1);
+                    if (GetPieceAt(random1) != GetPieceAt(random2))
+                    { 
+                        var piece = _pieceList[random2];
+                        _pieceList[random2] = _pieceList[random1];
+                        _pieceList[random1] = piece;
+                    }
+            }
         }
-}
+
+
+    }
 }

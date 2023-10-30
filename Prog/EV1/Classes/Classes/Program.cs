@@ -9,8 +9,15 @@
             //for (int i = 0; i < lista.Count; i++)
             //    Console.Write(Coin.ToNumber(lista[i]) + " ");
 
-         var pepe = Utils.GetRandomInt(1, 6);
-            Console.WriteLine(pepe);
+            DominoDeck dominoDeck = new DominoDeck();
+            dominoDeck.AddPiece(DominoPiece.CreatePiece(1, 1));
+            dominoDeck.AddPiece(DominoPiece.CreatePiece(2, 2));
+            dominoDeck.AddPiece(DominoPiece.CreatePiece(3, 3));
+            dominoDeck.AddPiece(DominoPiece.CreatePiece(4, 4));
+            dominoDeck.AddPiece(DominoPiece.CreatePiece(5, 5));
+            dominoDeck.AddPiece(DominoPiece.CreatePiece(6, 6));
+            dominoDeck.Shuffle();
+
         }
     }
 }
