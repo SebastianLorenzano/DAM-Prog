@@ -8,33 +8,40 @@ namespace Classes
 {
     public class DominoDeck
     {
-        private List<DominoPiece> dominoPieces;
-    
-        /* que compare fichas para ver si son compatibles */
+        private List<DominoPiece> dominoPieces = new List<DominoPiece>();
 
-        public DominoPiece ExtractPiece(int index)
-        {   
-            DominoPiece piece = dominoPieces[index];
+        /* Funciones 
+            + ExtractPiece(index:int) : DominoPiece
+            + ExtractPiece(): DominoPiece
+            + GetPieceCount(): int
+            + AddPiece(piece: DominoPiece)
+            + GetPieceAt(index:int): Piece? 
+            + Shuffle()
+        */
+        public DominoPiece? ExtractPiece(int index)
+        {
+            if (index < 0 || index >= dominoPieces.Count)
+                return null;
+            var piece = dominoPieces[index];
             dominoPieces.RemoveAt(index);
             return piece;
         }
 
         public DominoPiece ExtractPiece()
         {
-            int value1 = 0, value2 = dominoPieces.Count - 1;
-            int random = Utils.GetRandom(value1, value2);
+            int random = Utils.GetRandom(0, dominoPieces.Count() - 1);
             return ExtractPiece(random);
            
         }
 
-        public int? GetPieceCount(int value)
+        public int? GetPieceCount()
         {
             return dominoPieces.Count;
         }
 
         public DominoPiece? GetPieceAt(int index)
         {
-            if (index < 0 || index >= dominoPieces.Count)
+            if (index < 0 || index >= GetPieceCount())
                 return null;
             return dominoPieces[index];
         }
@@ -43,6 +50,16 @@ namespace Classes
         {
 
             dominoPieces.Add(piece);
+        }
+
+        public bool ContainsPiece(DominoPiece piece)
+        {
+            if (piece == null)
+                return false;
+            for (int i = 0; i < dominoPieces.Count; i++)
+                if (dominoPieces[i] == piece)
+                    return true;
+            return false;
         }
 
         public void Shuffle();

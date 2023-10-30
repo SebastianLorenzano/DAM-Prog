@@ -14,7 +14,6 @@ namespace Classes
         private DominoPiece(int v1, int v2)
         {
             value1 = v1;
-        
             value2 = v2;
         }
 
