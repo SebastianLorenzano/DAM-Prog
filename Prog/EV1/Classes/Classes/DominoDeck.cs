@@ -16,6 +16,7 @@ namespace Classes
             + GetPieceCount(): int
             + AddPiece(piece: DominoPiece)
             + GetPieceAt(index:int): Piece? 
+            + ContainsPiece()
             + Shuffle()
         */
         public DominoPiece? ExtractPiece(int index)
@@ -29,7 +30,7 @@ namespace Classes
 
         public DominoPiece ExtractPiece()
         {
-            int random = Utils.GetRandom(0, dominoPieces.Count() - 1);
+            int random = Utils.GetRandomInt(0, dominoPieces.Count() - 1);
             return ExtractPiece(random);
            
         }
@@ -62,6 +63,9 @@ namespace Classes
             return false;
         }
 
-        public void Shuffle();
+        public void Shuffle()
+        {
+
+        }
 }
 }

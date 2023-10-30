@@ -5,6 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Classes
+    /* 
+        - DominoPiece(int, int)   
+        + CreatePiece(int1, int2)
+        + GetValue1()
+        + GetValue2()
+        + GetTotalValue()
+        + IsDouble()
+        + IsValid() esta dentro de los valores (1-6)
+        + IsEqualTo()
+     
+     */
 {
     public class DominoPiece
     {

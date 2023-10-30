@@ -8,13 +8,12 @@ namespace Classes
 {
     public class Utils
     {
-        Random random = new Random();
-        public static int GetRandom(int min, int max)
-        {
-            int dif = max - min;
-            
-            return min + random.Next() % dif;
-        }
+        private static Random r = new Random();
 
+        public static int GetRandomInt(int min, int max)
+        {
+            return r.Next(min, max + 1);
+        }
     }
 }
+
