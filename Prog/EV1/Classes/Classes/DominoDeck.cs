@@ -47,7 +47,9 @@ namespace Classes
 
         public int ContainsPiece(DominoPiece piece)
         {
-        /* Me parece que no es necesario un if null ya que no entra en el for */
+        /* Me parece que no es necesario un if null pero ahorra tiempo de procesamiento */
+            if (piece == null)
+                return -2;
             for (int i = 0;  i < GetPieceCount(); i++)
             {
                 if (piece.IsEqualTo(GetPieceAt(i)))
