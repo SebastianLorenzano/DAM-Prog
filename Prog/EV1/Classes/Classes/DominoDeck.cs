@@ -45,24 +45,29 @@ namespace Classes
             return _pieceList[index];
         }
 
-        public int ContainsPiece(DominoPiece piece)
+        public int IndexOf(DominoPiece? piece)
         {
-        /* Me parece que no es necesario un if null pero ahorra tiempo de procesamiento */
             if (piece == null)
-                return -2;
-            for (int i = 0;  i < GetPieceCount(); i++)
+                return -1;
+            for (int i = 0; i < GetPieceCount(); i++)
             {
                 if (piece.IsEqualTo(GetPieceAt(i)))
-                    return -1;
+                    return i;
             }
-            return 0;
+            return -1;
+        }
+
+
+    public bool ContainsPiece(DominoPiece? piece)
+        {
+        return (IndexOf(piece) >= 0);
         }
 
         public void AddPiece(DominoPiece piece)
         {
             if (piece == null)
                 return;
-            if (ContainsPiece(piece) >= 0)
+            if (ContainsPiece(piece))
                 _pieceList.Add(piece);
         }
 
@@ -79,6 +84,6 @@ namespace Classes
             }
         }
 
-
-    }
 }
+    
+
