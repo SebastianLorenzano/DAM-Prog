@@ -72,11 +72,9 @@ namespace Classes
             {
                 var random1 = Utils.GetRandomInt(0, GetPieceCount() - 1);
                 var random2 = Utils.GetRandomInt(0, GetPieceCount() - 1);
-                    if (GetPieceAt(random1) != GetPieceAt(random2))
-                    { 
-                        var piece = _pieceList[random2];
-                        _pieceList[random2] = _pieceList[random1];
-                        _pieceList[random1] = piece;
+                var piece = _pieceList[random2];
+                _pieceList[random2] = _pieceList[random1];
+                _pieceList[random1] = piece;
                     }
             }
         }
