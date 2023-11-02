@@ -7,28 +7,28 @@ namespace Classes
 
     public enum CardType
     {
-         Corazon,
-         Diamante,
-         Trebol,
-         Picas,
-         Joker,
+         CORAZON,
+         DIAMANTE,
+         TREBOL,
+         PICAS,
+         JOKER,
     }
 
     public enum FigureType
     {
-        None,
-        Jack,
-        Queen,
-        King,
-        As,
-        Joker,
+        NONE,
+        JACK,
+        QUEEN,
+        kING,
+        AS,
+        JOKER,
     }
 
     public enum ColorType
     {
-        Red,
-        Black,
-        None,
+        RED,
+        BLACK,
+        NONE,
     }
 
     public class Card
@@ -39,7 +39,7 @@ namespace Classes
 
         public Card(int n, CardType p)
         {
-            if (n >= 1 || n <= 14)
+            if (IsValid())
             {
                 _number = n;
                 _palo = p;
@@ -63,18 +63,18 @@ namespace Classes
 
         public ColorType GetColorType()
         {
-            if (_palo == CardType.Corazon || _palo == CardType.Diamante)
-                return ColorType.Red;
-            if (_palo == CardType.Trebol || _palo == CardType.Picas)
-                return ColorType.Black;
-            return ColorType.None;
+            if (_palo == CardType.CORAZON || _palo == CardType.DIAMANTE)
+                return ColorType.RED;
+            if (_palo == CardType.TREBOL || _palo == CardType.PICAS)
+                return ColorType.BLACK;
+            return ColorType.NONE;
         }
 
         public bool IsFigure()
         {
-            if (IsValid())
-                return (_number > 10);
-            return false;
+
+            return (_number > 10);
+
         }
 
         public FigureType GetFigureType()
@@ -82,17 +82,17 @@ namespace Classes
             if (IsFigure())
             {
                 if (_number == 11)
-                    return FigureType.Jack;
+                    return FigureType.JACK;
                 if (_number == 12)
-                    return FigureType.Queen;
+                    return FigureType.QUEEN;
                 if (_number == 13)
-                    return FigureType.King;
+                    return FigureType.kING;
                 if (_number == 14)
-                    return FigureType.As;
+                    return FigureType.AS;
                 if (_number == 15)
-                    return FigureType.Joker;
+                    return FigureType.JOKER;
             }
-            return FigureType.None;
+            return FigureType.NONE;
         }
     }
     }
