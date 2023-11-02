@@ -43,17 +43,12 @@ namespace Classes
             {
                 _number = n;
                 _palo = p;
-            }
-                
+            }  
         }
-
 
         public bool IsValid()
         {
-            if (_number >= 2 && _number <= 15)
-                return true;
-            return false;
-            
+            return _number >= 2 && _number <= 15;
         }
 
         public CardType GetCardType()
@@ -77,8 +72,8 @@ namespace Classes
 
         public bool IsFigure()
         {
-            if (_number > 10)
-                return true;
+            if (IsValid())
+                return (_number > 10);
             return false;
         }
 
@@ -100,6 +95,5 @@ namespace Classes
             return FigureType.None;
         }
     }
-
     }
 
