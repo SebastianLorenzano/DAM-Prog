@@ -44,21 +44,21 @@ namespace Classes
             _movementCount = 0;
         }
 
-        public bool IsValid(int x, int y)
+        public bool IsValid()
         {
-            return x >= 1 && x <= 8 && y >= 1 && y <= 8;
+            return _x >= 1 && _x <= 8 && _y >= 1 && _y <= 8;
         }
 
         public int GetX()
         { 
-            if (IsValid(_x, _y))
+            if (IsValid())
                 return _x;
             return -1;
         }
         
         public int GetY()
         { 
-            if (IsValid(_x, _y))
+            if (IsValid())
                 return _y; 
             return -1;
         }
