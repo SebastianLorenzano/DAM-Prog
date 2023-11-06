@@ -1,4 +1,4 @@
-﻿namespace EV1
+﻿ namespace EmGame
 {
     internal class Program
     {
