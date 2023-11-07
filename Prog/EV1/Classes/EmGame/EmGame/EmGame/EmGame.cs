@@ -1,9 +1,5 @@
 ﻿using Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmGame
 {
@@ -18,9 +14,9 @@ namespace EmGame
 
         }
 
-        public Warrior.TeamType GetWinner()
+        public TeamType GetWinner()
         {
-            return Warrior.TeamType.HUMAN;
+            return TeamType.HUMAN;
         }
     }
 }
