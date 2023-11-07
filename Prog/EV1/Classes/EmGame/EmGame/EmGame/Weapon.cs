@@ -16,7 +16,7 @@ namespace EmGame
     public class Weapon
     {
         private WeaponType _weaponType;
-        public Weapon(WeaponType type)
+        public Weapon(WeaponType type)   // Weapon pepe = new Weapon(WeaponType.SWORD)
         {
             _weaponType = type;
         }
@@ -33,7 +33,7 @@ namespace EmGame
                 return 5;
             if (_weaponType == WeaponType.SPEAR)    
                 return 2;
-            if (_weaponType == WeaponType.ARROW)
+            if (_weaponType == WeaponType.ARROW)//eL DAÑO DE LAS FLECHAS QUE PASA PISHA?
                 return 2;
             if (_weaponType == WeaponType.BOW)
                 return 3;
@@ -56,12 +56,10 @@ namespace EmGame
         public double GetRange()
         {
             if (_weaponType == WeaponType.SPEAR)
-                return 2;
-            if (_weaponType == WeaponType.ARROW)
-                return 1;
+                return 2.5;
             if (_weaponType == WeaponType.BOW)
-                return 3;
-            return 1;
+                return 3.5;
+            return 1.5;
         }
 
         public static WeaponType GetRandomWeapon()

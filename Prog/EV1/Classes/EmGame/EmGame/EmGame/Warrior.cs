@@ -21,6 +21,7 @@ namespace Classes
         private double _accuracity;
         private Weapon _weapon;
 
+
         public Warrior(TeamType team, WeaponType weapontype)
         {
             _team = team;
@@ -49,6 +50,21 @@ namespace Classes
 
         public TeamType GetTeam()
         { return _team; }
+
+        public WeaponType GetWeaponType()
+        { return _weapon.GetWeaponType(); }
+
+        public double GetWeaponRange()
+        { 
+            return _weapon.GetRange()
+                ; 
+        }
+
+        public int GetWeaponDamage()
+        { return _weapon.GetDamage(); }
+
+        public int GetWeaponReloadTime()
+        { return _weapon.GetReloadTime(); }
 
         public void ExecuteTurn()
         {
