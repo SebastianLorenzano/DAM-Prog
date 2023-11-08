@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="UDK" Version="1.0.0" />
+    <PackageReference Include="UDK-sgen" Version="1.0.0" />
+    <PackageReference Include="UDK-shapes" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

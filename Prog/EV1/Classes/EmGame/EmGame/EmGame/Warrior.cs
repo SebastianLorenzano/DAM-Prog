@@ -40,31 +40,45 @@ namespace Classes
         }
 
         public int GetX()
-        { return _x; }
+        { 
+            return _x; 
+        }
 
         public int GetY()
-        { return _y; }
+        { 
+            return _y; 
+        }
 
         public int GetHealth()
-        { return _health; }
+        { 
+            return _health; 
+        }
 
         public TeamType GetTeam()
-        { return _team; }
+        { 
+            return _team; 
+        }
 
         public WeaponType GetWeaponType()
-        { return _weapon.GetWeaponType(); }
+        { 
+            return _weapon.GetWeaponType(); 
+        }
 
         public double GetWeaponRange()
         { 
-            return _weapon.GetRange()
-                ; 
+            return _weapon.GetRange();
+
         }
 
         public int GetWeaponDamage()
-        { return _weapon.GetDamage(); }
+        { 
+            return _weapon.GetDamage(); 
+        }
 
         public int GetWeaponReloadTime()
-        { return _weapon.GetReloadTime(); }
+        { 
+            return _weapon.GetReloadTime(); 
+        }
 
         public void ExecuteTurn()
         {

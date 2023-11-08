@@ -23,7 +23,9 @@ namespace EmGame
 
 
         public WeaponType GetWeaponType()
-            { return _weaponType; }
+        { 
+            return _weaponType; 
+        }
 
         public int GetDamage()
         {

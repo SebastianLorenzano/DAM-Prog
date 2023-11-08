@@ -38,6 +38,8 @@ namespace Classes
         public List<Warrior> GetWarriorList()
         {
             return _warriorList;
+
+            for (int i = 0; )
         }
 
         public void CreateWarriors(int count, TeamType team, WeaponType weaponType)
@@ -117,9 +119,25 @@ namespace Classes
         //    return lista;
         //}
 
-        public List<Warrior> GetWarriorsSortedByDistance(int x, int y)
+        public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior?> lista)
         {
-            return _warriorList;
+            if (lista == null)
+                lista = _warriorList;
+            for (int i = 0; i < lista.Count - 1; i++)
+            {
+                for (int j= 1; j < lista.Count; j++)
+                {
+                    var d1 = GetDistance(x, y, lista[i].GetX(), lista[i].GetY());
+                    var d2 = GetDistance(x, y, lista[j].GetX(), lista[j].GetY());
+                    if (d1 > d2)
+                    {
+                        var aux = lista[i];
+                        lista[i] = lista[j];
+                        lista[j] = aux;
+                    }
+                }
+            }
+            return lista;
         }
 
         public static double GetDistance(Warrior w1, Warrior w2)
