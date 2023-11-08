@@ -119,7 +119,7 @@ namespace Classes
         //    return lista;
         //}
 
-        public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior?> lista)
+        public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior>? lista)
         {
             if (lista == null)
                 lista = _warriorList;
