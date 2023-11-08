@@ -16,10 +16,12 @@ namespace Classes
     public class Warrior
     {
         private List<Weapon> _weaponList;
-        private int _x, _y, _health = 20;
+        private Rect rect = new Rect();
+        private int _health = 20;
         private TeamType _team;
         private double _accuracity;
         private Weapon _weapon;
+        private bool _isDead = false;
 
 
         public Warrior(TeamType team, WeaponType weapontype)
@@ -41,12 +43,22 @@ namespace Classes
 
         public int GetX()
         { 
-            return _x; 
+            return rect.x; 
         }
 
         public int GetY()
         { 
-            return _y; 
+            return rect.y; 
+        }
+
+        public int GetRectWidth()
+        {
+            return rect.GetWidth();
+        }
+
+        public int GetRectHeight() 
+        {
+            return rect.GetHeight();
         }
 
         public int GetHealth()
@@ -80,23 +92,57 @@ namespace Classes
             return _weapon.GetReloadTime(); 
         }
 
-        public void ExecuteTurn()
+        public bool IsDead()
         {
-
+            return _health <= 0;
+        }
+        public Warrior? ExecuteTurn(WarZone warzone)
+        {
+            var result = warzone.GetEnemiesInRange(GetX(), GetY());
+            if (result == null)
+            {
+                Move(warzone);
+                return null;
+            }
+            Attack(result[0], warzone);
+            if (result[0].IsDead())
+                return result[0];
+            return null;
         }
 
-        public void Attack()
+        public void Attack(Warrior warrior, WarZone warzone)
         {
-
+            warrior._health -= GetWeaponDamage();           
         }
 
-        public void Move()
-        {
-            // Preguntarle a javi si combiene en WarZone poner una funcion que cuente donde estan los enemigos para moverse ahi //
-
+        public void Move(WarZone warzone)
+        { 
+            double k = Utils.GetRandom();
+            double j = Utils.GetRandom();
+            if (k > 0.5)
+            {
+                if (warzone.HitRightWall(this) != true)
+                    rect.x += 1;
+            }
+            else
+            {
+                if (warzone.HitLeftWall(this) != true)
+                    rect.x += -1;
+            }
+            if (j > 0.5)
+            {
+                if (warzone.HitTopWall(this) != true)
+                    rect.y += 1;
+            }
+            else
+            {
+                if (warzone.HitBottomWall(this) != true)
+                    rect.y += -1;
+            }
         }
-
-
+        // Preguntarle a javi si combiene en WarZone poner una funcion que cuente donde estan los enemigos para moverse ahi //
 
     }
-}
+
+    }
+

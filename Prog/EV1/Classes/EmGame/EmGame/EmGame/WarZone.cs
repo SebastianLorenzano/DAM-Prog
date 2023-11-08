@@ -1,45 +1,25 @@
 ﻿using EmGame;
 using System;
 using System.Text;
+using static UDK.IFont;
 
 namespace Classes
 {
     public class WarZone
     {
-        private int _x, _y, _width, _height;
+        private Rect rect = new Rect();
+ 
         private List<Warrior> _warriorList = new List<Warrior>();
 
         public WarZone()
         {
-            
-
-        }
-
-        public int GetX()
-        {
-            return _x; 
-        }
-
-        public int GetY()
-        {
-            return _y; 
-        }
-
-        public int GetWidth() 
-        { 
-            return _width; 
-        }
-
-        public int GetHeight()
-        { 
-            return _height; 
+            rect.width = 50;
+            rect.height = 50;
         }
 
         public List<Warrior> GetWarriorList()
         {
             return _warriorList;
-
-            for (int i = 0; )
         }
 
         public void CreateWarriors(int count, TeamType team, WeaponType weaponType)
@@ -56,9 +36,18 @@ namespace Classes
             _warriorList.RemoveAt(index);
         }
 
-        public void ExecuteRound(WarZone warzone)
+        public void ExecuteRound()
         {
-
+            Warrior? turn;
+            for (int i = 0; i < _warriorList.Count; i++)
+            {
+                turn = _warriorList[i].ExecuteTurn(this);
+                if (turn != null)
+                {
+                    RemoveWarrior(GetWarriorIndex(turn));
+                    i--;
+                }
+            }  
         }
 
         public Warrior? GetWarriorAt(int x, int y)
@@ -78,6 +67,16 @@ namespace Classes
             return _warriorList[index];
         }
 
+        public int GetWarriorIndex(Warrior warrior)
+        {
+            for (int i = 0; i < _warriorList.Count; i++)
+            {
+                if (_warriorList[i].GetX() == warrior.GetX() && _warriorList[i].GetY() == warrior.GetY()) 
+                    return i;
+            }
+            return -1;
+        }
+
         public bool IsEnemyInRange(int x, int y, Warrior warrior)
         {
             var w = GetWarriorAt(x, y);
@@ -86,7 +85,7 @@ namespace Classes
             return  (GetDistance(w.GetX(), w.GetY(), x, y) <= warrior.GetWeaponRange() && w.GetTeam() != warrior.GetTeam());
         }
 
-        public int GetEnemiesInRange(int x, int y)                    
+        public int GetNumEnemiesInRange(int x, int y)                    
         {
             int result = 0;
             if (GetWarriorAt(x, y) == null)
@@ -108,6 +107,20 @@ namespace Classes
                     return _warriorList[i];
             }
             return null;
+        }
+
+        public List<Warrior>? GetEnemiesInRange(int x, int y)
+        {
+            List<Warrior>? result = new List<Warrior>();
+            for (var i = 0; i < _warriorList.Count; i++)
+            {
+                var warrior = _warriorList[i];
+
+                if (IsEnemyInRange(x, y, warrior))
+                    result.Add(_warriorList[i]);
+            }
+            result = GetWarriorsSortedByDistance(x, y, result);
+            return result;
         }
 
         //public List<Warrior> GetWarriorsInside(int x, int y, int width, int height)           // Esto es para hacer un daño en area tipo un Fireball //
@@ -150,6 +163,31 @@ namespace Classes
             int dx = x2 - x1;
             int dy = y2 - y1;
             return Math.Sqrt(dx * dx + dy * dy);
+        }
+
+        public bool HitLeftWall(Warrior ch)
+        {
+            if (ch.GetX() < rect.GetX())
+                return true;
+            return false;
+        }
+        public bool HitRightWall(Warrior ch)
+        {
+            if (ch.GetX() > rect.GetX() + rect.GetWidth() - ch.GetRectWidth())
+                return true;
+            return false;
+        }
+        public bool HitTopWall(Warrior ch)
+        {
+            if (ch.GetY() > rect.GetY() + rect.GetHeight() - ch.GetRectHeight())
+                return true;
+            return false;
+        }
+        public bool HitBottomWall(Warrior ch)
+        {
+            if (ch.GetY() < rect.GetY())
+                return true;
+            return false;
         }
     }
 }    
