@@ -1,16 +1,16 @@
 ﻿using EmGame;
 using System;
 using System.Text;
+using UDK;
 using static UDK.IFont;
 
 namespace Classes
 {
     public class WarZone
     {
-        private Rect rect = new Rect();
+        public Rect rect = new Rect();
  
         private List<Warrior> _warriorList = new List<Warrior>();
-
         public WarZone()
         {
             rect.width = 50;
@@ -22,18 +22,50 @@ namespace Classes
             return _warriorList;
         }
 
-        public void CreateWarriors(int count, TeamType team, WeaponType weaponType)
+        public int GetWarriorCount()
         {
-            for (int i= 0; i < count; i++)
-            {
-                var warrior = new Warrior(team, weaponType);
-                _warriorList.Add(warrior);
-            }
+            return _warriorList.Count;
+        }
+
+        public void CreateAllWarriors(int countH, int countO)
+        {
+            for (int i = 0; i < countH; i++)
+                CreateWarrior(TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
+            for (int i = 0; i < countO; i++)
+                CreateWarrior(TeamType.ORC, WeaponType.RANDOM, 31, 84, 41);
+
+        }
+        public void CreateWarrior(TeamType team, WeaponType weaponType, double r, double g, double b)
+        {
+            var warrior = new Warrior(team, weaponType, r, g, b);
+            _warriorList.Add(warrior);
         }
 
         public void RemoveWarrior(int index)
         {
             _warriorList.RemoveAt(index);
+        }
+
+        public void DrawAll(ICanvas canvas)
+        {
+            DrawMap(canvas);
+            DrawWarriors(canvas);
+        }
+        public void DrawMap(ICanvas canvas)
+        {
+            canvas.FillShader.SetColor(1, 1, 1, 1);
+            canvas.Camera.SetRectangle(0, 0, rect.width, rect.height);
+            canvas.DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+        }
+
+        public void DrawWarriors(ICanvas canvas)
+        {
+            for (int i = 0; i < _warriorList.Count; i++)
+            {
+                Warrior wr = _warriorList[i];
+                canvas.FillShader.SetColor(wr.GetR(), wr.GetG(), wr.GetB(), 1);
+                canvas.DrawRectangle(wr.GetX(), wr.GetY(), wr.GetWidth(), wr.GetHeight());
+            }
         }
 
         public void ExecuteRound()
@@ -173,13 +205,13 @@ namespace Classes
         }
         public bool HitRightWall(Warrior ch)
         {
-            if (ch.GetX() > rect.GetX() + rect.GetWidth() - ch.GetRectWidth())
+            if (ch.GetX() > rect.GetX() + rect.GetWidth() - ch.GetWidth())
                 return true;
             return false;
         }
         public bool HitTopWall(Warrior ch)
         {
-            if (ch.GetY() > rect.GetY() + rect.GetHeight() - ch.GetRectHeight())
+            if (ch.GetY() > rect.GetY() + rect.GetHeight() - ch.GetHeight())
                 return true;
             return false;
         }

@@ -37,8 +37,7 @@ namespace PintarMyGame
         {
             for (int i = 1; i < world.GetCharacterCount(); i++)
 
-                world.MoveEnemies(i);
-                  
+                world.MoveEnemies(i);        
         }
 
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)

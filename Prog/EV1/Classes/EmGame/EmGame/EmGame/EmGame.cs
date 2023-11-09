@@ -1,22 +1,48 @@
 ﻿using Classes;
 using System;
+using static UDK.IFont;
+using UDK;
 
 namespace EmGame
 {
-    public class EmGame
+    public class EmGame : UDK.IGameDelegate
     {
-        public EmGame()
+
+        
+
+        //public TeamType GetWinner()
+        //{
+        //    return TeamType.HUMAN;
+        //}
+
+        WarZone warzone = new WarZone();
+        public void OnLoad(GameDelegateEvent gameEvent)
         {
-            var warzone = new WarZone();
+            warzone.CreateAllWarriors(50, 50);
         }
-        public void Start(int value1, int value2, int value3, int value4)
+
+        public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)
         {
 
         }
 
-        public TeamType GetWinner()
+        public void OnAnimate(GameDelegateEvent gameEvent)
         {
-            return TeamType.HUMAN;
+                warzone.ExecuteRound();
+
+        }
+
+        public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
+        {
+            canvas.Clear(1,1,1,1);
+            warzone.DrawAll(canvas);
+        }
+
+        public void OnUnload(GameDelegateEvent gameEvent)
+        {
+
         }
     }
-}
+    }
+
+

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,12 @@ namespace EmGame
     {
 
         public int x, y, width, height;
+        public double r, g, b, a;
+
+        public Rect()
+        {
+
+        }
 
         public int GetX()
         {
@@ -32,5 +39,9 @@ namespace EmGame
             return height;
         }
 
+        public static int GetWidth(WarZone warzone)
+        {
+            return warzone.rect.height;
+        }
     }
 }

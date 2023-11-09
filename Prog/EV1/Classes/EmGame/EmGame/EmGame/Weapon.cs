@@ -18,7 +18,10 @@ namespace EmGame
         private WeaponType _weaponType;
         public Weapon(WeaponType type)   // Weapon pepe = new Weapon(WeaponType.SWORD)
         {
-            _weaponType = type;
+            if (type == WeaponType.RANDOM)
+                _weaponType = GetRandomWeapon();
+            else
+                _weaponType = type;
         }
 
 
@@ -64,10 +67,10 @@ namespace EmGame
             return 1.5;
         }
 
-        public static WeaponType GetRandomWeapon()
+        public WeaponType GetRandomWeapon()
         {
-            Random r = new Random();
-            var r1 = r.Next(0, 5);
+
+            var r1 = Utils.GetRandomInt(0, 5);
             if (r1 == 1)
                 return WeaponType.SWORD;
             if (r1 == 2)

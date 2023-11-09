@@ -1,16 +1,14 @@
 ﻿using Classes;
+using UDK;
 
 namespace EmGame
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-
-
-
-            Warrior pepe = new WarZone() 
+            EmGame emgame = new EmGame();
+            UDK.Game.Launch(emgame);
         }
     }
-}
+    }

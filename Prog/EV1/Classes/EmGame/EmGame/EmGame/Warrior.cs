@@ -15,32 +15,27 @@ namespace Classes
 
     public class Warrior
     {
-        private List<Weapon> _weaponList;
+        private List<Weapon>? _weaponList;
         private Rect rect = new Rect();
         private int _health = 20;
         private TeamType _team;
         private double _accuracity;
         private Weapon _weapon;
-        private bool _isDead = false;
 
-
-        public Warrior(TeamType team, WeaponType weapontype)
+        public Warrior(TeamType team, WeaponType weapontype, double r, double g, double b)
         {
+            rect.r = r;
             _team = team;
             _weapon = new Weapon(weapontype);
-            Weapon weapon1 = new Weapon(WeaponType.SWORD);
-            Weapon weapon2 = new Weapon(WeaponType.MAZE);
-            Weapon weapon3 = new Weapon(WeaponType.SPEAR);
-            Weapon weapon4 = new Weapon(WeaponType.ARROW);
-            Weapon weapon5 = new Weapon(WeaponType.BOW);
-            _weaponList.Add(new Weapon(WeaponType.FISTS));
-            _weaponList.Add(weapon1);
-            _weaponList.Add(weapon2);
-            _weaponList.Add(weapon3);
-            _weaponList.Add(weapon4);
-            _weaponList.Add(weapon5);
         }
 
+        private void SetSpawnPosition()
+        {
+            if (_team == TeamType.HUMAN)
+            {
+                rect.x = Utils.GetRandomInt(,1)
+            }
+        }
         public int GetX()
         { 
             return rect.x; 
@@ -51,12 +46,12 @@ namespace Classes
             return rect.y; 
         }
 
-        public int GetRectWidth()
+        public int GetWidth()
         {
             return rect.GetWidth();
         }
 
-        public int GetRectHeight() 
+        public int GetHeight() 
         {
             return rect.GetHeight();
         }
@@ -90,6 +85,21 @@ namespace Classes
         public int GetWeaponReloadTime()
         { 
             return _weapon.GetReloadTime(); 
+        }
+
+        public double GetR()
+        {
+            return rect.r;
+        }
+
+        public double GetG()
+        {
+            return rect.g;
+        }
+
+        public double GetB()
+        {
+            return rect.b;
         }
 
         public bool IsDead()

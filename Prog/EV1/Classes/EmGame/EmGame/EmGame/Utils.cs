@@ -20,5 +20,12 @@ namespace EmGame
         {
             return r.NextDouble() * (max - min) + min;
         }
+
+        public static int GetRandomInt(int min, int max) 
+        {
+
+            return r.Next(0, 5);
+        }
     }
+
 }
