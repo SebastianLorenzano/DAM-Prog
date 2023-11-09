@@ -22,18 +22,46 @@ namespace Classes
         private double _accuracity;
         private Weapon _weapon;
 
-        public Warrior(TeamType team, WeaponType weapontype, double r, double g, double b)
+        public Warrior(TeamType team, WeaponType weapontype, double r, double g, double b, WarZone warzone)
         {
             rect.r = r;
             _team = team;
             _weapon = new Weapon(weapontype);
+            SetSpawnPosition(warzone);
+            rect.r = r;
+            rect.g = g;
+            rect.b = b;
+            
         }
 
-        private void SetSpawnPosition()
+        public void SetSpawnPosition(WarZone warzone)
         {
-            if (_team == TeamType.HUMAN)
-            {
-                rect.x = Utils.GetRandomInt(,1)
+            bool positionOcupied = true;
+            while (positionOcupied == true)
+            { 
+                if (_team == TeamType.HUMAN)
+                {
+                    
+                    int x = Utils.GetRandomInt(GetWidth(), warzone.rect.GetWidth());
+                    int y = Utils.GetRandomInt(GetHeight(), warzone.rect.GetHeight() * 2 / 5);
+                    //if (warzone.GetWarriorAt(x, y) == null)
+                    //{
+                        rect.x = x;
+                        rect.y = y;
+                        positionOcupied = false;
+                    //}
+                }
+                if (_team == TeamType.ORC)
+                {
+                    int x = Utils.GetRandomInt(GetWidth(), warzone.rect.GetWidth() - GetWidth());
+                    int y = Utils.GetRandomInt(warzone.rect.GetHeight() * 3 / 5 + GetHeight(), warzone.rect.GetHeight() - GetHeight());
+                    //if (warzone.GetWarriorAt(x, y) == null)
+                    //{
+                        rect.x = x;
+                        rect.y = y;
+                        positionOcupied = false;
+                    //}
+                }    
             }
         }
         public int GetX()
@@ -108,8 +136,9 @@ namespace Classes
         }
         public Warrior? ExecuteTurn(WarZone warzone)
         {
-            var result = warzone.GetEnemiesInRange(GetX(), GetY());
-            if (result == null)
+            List<Warrior>? result = new List<Warrior>();
+            result = warzone.GetEnemiesInRange(GetX(), GetY());
+            if (result.Count == 0)
             {
                 Move(warzone);
                 return null;

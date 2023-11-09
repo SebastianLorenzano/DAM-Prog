@@ -10,8 +10,6 @@
   <ItemGroup>
     <PackageReference Include="OpenAL.Soft" Version="1.19.1" />
     <PackageReference Include="UDK" Version="1.0.0" />
-    <PackageReference Include="UDK-sgen" Version="1.0.0" />
-    <PackageReference Include="UDK-shapes" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

@@ -8,11 +8,14 @@ namespace Classes
 {
     public class WarZone
     {
+        public bool is_running = true;
         public Rect rect = new Rect();
  
         private List<Warrior> _warriorList = new List<Warrior>();
         public WarZone()
         {
+            rect.x = 0;
+            rect.y = 0;
             rect.width = 50;
             rect.height = 50;
         }
@@ -27,6 +30,14 @@ namespace Classes
             return _warriorList.Count;
         }
 
+        public void SetSpawnPositions()
+        {
+            for (int i = 0; i < _warriorList.Count; i++)
+            {
+                _warriorList[i].SetSpawnPosition(this);
+            }
+            
+        }
         public void CreateAllWarriors(int countH, int countO)
         {
             for (int i = 0; i < countH; i++)
@@ -37,7 +48,7 @@ namespace Classes
         }
         public void CreateWarrior(TeamType team, WeaponType weaponType, double r, double g, double b)
         {
-            var warrior = new Warrior(team, weaponType, r, g, b);
+            var warrior = new Warrior(team, weaponType, r, g, b, this);
             _warriorList.Add(warrior);
         }
 
@@ -51,14 +62,14 @@ namespace Classes
             DrawMap(canvas);
             DrawWarriors(canvas);
         }
-        public void DrawMap(ICanvas canvas)
+        private void DrawMap(ICanvas canvas)
         {
             canvas.FillShader.SetColor(1, 1, 1, 1);
-            canvas.Camera.SetRectangle(0, 0, rect.width, rect.height);
+            canvas.Camera.SetRectangle(rect.x, rect.y, rect.width, rect.height);
             canvas.DrawRectangle(rect.x, rect.y, rect.width, rect.height);
         }
 
-        public void DrawWarriors(ICanvas canvas)
+        private void DrawWarriors(ICanvas canvas)
         {
             for (int i = 0; i < _warriorList.Count; i++)
             {
@@ -220,6 +231,21 @@ namespace Classes
             if (ch.GetY() < rect.GetY())
                 return true;
             return false;
+        }
+
+        public bool IsTeamRemaining(TeamType team)
+        {
+            for (int i = 0; i < _warriorList.Count; i++)
+            {
+                if (_warriorList[i].GetTeam() == team)
+                    return true;
+            }
+            return false;
+        }
+        public bool AreAllTeamsRemaining()
+        {
+            return IsTeamRemaining(TeamType.HUMAN) && IsTeamRemaining(TeamType.ORC);
+                
         }
     }
 }    

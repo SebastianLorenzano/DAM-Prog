@@ -7,7 +7,7 @@ namespace EmGame
 {
     public class EmGame : UDK.IGameDelegate
     {
-
+        private int _frameCount;
         
 
         //public TeamType GetWinner()
@@ -28,14 +28,25 @@ namespace EmGame
 
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
+            _frameCount++;
+            if (_frameCount > 100 && warzone.AreAllTeamsRemaining() == true)
+            {
                 warzone.ExecuteRound();
+
+            }
+
 
         }
 
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
         {
-            canvas.Clear(1,1,1,1);
-            warzone.DrawAll(canvas);
+
+            {
+                canvas.Clear(0, 0, 0, 1);
+                warzone.DrawAll(canvas);
+                _frameCount = 0;
+            }
+
         }
 
         public void OnUnload(GameDelegateEvent gameEvent)
