@@ -15,7 +15,7 @@ namespace Classes
 
     public class Warrior
     {
-        private List<Weapon>? _weaponList;
+        private List<Weapon> _weaponList;
         private Rect rect = new Rect();
         private int _health = 20;
         private TeamType _team;
@@ -84,6 +84,21 @@ namespace Classes
             return rect.GetHeight();
         }
 
+        public double GetR()
+        {
+            return rect.r;
+        }
+
+        public double GetG()
+        {
+            return rect.g;
+        }
+
+        public double GetB()
+        {
+            return rect.b;
+        }
+
         public int GetHealth()
         { 
             return _health; 
@@ -113,21 +128,6 @@ namespace Classes
         public int GetWeaponReloadTime()
         { 
             return _weapon.GetReloadTime(); 
-        }
-
-        public double GetR()
-        {
-            return rect.r;
-        }
-
-        public double GetG()
-        {
-            return rect.g;
-        }
-
-        public double GetB()
-        {
-            return rect.b;
         }
 
         public bool IsDead()
