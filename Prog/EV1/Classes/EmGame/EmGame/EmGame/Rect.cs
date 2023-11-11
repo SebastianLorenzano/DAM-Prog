@@ -12,13 +12,7 @@ namespace EmGame
     {
 
         public int x, y, width, height;
-        public double r, g, b, a;
-
-        public Rect()
-        {
-
-        }
-
+        public double r, g, b;
         public int GetX()
         {
             return x;

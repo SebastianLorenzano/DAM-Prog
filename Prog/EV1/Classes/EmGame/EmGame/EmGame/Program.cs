@@ -1,5 +1,5 @@
 ﻿using Classes;
-using UDK;
+
 
 namespace EmGame
 {
@@ -7,8 +7,8 @@ namespace EmGame
     {
         static void Main(string[] args)
         {
-            EmGame emgame = new EmGame();
-            UDK.Game.Launch(emgame);
+            EmGame emGame = new EmGame();
+            UDK.Game.Launch(emGame);
         }
     }
     }

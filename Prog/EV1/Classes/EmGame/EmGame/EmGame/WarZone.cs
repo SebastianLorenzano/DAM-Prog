@@ -1,5 +1,6 @@
 ﻿using EmGame;
 using System;
+using System.Diagnostics.Metrics;
 using System.Text;
 using UDK;
 using static UDK.IFont;
@@ -10,7 +11,14 @@ namespace Classes
     {
         public bool is_running = true;
         public Rect rect = new Rect();
- 
+        public int
+            HX = 1,
+            HY,
+            OX = 1,
+            OY;
+        
+        public bool HSpawnMaxxed = false;
+        public bool OSpawnMaxxed = false;
         private List<Warrior> _warriorList = new List<Warrior>();
         public WarZone()
         {
@@ -18,6 +26,8 @@ namespace Classes
             rect.y = 0;
             rect.width = 50;
             rect.height = 50;
+            HY = rect.y + 1;
+            OY = rect.height - 1;
         }
 
         public List<Warrior> GetWarriorList()
@@ -30,26 +40,22 @@ namespace Classes
             return _warriorList.Count;
         }
 
-        public void SetSpawnPositions()
+            public void CreateAllWarriors(int countH, int countO)
         {
-            for (int i = 0; i < _warriorList.Count; i++)
-            {
-                _warriorList[i].SetSpawnPosition(this);
-            }
             
-        }
-        public void CreateAllWarriors(int countH, int countO)
-        {
-            for (int i = 0; i < countH; i++)
-                CreateWarrior(TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
+                CreateWarrior(countH, TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
             for (int i = 0; i < countO; i++)
-                CreateWarrior(TeamType.ORC, WeaponType.RANDOM, 31, 84, 41);
+                CreateWarrior(countO, TeamType.ORC, WeaponType.RANDOM, 31, 84, 41);
 
         }
-        public void CreateWarrior(TeamType team, WeaponType weaponType, double r, double g, double b)
+        public void CreateWarrior(int count, TeamType team, WeaponType weaponType, double r, double g, double b)
         {
-            var warrior = new Warrior(team, weaponType, r, g, b, this);
-            _warriorList.Add(warrior);
+            for (int i = 0; i < count; i++)
+            {
+                var warrior = new Warrior(team, weaponType, r, g, b, this);
+                SetSpawnPosition(warrior);
+                _warriorList.Add(warrior);
+            }
         }
 
         public void RemoveWarrior(int index)
@@ -57,7 +63,48 @@ namespace Classes
             _warriorList.RemoveAt(index);
         }
 
-        public void DrawAll(ICanvas canvas)
+        public void SetSpawnPosition(Warrior warr)
+        {
+            if (warr.GetTeam() == TeamType.HUMAN && HSpawnMaxxed == false)
+            {
+                warr.SetX(HX);
+                warr.SetY(HY);
+                DecideNextSpawnPostion(warr.GetTeam());
+            }
+
+            if (warr.GetTeam() == TeamType.ORC && OSpawnMaxxed == false)
+            {
+                warr.SetX(OX);
+                warr.SetY(OY);
+                DecideNextSpawnPostion(warr.GetTeam());
+            }
+            }
+
+            public void DecideNextSpawnPostion(TeamType team)
+            {
+                if (team == TeamType.HUMAN)
+                {
+                    if (HX > rect.GetWidth() - 2)
+                    {
+                        HX = 1;
+                        HY++;
+                        if (HY > rect.height * 2 / 5 - 2)
+                            HSpawnMaxxed = true;
+                    }
+                }
+                if (team == TeamType.ORC)
+                {
+                    if (OX > rect.GetWidth() - 2)
+                    {
+                        OX = 1;
+                        OY--;
+                        if (OY > rect.height * 3 / 5 + 2)
+                            OSpawnMaxxed = true;
+                    }
+                }
+            }
+
+            public void DrawAll(ICanvas canvas)
         {
             DrawMap(canvas);
             DrawWarriors(canvas);
@@ -65,7 +112,7 @@ namespace Classes
         private void DrawMap(ICanvas canvas)
         {
             canvas.FillShader.SetColor(1, 1, 1, 1);
-            canvas.Camera.SetRectangle(rect.x, rect.y, rect.width, rect.height);
+            canvas.Camera.SetRectangle(rect.x - 5, rect.y - 5, rect.width + 10, rect.height + 10);
             canvas.DrawRectangle(rect.x, rect.y, rect.width, rect.height);
         }
 
@@ -73,9 +120,9 @@ namespace Classes
         {
             for (int i = 0; i < _warriorList.Count; i++)
             {
-                Warrior wr = _warriorList[i];
-                canvas.FillShader.SetColor(wr.GetR(), wr.GetG(), wr.GetB(), 1);
-                canvas.DrawRectangle(wr.GetX(), wr.GetY(), wr.GetWidth(), wr.GetHeight());
+                Warrior warr = _warriorList[i];
+                canvas.FillShader.SetColor(warr.GetR(), warr.GetG(), warr.GetB(), 1);
+                canvas.DrawRectangle(warr.GetX(), warr.GetY(), warr.GetWidth(), warr.GetHeight());
             }
         }
 

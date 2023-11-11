@@ -42,6 +42,7 @@ namespace PintarMyGame
 
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
         {
+            canvas.Clear(0, 0, 0, 1);
             world.DrawAll(canvas);
         }
 

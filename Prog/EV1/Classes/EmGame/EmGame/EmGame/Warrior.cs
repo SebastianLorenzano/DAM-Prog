@@ -15,11 +15,9 @@ namespace Classes
 
     public class Warrior
     {
-        private List<Weapon> _weaponList;
         private Rect rect = new Rect();
         private int _health = 20;
         private TeamType _team;
-        private double _accuracity;
         private Weapon _weapon;
 
         public Warrior(TeamType team, WeaponType weapontype, double r, double g, double b, WarZone warzone)
@@ -27,43 +25,13 @@ namespace Classes
             rect.r = r;
             _team = team;
             _weapon = new Weapon(weapontype);
-            SetSpawnPosition(warzone);
             rect.r = r;
             rect.g = g;
             rect.b = b;
             
         }
 
-        public void SetSpawnPosition(WarZone warzone)
-        {
-            bool positionOcupied = true;
-            while (positionOcupied == true)
-            { 
-                if (_team == TeamType.HUMAN)
-                {
-                    
-                    int x = Utils.GetRandomInt(GetWidth(), warzone.rect.GetWidth());
-                    int y = Utils.GetRandomInt(GetHeight(), warzone.rect.GetHeight() * 2 / 5);
-                    //if (warzone.GetWarriorAt(x, y) == null)
-                    //{
-                        rect.x = x;
-                        rect.y = y;
-                        positionOcupied = false;
-                    //}
-                }
-                if (_team == TeamType.ORC)
-                {
-                    int x = Utils.GetRandomInt(GetWidth(), warzone.rect.GetWidth() - GetWidth());
-                    int y = Utils.GetRandomInt(warzone.rect.GetHeight() * 3 / 5 + GetHeight(), warzone.rect.GetHeight() - GetHeight());
-                    //if (warzone.GetWarriorAt(x, y) == null)
-                    //{
-                        rect.x = x;
-                        rect.y = y;
-                        positionOcupied = false;
-                    //}
-                }    
-            }
-        }
+
         public int GetX()
         { 
             return rect.x; 
@@ -82,6 +50,26 @@ namespace Classes
         public int GetHeight() 
         {
             return rect.GetHeight();
+        }
+
+        public void SetX(int x)
+        {
+            rect.x = x;
+        }
+
+        public void SetY(int y)
+        {
+            rect.y = y;
+        }
+
+        public void SetWidth(int width)
+        {
+            rect.width = width;
+        }
+
+        public void SetHeight(int height)
+        {
+            rect.height = height;
         }
 
         public double GetR()
@@ -136,9 +124,8 @@ namespace Classes
         }
         public Warrior? ExecuteTurn(WarZone warzone)
         {
-            List<Warrior>? result = new List<Warrior>();
-            result = warzone.GetEnemiesInRange(GetX(), GetY());
-            if (result.Count == 0)
+            List<Warrior>? result = warzone.GetEnemiesInRange(GetX(), GetY());
+            if (result.Count == 0 || result == null)
             {
                 Move(warzone);
                 return null;
