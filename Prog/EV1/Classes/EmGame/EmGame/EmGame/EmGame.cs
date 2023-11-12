@@ -8,7 +8,7 @@ namespace EmGame
     public class EmGame : UDK.IGameDelegate
     {
         private int _frameCount;
-        
+        private int hasWonText;
 
         //public TeamType GetWinner()
         //{
@@ -18,7 +18,7 @@ namespace EmGame
         WarZone warzone = new WarZone();
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            warzone.CreateAllWarriors(2, 2);
+            warzone.CreateAllWarriors(200, 200);
         }
 
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)
@@ -29,14 +29,19 @@ namespace EmGame
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
             _frameCount++;
-            if (_frameCount > 50)
+            if (_frameCount > 200 && warzone.AreAllTeamsRemaining())
             {
                 warzone.ExecuteRound();
                 _frameCount = 0;
+            }
+            if (!warzone.AreAllTeamsRemaining() && hasWonText == 0)
+            {
+                Console.WriteLine(warzone.GetWarriorList()[0].GetTeam() + "  Has Won.");
+                hasWonText++;
+            }
+
+
         }
-
-
-    }
 
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
         {

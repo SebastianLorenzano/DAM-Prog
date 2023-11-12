@@ -16,6 +16,7 @@ namespace EmGame
     public class Weapon
     {
         private WeaponType _weaponType;
+        public int reloadTimeLeft = 0;
         public Weapon(WeaponType type)   // Weapon pepe = new Weapon(WeaponType.SWORD)
         {
             if (type == WeaponType.RANDOM)
@@ -47,15 +48,15 @@ namespace EmGame
 
         public int GetReloadTime()
         {
-            if (_weaponType == WeaponType.MAZE)
-                return 2;
-            if (_weaponType == WeaponType.SPEAR)
-                return 2;
-            if (_weaponType == WeaponType.ARROW)
-                return 1;
-            if (_weaponType == WeaponType.BOW)
+            if (_weaponType == WeaponType.MAZE) // 2 2 1 3 1
                 return 3;
-            return 1;
+            if (_weaponType == WeaponType.SPEAR)
+                return 3;
+            if (_weaponType == WeaponType.ARROW)
+                return 2;
+            if (_weaponType == WeaponType.BOW)
+                return 4;
+            return 2;
         }
 
         public double GetRange()

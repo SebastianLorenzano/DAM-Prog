@@ -39,20 +39,18 @@ namespace Classes
         {
             return _warriorList.Count;
         }
-
+            
             public void CreateAllWarriors(int countH, int countO)
         {
-            
                 CreateWarrior(countH, TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
-            for (int i = 0; i < countO; i++)
-                CreateWarrior(countO, TeamType.ORC, WeaponType.RANDOM, 31, 84, 41);
-
+                CreateWarrior(countO, TeamType.ORC, WeaponType.RANDOM, 0.31, 0.84, 0.41);
         }
+
         public void CreateWarrior(int count, TeamType team, WeaponType weaponType, double r, double g, double b)
         {
             for (int i = 0; i < count; i++)
             {
-                var warrior = new Warrior(team, weaponType, r, g, b, this);
+                var warrior = new Warrior(team, weaponType, r, g, b, 1, 1);
                 SetSpawnPosition(warrior);
                 _warriorList.Add(warrior);
             }
@@ -69,6 +67,7 @@ namespace Classes
             {
                 warr.SetX(HX);
                 warr.SetY(HY);
+                HX++;
                 DecideNextSpawnPostion(warr.GetTeam());
             }
 
@@ -76,6 +75,7 @@ namespace Classes
             {
                 warr.SetX(OX);
                 warr.SetY(OY);
+                OX++;
                 DecideNextSpawnPostion(warr.GetTeam());
             }
             }
@@ -98,7 +98,7 @@ namespace Classes
                     {
                         OX = 1;
                         OY--;
-                        if (OY > rect.height * 3 / 5 + 2)
+                        if (OY < rect.height * 3 / 5 + 2)
                             OSpawnMaxxed = true;
                     }
                 }
@@ -113,7 +113,7 @@ namespace Classes
         {
             canvas.FillShader.SetColor(1, 1, 1, 1);
             canvas.Camera.SetRectangle(rect.x - 5, rect.y - 5, rect.width + 10, rect.height + 10);
-            canvas.DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+            canvas.DrawRectangle(rect.x, rect.y, rect.width , rect.height);
         }
 
         private void DrawWarriors(ICanvas canvas)
@@ -122,7 +122,7 @@ namespace Classes
             {
                 Warrior warr = _warriorList[i];
                 canvas.FillShader.SetColor(warr.GetR(), warr.GetG(), warr.GetB(), 1);
-                canvas.DrawRectangle(warr.GetX(), warr.GetY(), warr.GetWidth(), warr.GetHeight());
+                canvas.DrawRectangle(warr.GetX(), warr.GetY(), warr.GetWidth() - 0.1, warr.GetHeight() - 0.1);
             }
         }
 
@@ -172,7 +172,7 @@ namespace Classes
             var w = GetWarriorAt(x, y);
             if (w == null)
                 return false;
-            return  (GetDistance(w.GetX(), w.GetY(), x, y) <= warrior.GetWeaponRange() && w.GetTeam() != warrior.GetTeam());
+            return  (GetDistance(x, y, warrior.GetX(), warrior.GetY()) <= w.GetWeaponRange() && w.GetTeam() != warrior.GetTeam());
         }
 
         public int GetNumEnemiesInRange(int x, int y)                    
@@ -204,9 +204,7 @@ namespace Classes
             List<Warrior>? result = new List<Warrior>();
             for (var i = 0; i < _warriorList.Count; i++)
             {
-                var warrior = _warriorList[i];
-
-                if (IsEnemyInRange(x, y, warrior))
+                if (IsEnemyInRange(x, y, _warriorList[i]))
                     result.Add(_warriorList[i]);
             }
             result = GetWarriorsSortedByDistance(x, y, result);
@@ -243,6 +241,16 @@ namespace Classes
             return lista;
         }
 
+        public bool IsOccupied(int x, int y)
+        {
+            for (int i = 0; i <  _warriorList.Count; i++)
+            {
+                if (_warriorList[i].GetX() == x && _warriorList[i].GetY() == y)
+                    return true;
+            }
+            return false;
+        }
+
         public static double GetDistance(Warrior w1, Warrior w2)
         {
             return GetDistance(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY());
@@ -254,32 +262,6 @@ namespace Classes
             int dy = y2 - y1;
             return Math.Sqrt(dx * dx + dy * dy);
         }
-
-        public bool HitLeftWall(Warrior ch)
-        {
-            if (ch.GetX() < rect.GetX())
-                return true;
-            return false;
-        }
-        public bool HitRightWall(Warrior ch)
-        {
-            if (ch.GetX() > rect.GetX() + rect.GetWidth() - ch.GetWidth())
-                return true;
-            return false;
-        }
-        public bool HitTopWall(Warrior ch)
-        {
-            if (ch.GetY() > rect.GetY() + rect.GetHeight() - ch.GetHeight())
-                return true;
-            return false;
-        }
-        public bool HitBottomWall(Warrior ch)
-        {
-            if (ch.GetY() < rect.GetY())
-                return true;
-            return false;
-        }
-
         public bool IsTeamRemaining(TeamType team)
         {
             for (int i = 0; i < _warriorList.Count; i++)
