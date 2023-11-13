@@ -18,7 +18,7 @@ namespace EmGame
         WarZone warzone = new WarZone();
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            warzone.CreateAllWarriors(200, 200);
+            warzone.CreateAllWarriors(150, 150);
         }
 
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)
@@ -29,7 +29,7 @@ namespace EmGame
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
             _frameCount++;
-            if (_frameCount > 200 && warzone.AreAllTeamsRemaining())
+            if (_frameCount > 50 && warzone.AreAllTeamsRemaining())
             {
                 warzone.ExecuteRound();
                 _frameCount = 0;

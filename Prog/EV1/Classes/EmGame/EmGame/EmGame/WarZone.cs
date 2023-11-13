@@ -20,6 +20,7 @@ namespace Classes
         public bool HSpawnMaxxed = false;
         public bool OSpawnMaxxed = false;
         private List<Warrior> _warriorList = new List<Warrior>();
+
         public WarZone()
         {
             rect.x = 0;
@@ -42,11 +43,11 @@ namespace Classes
             
             public void CreateAllWarriors(int countH, int countO)
         {
-                CreateWarrior(countH, TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
-                CreateWarrior(countO, TeamType.ORC, WeaponType.RANDOM, 0.31, 0.84, 0.41);
+                CreateWarriors(countH, TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
+                CreateWarriors(countO, TeamType.ORC, WeaponType.RANDOM, 0.31, 0.84, 0.41);
         }
 
-        public void CreateWarrior(int count, TeamType team, WeaponType weaponType, double r, double g, double b)
+        public void CreateWarriors(int count, TeamType team, WeaponType weaponType, double r, double g, double b)
         {
             for (int i = 0; i < count; i++)
             {
