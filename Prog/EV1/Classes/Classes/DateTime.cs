@@ -108,16 +108,19 @@ namespace Classes
 
         public string ToString()
         {
-            string 
-                year = Convert.ToString(_year), 
-                month = Convert.ToString(_month), 
-                day = Convert.ToString(_day);
-            if (_month < 10)
-                month = 0 + month;
-            if (_day < 10)
-                day = 0 + day;
-
+            if (IsValid())
+            {
+                string
+                    year = Convert.ToString(_year),
+                    month = Convert.ToString(_month),
+                    day = Convert.ToString(_day);
+                if (_month < 10)
+                    month = 0 + month;
+                if (_day < 10)
+                    day = 0 + day;
                 return _year + "/" + _month + "/" + _day;
+            }
+            return "";
         }
 
         public DateTime Clone()
