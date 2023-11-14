@@ -28,6 +28,7 @@ namespace Classes
 
     public class Coin
     {
+
         public static int ToNumber(Moneda value)
         {
             return (int)value;

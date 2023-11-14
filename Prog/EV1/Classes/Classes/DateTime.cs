@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace Classes
 {
     
+    
+
     public enum DayOfWeek
     {
         Monday,
@@ -33,6 +35,9 @@ namespace Classes
             _year = year; 
             _month = month; 
             _day = day; 
+            _hour = 0;
+            _min = 0;
+            _sec = 0;
         }
 
         public DateTime(int year, int month, int day, int hour, int min, int sec)
@@ -78,21 +83,17 @@ namespace Classes
         public bool IsValid()
         { // 1, 3, 5, 7, 8, 10, 12 
             if (_month > 12 || _day > 31 || _hour > 23 || _min > 59 || _sec > 59 ||
-                _month < 0 || _day < 0 || _hour < 0 || _min < 0 || _sec < 0)
+                _month < 1 || _day < 1 || _hour < 0 || _min < 0 || _sec < 0)
                 return false;
-            if (_month > 12 || _day > 31 || _hour > 23 || _min > 59 || _sec > 59)
             if (_month == 2 && _day > 28)
                 {
-                    if (_month == 2 && _day > 28)
-                    {
-                        if (IsLeap() && _day == 29)
-                        {
-                        }
-                        else return false;
-                    }
-                    if (!IsLeap() && _month == 2 && _day > 28)
+                    if (IsLeap() && _day > 29)
+                        return false;
+                    
+                    if (!IsLeap() && _day > 28)
                     return false;
-                }
+            }
+
             if (_month == 2 || _month == 4 || _month == 6 || _month == 9 || _month == 11 && _day == 31)
                 return false;
             return true;
@@ -139,11 +140,11 @@ namespace Classes
                 _day++;
                 if (!IsValid())
                 {
-                    _day = 0;
+                    _day = 1;
                     _month += 1;
                     if (!IsValid())
                     {
-                        _month = 0;
+                        _month = 1;
                         _year++;
                     }
                 }
@@ -170,9 +171,24 @@ namespace Classes
             }
         }
 
+
+        private ulong CalcDayNumFromDate(int y, int m, int d)
+        {
+            m = (m + 9) % 12;
+            y -= m / 10;
+            ulong dn = (ulong)(365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1));
+            return dn;
+        }
+
         public DayOfWeek GetDayOfWeek()
         {
-            return DayOfWeek.Monday;
+            ulong dayNum = CalcDayNumFromDate(_year, _month, _day);
+            return (DayOfWeek)(dayNum % 7);
+
+
+
+
+
         }
         
 
