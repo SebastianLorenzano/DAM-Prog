@@ -12,13 +12,16 @@ namespace Classes
 
     public enum DayOfWeek
     {
+        
         Monday,
         Tuesday,
         Wednesday,
         Thursday,
         Friday,
         Saturday,
-        Sunday
+        Sunday,
+        NONE
+
     }
 
     public class DateTime
@@ -172,12 +175,15 @@ namespace Classes
         }
 
 
-        private ulong CalcDayNumFromDate(int y, int m, int d)
+        private ulong CalcDayNumFromDate()
         {
+            int m;
+            int y = _year;
             if (IsValid())
             {
-                m = (m + 9) % 12;
-                y -= m / 10;
+
+                m = (_month + 9) % 12;
+                y = _month / 10;
                 ulong dn = (ulong)(365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1));
                 return dn;
             }
@@ -186,9 +192,9 @@ namespace Classes
 
         public DayOfWeek? GetDayOfWeek()
         {
-            ulong dayNum = CalcDayNumFromDate(_year, _month, _day);
+            ulong dayNum = CalcDayNumFromDate();
             if (dayNum == ulong.MinValue)
-                return null;
+                return DayOfWeek.NONE;
             return (DayOfWeek)(dayNum % 7);
         }
     }
