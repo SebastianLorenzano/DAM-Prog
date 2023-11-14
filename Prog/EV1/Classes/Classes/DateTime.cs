@@ -35,9 +35,6 @@ namespace Classes
             _year = year; 
             _month = month; 
             _day = day; 
-            _hour = 0;
-            _min = 0;
-            _sec = 0;
         }
 
         public DateTime(int year, int month, int day, int hour, int min, int sec)
@@ -174,23 +171,22 @@ namespace Classes
 
         private ulong CalcDayNumFromDate(int y, int m, int d)
         {
-            m = (m + 9) % 12;
-            y -= m / 10;
-            ulong dn = (ulong)(365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1));
-            return dn;
+            if (IsValid())
+            {
+                m = (m + 9) % 12;
+                y -= m / 10;
+                ulong dn = (ulong)(365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1));
+                return dn;
+            }
+            return ulong.MinValue;
         }
 
-        public DayOfWeek GetDayOfWeek()
+        public DayOfWeek? GetDayOfWeek()
         {
             ulong dayNum = CalcDayNumFromDate(_year, _month, _day);
+            if (dayNum == ulong.MinValue)
+                return null;
             return (DayOfWeek)(dayNum % 7);
-
-
-
-
-
         }
-        
-
     }
 }
