@@ -8,15 +8,20 @@ using System.Threading.Tasks;
 namespace Classes
 {
     
+    
+
     public enum DayOfWeek
     {
+        
         Monday,
         Tuesday,
         Wednesday,
         Thursday,
         Friday,
         Saturday,
-        Sunday
+        Sunday,
+        NONE
+
     }
 
     public class DateTime
@@ -78,21 +83,17 @@ namespace Classes
         public bool IsValid()
         { // 1, 3, 5, 7, 8, 10, 12 
             if (_month > 12 || _day > 31 || _hour > 23 || _min > 59 || _sec > 59 ||
-                _month < 0 || _day < 0 || _hour < 0 || _min < 0 || _sec < 0)
+                _month < 1 || _day < 1 || _hour < 0 || _min < 0 || _sec < 0)
                 return false;
-            if (_month > 12 || _day > 31 || _hour > 23 || _min > 59 || _sec > 59)
             if (_month == 2 && _day > 28)
                 {
-                    if (_month == 2 && _day > 28)
-                    {
-                        if (IsLeap() && _day == 29)
-                        {
-                        }
-                        else return false;
-                    }
-                    if (!IsLeap() && _month == 2 && _day > 28)
+                    if (IsLeap() && _day > 29)
+                        return false;
+                    
+                    if (!IsLeap() && _day > 28)
                     return false;
-                }
+            }
+
             if (_month == 2 || _month == 4 || _month == 6 || _month == 9 || _month == 11 && _day == 31)
                 return false;
             return true;
@@ -110,16 +111,19 @@ namespace Classes
 
         public string ToString()
         {
-            string 
-                year = Convert.ToString(_year), 
-                month = Convert.ToString(_month), 
-                day = Convert.ToString(_day);
-            if (_month < 10)
-                month = 0 + month;
-            if (_day < 10)
-                day = 0 + day;
-
+            if (IsValid())
+            {
+                string
+                    year = Convert.ToString(_year),
+                    month = Convert.ToString(_month),
+                    day = Convert.ToString(_day);
+                if (_month < 10)
+                    month = 0 + month;
+                if (_day < 10)
+                    day = 0 + day;
                 return _year + "/" + _month + "/" + _day;
+            }
+            return "";
         }
 
         public DateTime Clone()
@@ -139,11 +143,11 @@ namespace Classes
                 _day++;
                 if (!IsValid())
                 {
-                    _day = 0;
+                    _day = 1;
                     _month += 1;
                     if (!IsValid())
                     {
-                        _month = 0;
+                        _month = 1;
                         _year++;
                     }
                 }
@@ -170,11 +174,28 @@ namespace Classes
             }
         }
 
-        public DayOfWeek GetDayOfWeek()
-        {
-            return DayOfWeek.Monday;
-        }
-        
 
+        private ulong CalcDayNumFromDate()
+        {
+            int m;
+            int y = _year;
+            if (IsValid())
+            {
+
+                m = (_month + 9) % 12;
+                y = _month / 10;
+                ulong dn = (ulong)(365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1));
+                return dn;
+            }
+            return ulong.MinValue;
+        }
+
+        public DayOfWeek? GetDayOfWeek()
+        {
+            ulong dayNum = CalcDayNumFromDate();
+            if (dayNum == ulong.MinValue)
+                return DayOfWeek.NONE;
+            return (DayOfWeek)(dayNum % 7);
+        }
     }
 }

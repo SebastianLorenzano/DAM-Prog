@@ -9,6 +9,9 @@
             //for (int i = 0; i < lista.Count; i++)
             //    Console.Write(Coin.ToNumber(lista[i]) + " ");
 
+
+       
+
             Card card = new Card(1, CardType.CORAZON);
             Card card1 = new Card(3, CardType.DIAMANTE);
             card1.GetColorType();
