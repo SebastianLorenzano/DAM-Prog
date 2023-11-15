@@ -130,12 +130,15 @@ namespace Classes
             if (result.Count == 0 || result == null)
             {
                 Move(warzone);
-                return null;
             }
-            Attack(result[0]);
-            _weapon.reloadTimeLeft -= 1;
-            if (result[0].IsDead())
-                return result[0];
+            else
+            {
+                Attack(result[0]);
+                _weapon.reloadTimeLeft -= 1;
+                if (result[0].IsDead())
+                    return result[0];
+            }
+
             return null;
         }
 
