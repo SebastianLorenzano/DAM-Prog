@@ -39,7 +39,7 @@ namespace EmGame
                 return 5;
             if (_weaponType == WeaponType.SPEAR)    
                 return 2;
-            if (_weaponType == WeaponType.ARROW)//eL DAÑO DE LAS FLECHAS QUE PASA PISHA?
+            if (_weaponType == WeaponType.ARROW)
                 return 2;
             if (_weaponType == WeaponType.BOW)
                 return 3;
@@ -48,7 +48,7 @@ namespace EmGame
 
         public int GetReloadTime()
         {
-            if (_weaponType == WeaponType.MAZE) // 2 2 1 3 1
+            if (_weaponType == WeaponType.MAZE) 
                 return 3;
             if (_weaponType == WeaponType.SPEAR)
                 return 3;

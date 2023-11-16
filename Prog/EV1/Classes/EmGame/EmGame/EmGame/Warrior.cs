@@ -1,10 +1,13 @@
 ﻿using EmGame;
+using FreeTypeSharp.Native;
 using Microsoft.VisualBasic;
 using System;
 
 
 namespace Classes
 {
+
+    // Que tengan proficiencias las razas con distintas armas, o distintas estrategias
     public enum TeamType
     {
         HUMAN,
@@ -13,80 +16,66 @@ namespace Classes
         ELF
     }
 
-    public class Warrior
+    public enum AttackMode
     {
-        private Rect rect = new Rect();
+        NORMAL,
+        BERSERKER
+    }
+
+    public class Warrior : Rect
+    {
         private int _health = 20;
         private TeamType _team;
         private Weapon _weapon;
+        private AttackMode _mode;
 
         public Warrior(TeamType team, WeaponType weapontype, double r, double g, double b, int width, int height)
         {
-            rect.r = r;
+            this.r = r;
             _team = team;
             _weapon = new Weapon(weapontype);
-            rect.r = r;
-            rect.g = g;
-            rect.b = b;
-            rect.width = width;
-            rect.height = height;
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.width = width;
+            this.height = height;
 
         }
 
-
-        public int GetX()
-        {
-            return rect.x;
-        }
-
-        public int GetY()
-        {
-            return rect.y;
-        }
-
-        public int GetWidth()
-        {
-            return rect.GetWidth();
-        }
-
-        public int GetHeight()
-        {
-            return rect.GetHeight();
-        }
 
         public void SetX(int x)
         {
-            rect.x = x;
+            this.x = x;
         }
 
         public void SetY(int y)
         {
-            rect.y = y;
+            this.y = y;
         }
 
         public void SetWidth(int width)
         {
-            rect.width = width;
+            this.width = width;
         }
 
         public void SetHeight(int height)
         {
-            rect.height = height;
+            this.height = height;
         }
 
         public double GetR()
         {
-            return rect.r;
+            return r;
         }
 
         public double GetG()
         {
-            return rect.g;
+            return g;
         }
 
         public double GetB()
         {
-            return rect.b;
+            return b;
         }
 
         public int GetHealth()
@@ -138,7 +127,6 @@ namespace Classes
                 if (result[0].IsDead())
                     return result[0];
             }
-
             return null;
         }
 
@@ -151,29 +139,53 @@ namespace Classes
             }
         }
 
+        public void MoveTo(Position position, WarZone warzone)
+        {
+           //  if (x < )            COMPLETAR
+        }
         public void Move(WarZone warzone)
         { 
-                if (WarZone.GetDistance(rect.x, rect.y, rect.x, warzone.rect.height / 2) != 0)
-                {
-                    if (rect.y < warzone.rect.height / 2 && !warzone.IsOccupied(rect.x, rect.y + 1))
-                        rect.y += 1;
-                    else if (rect.y > warzone.rect.height / 2 && !warzone.IsOccupied(rect.x, rect.y - 1))
-                        rect.y += -1;
-                }
-                if (WarZone.GetDistance(rect.x, rect.y, rect.x, warzone.rect.height / 2) == 0)
-                {
-                    if (rect.x < warzone.rect.width / 2 && !warzone.IsOccupied(rect.x + 1, rect.y))
-                        rect.x += 1;
-                    else if (rect.x > warzone.rect.width / 2 && !warzone.IsOccupied(rect.x - 1, rect.y))
-                        rect.x += -1;
-                
-                }
+               
+            if (_mode == AttackMode.BERSERKER)
+            {
+                var position = warzone.GetEnemiesCenterPosition(_team);
+                // que recorra una lista de posiciones disponibles y que se mueva a aquella que esta a menor distancia del centro // 
+                MoveTo(position, warzone);
+
+
             }
-    
+            
+            
+       
+            
+
+
+
+
+          /*  
+                if (WarZone.GetDistance(x, y, x, warzone.rect.height / 2) != 0)
+                {
+                    if (y < warzone.rect.height / 2 && !warzone.IsOccupied(x, y + 1))
+                        y += 1;
+                    else if (y > warzone.rect.height / 2 && !warzone.IsOccupied(x, y - 1))
+                        y += -1;
+                }
+                if (WarZone.GetDistance(x, y, x, warzone.rect.height / 2) == 0)
+                {
+                    if (x < warzone.rect.width / 2 && !warzone.IsOccupied(x + 1, y))
+                        x += 1;
+                    else if (x > warzone.rect.width / 2 && !warzone.IsOccupied(x - 1, y))
+                        x += -1;
+                }
+            
+       */
         }
-        // Preguntarle a javi si combiene en WarZone poner una funcion que cuente donde estan los enemigos para moverse ahi //
+
 
     }
+    // Preguntarle a javi si combiene en WarZone poner una funcion que cuente donde estan los enemigos para moverse ahi //
+
+}
 
 
 

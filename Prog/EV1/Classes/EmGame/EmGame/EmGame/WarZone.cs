@@ -7,6 +7,17 @@ using static UDK.IFont;
 
 namespace Classes
 {
+
+    public class Position
+    {
+        public int x, y;
+        public Position(int x, int y)
+            {
+            this.x = x;
+            this.y = y;
+            }
+    }
+
     public class WarZone
     {
         public bool is_running = true;
@@ -16,7 +27,6 @@ namespace Classes
             HY,
             OX = 1,
             OY;
-        
         public bool HSpawnMaxxed = false;
         public bool OSpawnMaxxed = false;
         private List<Warrior> _warriorList = new List<Warrior>();
@@ -40,11 +50,11 @@ namespace Classes
         {
             return _warriorList.Count;
         }
-            
-            public void CreateAllWarriors(int countH, int countO)
+
+        public void CreateAllWarriors(int countH, int countO)
         {
-                CreateWarriors(countH, TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
-                CreateWarriors(countO, TeamType.ORC, WeaponType.RANDOM, 0.31, 0.84, 0.41);
+            CreateWarriors(countH, TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
+            CreateWarriors(countO, TeamType.ORC, WeaponType.RANDOM, 0.31, 0.84, 0.41);
         }
 
         public void CreateWarriors(int count, TeamType team, WeaponType weaponType, double r, double g, double b)
@@ -79,33 +89,33 @@ namespace Classes
                 OX++;
                 DecideNextSpawnPostion(warr.GetTeam());
             }
-            }
+        }
 
-            public void DecideNextSpawnPostion(TeamType team)
+        public void DecideNextSpawnPostion(TeamType team)
+        {
+            if (team == TeamType.HUMAN)
             {
-                if (team == TeamType.HUMAN)
+                if (HX > rect.GetWidth() - 2)
                 {
-                    if (HX > rect.GetWidth() - 2)
-                    {
-                        HX = 1;
-                        HY++;
-                        if (HY > rect.height * 2 / 5 - 2)
-                            HSpawnMaxxed = true;
-                    }
-                }
-                if (team == TeamType.ORC)
-                {
-                    if (OX > rect.GetWidth() - 2)
-                    {
-                        OX = 1;
-                        OY--;
-                        if (OY < rect.height * 3 / 5 + 2)
-                            OSpawnMaxxed = true;
-                    }
+                    HX = 1;
+                    HY++;
+                    if (HY > rect.height * 2 / 5 - 2)
+                        HSpawnMaxxed = true;
                 }
             }
+            if (team == TeamType.ORC)
+            {
+                if (OX > rect.GetWidth() - 2)
+                {
+                    OX = 1;
+                    OY--;
+                    if (OY < rect.height * 3 / 5 + 2)
+                        OSpawnMaxxed = true;
+                }
+            }
+        }
 
-            public void DrawAll(ICanvas canvas)
+        public void DrawAll(ICanvas canvas)
         {
             DrawMap(canvas);
             DrawWarriors(canvas);
@@ -114,7 +124,7 @@ namespace Classes
         {
             canvas.FillShader.SetColor(1, 1, 1, 1);
             canvas.Camera.SetRectangle(rect.x - 5, rect.y - 5, rect.width + 10, rect.height + 10);
-            canvas.DrawRectangle(rect.x, rect.y, rect.width , rect.height);
+            canvas.DrawRectangle(rect.x, rect.y, rect.width, rect.height);
         }
 
         private void DrawWarriors(ICanvas canvas)
@@ -138,7 +148,7 @@ namespace Classes
                     RemoveWarrior(GetWarriorIndex(turn));
                     i--;
                 }
-            }  
+            }
         }
 
         public Warrior? GetWarriorAt(int x, int y)
@@ -162,7 +172,7 @@ namespace Classes
         {
             for (int i = 0; i < _warriorList.Count; i++)
             {
-                if (_warriorList[i].GetX() == warrior.GetX() && _warriorList[i].GetY() == warrior.GetY()) 
+                if (_warriorList[i].GetX() == warrior.GetX() && _warriorList[i].GetY() == warrior.GetY())
                     return i;
             }
             return -1;
@@ -173,10 +183,10 @@ namespace Classes
             var w = GetWarriorAt(x, y);
             if (w == null)
                 return false;
-            return  (GetDistance(x, y, warrior.GetX(), warrior.GetY()) <= w.GetWeaponRange() && w.GetTeam() != warrior.GetTeam());
+            return (GetDistance(x, y, warrior.GetX(), warrior.GetY()) <= w.GetWeaponRange() && w.GetTeam() != warrior.GetTeam());
         }
 
-        public int GetNumEnemiesInRange(int x, int y)                    
+        public int GetNumEnemiesInRange(int x, int y)
         {
             int result = 0;
             if (GetWarriorAt(x, y) == null)
@@ -221,13 +231,13 @@ namespace Classes
         //    return lista;
         //}
 
-        public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior>? lista)
+        public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior>? lista = null)
         {
             if (lista == null)
                 lista = _warriorList;
             for (int i = 0; i < lista.Count - 1; i++)
             {
-                for (int j= 1; j < lista.Count; j++)
+                for (int j = 1; j < lista.Count; j++)
                 {
                     var d1 = GetDistance(x, y, lista[i].GetX(), lista[i].GetY());
                     var d2 = GetDistance(x, y, lista[j].GetX(), lista[j].GetY());
@@ -244,7 +254,7 @@ namespace Classes
 
         public bool IsOccupied(int x, int y)
         {
-            for (int i = 0; i <  _warriorList.Count; i++)
+            for (int i = 0; i < _warriorList.Count; i++)
             {
                 if (_warriorList[i].GetX() == x && _warriorList[i].GetY() == y)
                     return true;
@@ -275,7 +285,22 @@ namespace Classes
         public bool AreAllTeamsRemaining()
         {
             return IsTeamRemaining(TeamType.HUMAN) && IsTeamRemaining(TeamType.ORC);
-                
+        }
+
+        public Position GetEnemiesCenterPosition(TeamType team)
+        {
+            int countX = 0, x = 0, y = 0, countY = 0;
+            for (int i = 0; i < _warriorList.Count;i++)
+            {
+                if (_warriorList[i].GetTeam() != team)
+                {
+                    x += _warriorList[i].x;
+                    y += _warriorList[i].y;
+                    countX++;
+                    countY++;
+                }
+            }
+            return new Position(x / countX, y / countY);
         }
     }
 }    

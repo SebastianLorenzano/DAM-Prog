@@ -184,7 +184,7 @@ namespace Classes
 
                 m = (_month + 9) % 12;
                 y = _month / 10;
-                ulong dn = (ulong)(365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1));
+                ulong dn = (ulong)(365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (_day - 1));
                 return dn;
             }
             return ulong.MinValue;
