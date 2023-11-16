@@ -178,7 +178,7 @@ namespace Classes
         private ulong CalcDayNumFromDate()
         {
             int m;
-            int y = _year;
+            int y;
             if (IsValid())
             {
 
