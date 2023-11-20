@@ -20,9 +20,14 @@ namespace Classes
             SetBigNumber(number);
         }
 
-        public BigNumber(List<int> digits)
+        private BigNumber(List<int> digits)
         {
             _digits = digits;
+        }
+
+        public bool IsPositive()
+        {
+            return GetDigitAt(GetDigitCount() - 1) > 0;
         }
 
         public void SetBigNumber(long number)
@@ -73,24 +78,37 @@ namespace Classes
         {
             List<int> digits = new List<int>();
             bool added1 = false;
+            int aux1 = 1;
+            int aux2 = 1;
             int n = Math.Max(number1.GetDigitCount(), number2.GetDigitCount());
+            if (!number1.IsPositive())
+                aux1 = -1;
+            if (!number2.IsPositive())
+                aux2 = -1;
             for (int i = n - 1; i >= 0; i--)
             {
-                int aux = number1.GetDigitAt(i) + number2.GetDigitAt(i);
+                int aux = number1.GetDigitAt(i) * aux1 + number2.GetDigitAt(i) * aux2;
                 if (added1)
                 {
                     aux++;
                     added1 = false;
                 }
+                if (aux < 0)
+                {
+                    aux += 10;
+                    if (number1.GetDigitAt(i + 1) > 0)
+                         
+                }
+
+
                 if (aux >= 10)
                 {
+                    aux -= 10;
                     added1 = true;
                 }
                 digits.Add(aux);
             }
-
-
- 
+            return new BigNumber(digits);
         }
 
         public static BigNumber Sub(BigNumber number1, BigNumber number2)
