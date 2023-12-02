@@ -11,15 +11,11 @@ namespace EmGame
         private int _frameCount;
         private int hasWonText;
 
-        //public TeamType GetWinner()
-        //{
-        //    return TeamType.HUMAN;
-        //}
 
         WarZone warzone = new WarZone();
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            warzone.CreateAllWarriors(300, 300);
+            warzone.CreateAllWarriors(100, 100);
         }
 
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)
@@ -30,7 +26,7 @@ namespace EmGame
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
             _frameCount++;
-            if (_frameCount > 0 && warzone.AreAllTeamsRemaining())
+            if (_frameCount > 50 && warzone.AreAllTeamsRemaining())
             {
                 warzone.ExecuteRound();
                 _frameCount = 0;

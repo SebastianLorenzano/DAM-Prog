@@ -24,7 +24,7 @@ namespace EmGame
         public static int GetRandomInt(int min, int max) 
         {
 
-            return r.Next(0, 5);
+            return r.Next(min, max);
         }
     }
 

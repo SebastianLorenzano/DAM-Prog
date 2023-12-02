@@ -62,7 +62,7 @@ namespace EmGame
         public double GetRange()
         {
             if (_weaponType == WeaponType.SPEAR)
-                return 2.5;
+                return 3.5;
             if (_weaponType == WeaponType.BOW)
                 return 20.5;
             return 1.5;
@@ -79,7 +79,9 @@ namespace EmGame
             if (r1 == 3)
                 return WeaponType.SPEAR;
             if (r1 == 4)
+            {
                 return WeaponType.BOW;
+            }
             return WeaponType.FISTS;
         }
 

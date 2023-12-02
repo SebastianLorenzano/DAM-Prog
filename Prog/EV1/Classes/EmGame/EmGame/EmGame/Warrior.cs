@@ -20,6 +20,7 @@ namespace Classes
     {
         RANDOM,
         NORMAL,
+        ROGUE,              // HUNTS FOR ARCHERS
         BERSERKER
     }
 
@@ -47,9 +48,11 @@ namespace Classes
 
         public AttackMode GetRandomAttackMode()
         {
-            var r1 = Utils.GetRandomInt(0, 2);
+            var r1 = Utils.GetRandomInt(0, 3);
             if (r1 == 1)
                 return AttackMode.BERSERKER;
+            if (r1 == 2)
+                return AttackMode.ROGUE;
             return AttackMode.NORMAL;
 
         }
@@ -125,11 +128,21 @@ namespace Classes
         { 
             if (_mode == AttackMode.BERSERKER)
             {
-                Position warrPosition = new Position(this.GetX(), this.GetY());
+                Position warrPosition = new Position(GetX(), GetY());
                 var goToPosition = warzone.GetClosestEnemyPosition(_team, warrPosition);
                 goToPosition = warzone.GetBestPosition(goToPosition, warrPosition);
                 MoveTo(goToPosition, warzone);
 
+
+            }
+
+            if (_mode == AttackMode.ROGUE)
+            {
+                Position warrPosition = new Position(GetX(), GetY());
+                var avoidPosition = warzone.GetEnemiesCenterPositionWithWeaponType(WeaponType.BOW, _team, warrPosition);
+                var goToPosition = warzone.GetClosestEnemyPositionWithWeaponType(WeaponType.BOW, _team, warrPosition);
+                goToPosition = warzone.GetBestPosition(goToPosition, warrPosition, avoidPosition);
+                MoveTo(goToPosition, warzone);
 
             }
 
@@ -150,28 +163,12 @@ namespace Classes
 
 
 
-            /*  
-                  if (WarZone.GetDistance(_x, _y, _x, warzone.rect._height / 2) != 0)
-                  {
-                      if (_y < warzone.rect._height / 2 && !warzone.IsOccupied(_x, _y + 1))
-                          _y += 1;
-                      else if (_y > warzone.rect._height / 2 && !warzone.IsOccupied(_x, _y - 1))
-                          _y += -1;
-                  }
-                  if (WarZone.GetDistance(_x, _y, _x, warzone.rect._height / 2) == 0)
-                  {
-                      if (_x < warzone.rect._width / 2 && !warzone.IsOccupied(_x + 1, _y))
-                          _x += 1;
-                      else if (_x > warzone.rect._width / 2 && !warzone.IsOccupied(_x - 1, _y))
-                          _x += -1;
-                  }
 
-         */
+     
         }
 
 
     }
-    // Preguntarle a javi si combiene en WarZone poner una funcion que cuente donde estan los enemigos para moverse ahi //
 
 }
 

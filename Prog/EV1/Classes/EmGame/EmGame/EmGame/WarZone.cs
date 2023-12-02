@@ -302,21 +302,47 @@ namespace Classes
             return new Position(x / countX, y / countY);
         }
 
-        public Position GetBestPosition(Position goToPosition, Position warPosition)
+        public Position GetBestPosition(Position goToPosition, Position warPosition, Position ToAvoidPosition = null)
         {
             var result = new Position(warPosition.x, warPosition.y);
-            for (int y = warPosition.y - 1;  y <= warPosition.y + 1; y++)
+            if (ToAvoidPosition == null)
             {
-                for (int x = warPosition.x - 1; x <= warPosition.x + 1; x++)
+                for (int y = warPosition.y - 1; y <= warPosition.y + 1; y++)
                 {
-                    if (GetDistance(result.x, result.y, goToPosition.x, goToPosition.y) > GetDistance(x, y, goToPosition.x, goToPosition.y) && 
-                        GetWarriorAt(x, y) == null && x > _x && x < _width && y > _y && _y < _height)
+                    for (int x = warPosition.x - 1; x <= warPosition.x + 1; x++)
+                    {
+                        if (GetDistance(result.x, result.y, goToPosition.x, goToPosition.y) > GetDistance(x, y, goToPosition.x, goToPosition.y) &&
+                            GetWarriorAt(x, y) == null && x > _x && x < _width && y > _y && _y < _height)
                         {
-                        result.x = x;
-                        result.y = y;
+                            result.x = x;
+                            result.y = y;
                         }
+                    }
                 }
-            }         
+            }
+            else          // Esto queda super increiblemente goofy y estupido, tengo que ver como hacer que evadan al resto
+                          // de fighters cuando esten en un rato de 10 casillas, y que cuando lleguen cerca de la y de las arqueros no les importe eso
+            {
+                List<Position> list = new List<Position>();
+                for (int y = warPosition.y - 1; y <= warPosition.y + 1; y++)
+                {
+                    for (int x = warPosition.x - 1; x <= warPosition.x + 1; x++)
+                    {
+                        if (GetDistance(result.x, result.y, goToPosition.x, goToPosition.y) > GetDistance(x, y, goToPosition.x, goToPosition.y) &&
+                            GetWarriorAt(x, y) == null && x > _x && x < _width && y > _y && _y < _height)
+                        {
+                            list.Add(new Position(x, y));
+                        }
+                    }
+                }
+                if (list.Count > 0)
+                    result = list[0];
+                for (int i =  1; i < list.Count - 1; i++) 
+                {
+                    if (GetDistance(result.x, result.y, ToAvoidPosition.x, ToAvoidPosition.y) < GetDistance(list[i].x, list[i].y, ToAvoidPosition.x, ToAvoidPosition.y))
+                        result = list[i];
+                }
+            }
             return result;
         }
 
@@ -334,6 +360,40 @@ namespace Classes
                 return new Position(list[0].GetX(), list[0].GetY());
             }
             return new Position(0, 0);
+        }
+
+        public Position GetClosestEnemyPositionWithWeaponType(WeaponType weaponType, TeamType team, Position warrPosition) //Pense detenidamente durante 3 segundos _y concurri que no voy a transformar todo el codigo a position. No.
+        {
+            List<Warrior> list = new List<Warrior>();
+            for (int i = 0; i < _warriorList.Count; i++)
+            {
+                if (_warriorList[i].GetTeam() != team && _warriorList[i].GetWeaponType() == weaponType)
+                    list.Add(_warriorList[i]);
+            }
+            if (list.Count > 0)
+            {
+                list = GetWarriorsSortedByDistance(warrPosition.x, warrPosition.y, list);
+                return new Position(list[0].GetX(), list[0].GetY());
+            }
+            return new Position(0, 0);
+        }
+
+        public Position GetEnemiesCenterPositionWithWeaponType(WeaponType weaponType, TeamType team, Position warrPosition) // Calcula la posicion central de todos los tipos de enemigos exceptuando el tipo que tiene el arma que pasa
+        {
+            {
+                List<Warrior> list = new List<Warrior>();
+                for (int i = 0; i < _warriorList.Count; i++)
+                {
+                    if (_warriorList[i].GetTeam() != team && _warriorList[i].GetWeaponType() != weaponType)
+                        list.Add(_warriorList[i]);
+                }
+                if (list.Count > 0)
+                {
+                    list = GetWarriorsSortedByDistance(warrPosition.x, warrPosition.y, list);
+                    return new Position(list[0].GetX(), list[0].GetY());
+                }
+                return new Position(0, 0);
+            }
         }
     }
 }    
