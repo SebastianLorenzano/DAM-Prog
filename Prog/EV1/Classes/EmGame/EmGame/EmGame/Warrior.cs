@@ -1,8 +1,5 @@
 ﻿using EmGame;
-using FreeTypeSharp.Native;
-using Microsoft.VisualBasic;
-using System;
-using static StbSharp.StbVorbis;
+
 
 
 namespace Classes
@@ -157,10 +154,7 @@ namespace Classes
                 var goToPosition = warzone.GetClosestEnemyPosition(_team, warrPosition);
                 goToPosition = warzone.GetBestPosition(goToPosition, warrPosition);
                 MoveTo(goToPosition, warzone);
-
-
             }
-
             else if (_mode == AttackMode.ROGUE)
             {
                 Position warrPosition = new Position(GetX(), GetY());
@@ -168,33 +162,16 @@ namespace Classes
                 var goToPosition = warzone.GetClosestEnemyPositionWithWeaponType(WeaponType.BOW, _team, warrPosition);
                 goToPosition = warzone.GetBestPosition(goToPosition, warrPosition, avoidPosition);
                 MoveTo(goToPosition, warzone);
-
             }
-
             else 
             {
                 var position = warzone.GetEnemiesCenterPosition(_team);
                 Position warrPosition = new Position(GetX(), GetY());
                 position = warzone.GetBestPosition(position, warrPosition);
                 MoveTo(position, warzone);
-
-
             }
-
-
-
-
-
-
-
-
-
-     
         }
-
-
     }
-
 }
 
 
