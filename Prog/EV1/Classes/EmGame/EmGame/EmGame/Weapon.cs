@@ -55,7 +55,7 @@ namespace EmGame
             if (_weaponType == WeaponType.ARROW)
                 return 2;
             if (_weaponType == WeaponType.BOW)
-                return 4;
+                return 6;
             return 2;
         }
 
@@ -64,7 +64,7 @@ namespace EmGame
             if (_weaponType == WeaponType.SPEAR)
                 return 2.5;
             if (_weaponType == WeaponType.BOW)
-                return 3.5;
+                return 20.5;
             return 1.5;
         }
 

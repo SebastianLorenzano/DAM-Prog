@@ -31,8 +31,8 @@ namespace Classes
         {
             _x = 0;
             _y = 0;
-            _width = 50;
-           _height = 50;
+            _width = 100;
+           _height = 100;
             HY = _y + 1;
             OY = _height - 1;
         }
