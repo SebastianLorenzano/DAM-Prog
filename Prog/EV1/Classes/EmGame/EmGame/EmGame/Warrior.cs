@@ -18,6 +18,7 @@ namespace Classes
 
     public enum AttackMode
     {
+        RANDOM,
         NORMAL,
         BERSERKER
     }
@@ -29,53 +30,28 @@ namespace Classes
         private Weapon _weapon;
         private AttackMode _mode;
 
-        public Warrior(TeamType team, WeaponType weapontype, double r, double g, double b, int width, int height)
+        public Warrior(TeamType team, WeaponType weapontype, AttackMode attackMode, double r, double g, double b, int width, int height)
         {
             this.r = r;
             _team = team;
             _weapon = new Weapon(weapontype);
+            if (attackMode == AttackMode.RANDOM)
+                _mode = GetRandomAttackMode();
             this.r = r;
             this.g = g;
             this.b = b;
-            this.width = width;
-            this.height = height;
+            _width = width;
+            _height = height;
 
         }
 
-
-        public void SetX(int x)
+        public AttackMode GetRandomAttackMode()
         {
-            this.x = x;
-        }
+            var r1 = Utils.GetRandomInt(0, 2);
+            if (r1 == 1)
+                return AttackMode.BERSERKER;
+            return AttackMode.NORMAL;
 
-        public void SetY(int y)
-        {
-            this.y = y;
-        }
-
-        public void SetWidth(int width)
-        {
-            this.width = width;
-        }
-
-        public void SetHeight(int height)
-        {
-            this.height = height;
-        }
-
-        public double GetR()
-        {
-            return r;
-        }
-
-        public double GetG()
-        {
-            return g;
-        }
-
-        public double GetB()
-        {
-            return b;
         }
 
         public int GetHealth()
@@ -141,44 +117,56 @@ namespace Classes
 
         public void MoveTo(Position position, WarZone warzone)
         {
-           //  if (x < )            COMPLETAR
+                _x = position.x;        // Agregar limitaciones luego
+                _y = position.y;
         }
+               
         public void Move(WarZone warzone)
         { 
-               
             if (_mode == AttackMode.BERSERKER)
             {
+                Position warrPosition = new Position(this.GetX(), this.GetY());
+                var goToPosition = warzone.GetClosestEnemyPosition(_team, warrPosition);
+                goToPosition = warzone.GetBestPosition(goToPosition, warrPosition);
+                MoveTo(goToPosition, warzone);
+
+
+            }
+
+            else 
+            {
                 var position = warzone.GetEnemiesCenterPosition(_team);
-                // que recorra una lista de posiciones disponibles y que se mueva a aquella que esta a menor distancia del centro // 
+                Position warrPosition = new Position(GetX(), GetY());
+                position = warzone.GetBestPosition(position, warrPosition);
                 MoveTo(position, warzone);
 
 
             }
-            
-            
-       
-            
 
 
 
 
-          /*  
-                if (WarZone.GetDistance(x, y, x, warzone.rect.height / 2) != 0)
-                {
-                    if (y < warzone.rect.height / 2 && !warzone.IsOccupied(x, y + 1))
-                        y += 1;
-                    else if (y > warzone.rect.height / 2 && !warzone.IsOccupied(x, y - 1))
-                        y += -1;
-                }
-                if (WarZone.GetDistance(x, y, x, warzone.rect.height / 2) == 0)
-                {
-                    if (x < warzone.rect.width / 2 && !warzone.IsOccupied(x + 1, y))
-                        x += 1;
-                    else if (x > warzone.rect.width / 2 && !warzone.IsOccupied(x - 1, y))
-                        x += -1;
-                }
-            
-       */
+
+
+
+
+            /*  
+                  if (WarZone.GetDistance(_x, _y, _x, warzone.rect._height / 2) != 0)
+                  {
+                      if (_y < warzone.rect._height / 2 && !warzone.IsOccupied(_x, _y + 1))
+                          _y += 1;
+                      else if (_y > warzone.rect._height / 2 && !warzone.IsOccupied(_x, _y - 1))
+                          _y += -1;
+                  }
+                  if (WarZone.GetDistance(_x, _y, _x, warzone.rect._height / 2) == 0)
+                  {
+                      if (_x < warzone.rect._width / 2 && !warzone.IsOccupied(_x + 1, _y))
+                          _x += 1;
+                      else if (_x > warzone.rect._width / 2 && !warzone.IsOccupied(_x - 1, _y))
+                          _x += -1;
+                  }
+
+         */
         }
 
 

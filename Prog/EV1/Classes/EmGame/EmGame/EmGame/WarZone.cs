@@ -1,7 +1,4 @@
 ﻿using EmGame;
-using System;
-using System.Diagnostics.Metrics;
-using System.Text;
 using UDK;
 using static UDK.IFont;
 
@@ -18,10 +15,9 @@ namespace Classes
             }
     }
 
-    public class WarZone
+    public class WarZone : Rect
     {
         public bool is_running = true;
-        public Rect rect = new Rect();
         public int
             HX = 1,
             HY,
@@ -33,12 +29,12 @@ namespace Classes
 
         public WarZone()
         {
-            rect.x = 0;
-            rect.y = 0;
-            rect.width = 50;
-            rect.height = 50;
-            HY = rect.y + 1;
-            OY = rect.height - 1;
+            _x = 0;
+            _y = 0;
+            _width = 50;
+           _height = 50;
+            HY = _y + 1;
+            OY = _height - 1;
         }
 
         public List<Warrior> GetWarriorList()
@@ -53,15 +49,15 @@ namespace Classes
 
         public void CreateAllWarriors(int countH, int countO)
         {
-            CreateWarriors(countH, TeamType.HUMAN, WeaponType.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
-            CreateWarriors(countO, TeamType.ORC, WeaponType.RANDOM, 0.31, 0.84, 0.41);
+            CreateWarriors(countH, TeamType.HUMAN, WeaponType.RANDOM, AttackMode.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
+            CreateWarriors(countO, TeamType.ORC, WeaponType.RANDOM, AttackMode.RANDOM, 0.31, 0.84, 0.41);
         }
 
-        public void CreateWarriors(int count, TeamType team, WeaponType weaponType, double r, double g, double b)
+        public void CreateWarriors(int count, TeamType team, WeaponType weaponType, AttackMode attackMode, double r, double g, double b)
         {
             for (int i = 0; i < count; i++)
             {
-                var warrior = new Warrior(team, weaponType, r, g, b, 1, 1);
+                var warrior = new Warrior(team, weaponType, AttackMode.RANDOM, r, g, b, 1, 1);
                 SetSpawnPosition(warrior);
                 _warriorList.Add(warrior);
             }
@@ -95,21 +91,21 @@ namespace Classes
         {
             if (team == TeamType.HUMAN)
             {
-                if (HX > rect.GetWidth() - 2)
+                if (HX > GetWidth() - 2)
                 {
                     HX = 1;
                     HY++;
-                    if (HY > rect.height * 2 / 5 - 2)
+                    if (HY > _height * 2 / 5 - 2)
                         HSpawnMaxxed = true;
                 }
             }
             if (team == TeamType.ORC)
             {
-                if (OX > rect.GetWidth() - 2)
+                if (OX > GetWidth() - 2)
                 {
                     OX = 1;
                     OY--;
-                    if (OY < rect.height * 3 / 5 + 2)
+                    if (OY < _height * 3 / 5 + 2)
                         OSpawnMaxxed = true;
                 }
             }
@@ -123,8 +119,8 @@ namespace Classes
         private void DrawMap(ICanvas canvas)
         {
             canvas.FillShader.SetColor(1, 1, 1, 1);
-            canvas.Camera.SetRectangle(rect.x - 5, rect.y - 5, rect.width + 10, rect.height + 10);
-            canvas.DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+            canvas.Camera.SetRectangle(_x - 5, _y - 5, _width + 10, _height + 10);
+            canvas.DrawRectangle(_x, _y, _width, _height);
         }
 
         private void DrawWarriors(ICanvas canvas)
@@ -222,11 +218,11 @@ namespace Classes
             return result;
         }
 
-        //public List<Warrior> GetWarriorsInside(int x, int y, int width, int height)           // Esto es para hacer un daño en area tipo un Fireball //
+        //public List<Warrior> GetWarriorsInside(int _x, int _y, int _width, int _height)           // Esto es para hacer un daño en area tipo un Fireball //
         //{
         //    List<Warrior> lista = new List<Warrior>();
         //    for (int i = 0; i < _warriorList.Count; i++)
-        //        if (IsEnemyInRange(x, y, _warriorList[i]))
+        //        if (IsEnemyInRange(_x, _y, _warriorList[i]))
         //            lista.Add(_warriorList[i]);
         //    return lista;
         //}
@@ -294,13 +290,50 @@ namespace Classes
             {
                 if (_warriorList[i].GetTeam() != team)
                 {
-                    x += _warriorList[i].x;
-                    y += _warriorList[i].y;
+                    x += _warriorList[i].GetX();
+                    y += _warriorList[i].GetY();
                     countX++;
                     countY++;
+
                 }
             }
+            if (countX == 0 || countY == 0)
+                return new Position(0, 0);
             return new Position(x / countX, y / countY);
+        }
+
+        public Position GetBestPosition(Position goToPosition, Position warPosition)
+        {
+            var result = new Position(warPosition.x, warPosition.y);
+            for (int y = warPosition.y - 1;  y <= warPosition.y + 1; y++)
+            {
+                for (int x = warPosition.x - 1; x <= warPosition.x + 1; x++)
+                {
+                    if (GetDistance(result.x, result.y, goToPosition.x, goToPosition.y) > GetDistance(x, y, goToPosition.x, goToPosition.y) && 
+                        GetWarriorAt(x, y) == null && x > _x && x < _width && y > _y && _y < _height)
+                        {
+                        result.x = x;
+                        result.y = y;
+                        }
+                }
+            }         
+            return result;
+        }
+
+        public Position GetClosestEnemyPosition(TeamType team, Position warrPosition) //Pense detenidamente durante 3 segundos _y concurri que no voy a transformar todo el codigo a position. No.
+        {
+            List<Warrior> list = new List<Warrior> ();
+            for (int i = 0; i < _warriorList.Count; i++)
+            {
+                if (_warriorList[i].GetTeam() != team)
+                    list.Add(_warriorList[i]);
+            }
+            if (list.Count > 0)
+            {
+                list = GetWarriorsSortedByDistance(warrPosition.x, warrPosition.y, list);
+                return new Position(list[0].GetX(), list[0].GetY());
+            }
+            return new Position(0, 0);
         }
     }
 }    

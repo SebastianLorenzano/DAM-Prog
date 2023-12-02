@@ -11,31 +11,61 @@ namespace EmGame
     public class Rect
     {
 
-        public int x, y, width, height;
-        public double r, g, b;
+        protected int _x, _y, _width, _height;
+        protected double r, g, b;
         public int GetX()
         {
-            return x;
+            return _x;
         }
 
         public int GetY()
         {
-            return y;
+            return _y;
         }
 
         public int GetWidth()
         {
-            return width;
+            return _width;
         }
 
         public int GetHeight()
         {
-            return height;
+            return _height;
         }
 
-        public static int GetWidth(WarZone warzone)
+        public double GetR()
         {
-            return warzone.rect.height;
+            return r;
+        }
+
+        public double GetG()
+        {
+            return g;
+        }
+
+        public double GetB()
+        {
+            return b;
+        }
+
+        public void SetX(int x)
+        {
+            _x = x;
+        }
+
+        public void SetY(int y)
+        {
+            _y = y;
+        }
+
+        public void SetWidth(int width)
+        {
+            _width = width;
+        }
+
+        public void SetHeight(int height)
+        {
+            _height = height;
         }
     }
 }
