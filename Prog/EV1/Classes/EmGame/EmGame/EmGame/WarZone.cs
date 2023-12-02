@@ -31,8 +31,8 @@ namespace Classes
         {
             _x = 0;
             _y = 0;
-            _width = 100;
-           _height = 100;
+            _width = 125;
+           _height = 125;
             HY = _y + 1;
             OY = _height - 1;
         }
@@ -49,15 +49,15 @@ namespace Classes
 
         public void CreateAllWarriors(int countH, int countO)
         {
-            CreateWarriors(countH, TeamType.HUMAN, WeaponType.RANDOM, AttackMode.RANDOM, 0.0, 0.0, 0.0);  // Light skin 255, 182, 193
-            CreateWarriors(countO, TeamType.ORC, WeaponType.RANDOM, AttackMode.RANDOM, 0.31, 0.84, 0.41);
+            CreateWarriors(countH, TeamType.HUMAN, WeaponType.RANDOM, AttackMode.RANDOM);  // Light skin 255, 182, 193
+            CreateWarriors(countO, TeamType.ORC, WeaponType.RANDOM, AttackMode.RANDOM);
         }
 
-        public void CreateWarriors(int count, TeamType team, WeaponType weaponType, AttackMode attackMode, double r, double g, double b)
+        public void CreateWarriors(int count, TeamType team, WeaponType weaponType, AttackMode attackMode)
         {
             for (int i = 0; i < count; i++)
             {
-                var warrior = new Warrior(team, weaponType, AttackMode.RANDOM, r, g, b, 1, 1);
+                var warrior = new Warrior(team, weaponType, AttackMode.RANDOM, 1, 1);
                 SetSpawnPosition(warrior);
                 _warriorList.Add(warrior);
             }
@@ -218,15 +218,6 @@ namespace Classes
             return result;
         }
 
-        //public List<Warrior> GetWarriorsInside(int _x, int _y, int _width, int _height)           // Esto es para hacer un daño en area tipo un Fireball //
-        //{
-        //    List<Warrior> lista = new List<Warrior>();
-        //    for (int i = 0; i < _warriorList.Count; i++)
-        //        if (IsEnemyInRange(_x, _y, _warriorList[i]))
-        //            lista.Add(_warriorList[i]);
-        //    return lista;
-        //}
-
         public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior>? lista = null)
         {
             if (lista == null)
@@ -237,6 +228,27 @@ namespace Classes
                 {
                     var d1 = GetDistance(x, y, lista[i].GetX(), lista[i].GetY());
                     var d2 = GetDistance(x, y, lista[j].GetX(), lista[j].GetY());
+                    if (d1 > d2)
+                    {
+                        var aux = lista[i];
+                        lista[i] = lista[j];
+                        lista[j] = aux;
+                    }
+                }
+            }
+            return lista;
+        }
+
+        public List<Position> GetPositionsSortedByDistance(int x, int y, List<Position>? lista = null)
+        {
+            if (lista == null)
+                return lista;
+            for (int i = 0; i < lista.Count - 1; i++)
+            {
+                for (int j = 1; j < lista.Count; j++)
+                {
+                    var d1 = GetDistance(x, y, lista[i].x, lista[i].y);
+                    var d2 = GetDistance(x, y, lista[j].x, lista[j].y);
                     if (d1 > d2)
                     {
                         var aux = lista[i];
@@ -294,7 +306,6 @@ namespace Classes
                     y += _warriorList[i].GetY();
                     countX++;
                     countY++;
-
                 }
             }
             if (countX == 0 || countY == 0)
@@ -302,10 +313,10 @@ namespace Classes
             return new Position(x / countX, y / countY);
         }
 
-        public Position GetBestPosition(Position goToPosition, Position warPosition, Position ToAvoidPosition = null)
+        public Position GetBestPosition(Position goToPosition, Position warPosition, Position toAvoidPosition = null)
         {
             var result = new Position(warPosition.x, warPosition.y);
-            if (ToAvoidPosition == null)
+            if (toAvoidPosition == null)
             {
                 for (int y = warPosition.y - 1; y <= warPosition.y + 1; y++)
                 {
@@ -320,8 +331,7 @@ namespace Classes
                     }
                 }
             }
-            else          // Esto queda super increiblemente goofy y estupido, tengo que ver como hacer que evadan al resto
-                          // de fighters cuando esten en un rato de 10 casillas, y que cuando lleguen cerca de la y de las arqueros no les importe eso
+            else          
             {
                 List<Position> list = new List<Position>();
                 for (int y = warPosition.y - 1; y <= warPosition.y + 1; y++)
@@ -335,11 +345,14 @@ namespace Classes
                         }
                     }
                 }
+                list = GetPositionsSortedByDistance(goToPosition.x, goToPosition.y, list);
                 if (list.Count > 0)
                     result = list[0];
                 for (int i =  1; i < list.Count - 1; i++) 
                 {
-                    if (GetDistance(result.x, result.y, ToAvoidPosition.x, ToAvoidPosition.y) < GetDistance(list[i].x, list[i].y, ToAvoidPosition.x, ToAvoidPosition.y))
+                    var distanceResult = GetDistance(result.x, result.y, toAvoidPosition.x, toAvoidPosition.y);
+                    var distanceI = GetDistance(list[i].x, list[i].y, toAvoidPosition.x, toAvoidPosition.y);
+                    if (distanceResult < distanceI && distanceResult < 40)
                         result = list[i];
                 }
             }

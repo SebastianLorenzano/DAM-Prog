@@ -15,7 +15,7 @@ namespace EmGame
         WarZone warzone = new WarZone();
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            warzone.CreateAllWarriors(100, 100);
+            warzone.CreateAllWarriors(250, 250);
         }
 
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)
@@ -26,7 +26,7 @@ namespace EmGame
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
             _frameCount++;
-            if (_frameCount > 50 && warzone.AreAllTeamsRemaining())
+            if (_frameCount > 5 && warzone.AreAllTeamsRemaining())
             {
                 warzone.ExecuteRound();
                 _frameCount = 0;
@@ -36,8 +36,6 @@ namespace EmGame
                 Console.WriteLine(warzone.GetWarriorList()[0].GetTeam() + "  Has Won.");
                 hasWonText++;
             }
-
-
         }
 
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
@@ -46,9 +44,7 @@ namespace EmGame
             {
                 canvas.Clear(0, 0, 0, 1);
                 warzone.DrawAll(canvas);
-
             }
-
         }
 
         public void OnUnload(GameDelegateEvent gameEvent)

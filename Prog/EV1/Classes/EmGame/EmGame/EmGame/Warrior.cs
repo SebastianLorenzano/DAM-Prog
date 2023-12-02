@@ -2,6 +2,7 @@
 using FreeTypeSharp.Native;
 using Microsoft.VisualBasic;
 using System;
+using static StbSharp.StbVorbis;
 
 
 namespace Classes
@@ -19,9 +20,9 @@ namespace Classes
     public enum AttackMode
     {
         RANDOM,
-        NORMAL,
-        ROGUE,              // HUNTS FOR ARCHERS
-        BERSERKER
+        NORMAL,             // VA HACIA LA MASA DE ENEMIGOS            
+        BERSERKER,          // VA HACIA EL ENEMIGO MAS CERCANO
+        ROGUE,              // BUSCA A LOS ARQUEROS
     }
 
     public class Warrior : Rect
@@ -31,16 +32,40 @@ namespace Classes
         private Weapon _weapon;
         private AttackMode _mode;
 
-        public Warrior(TeamType team, WeaponType weapontype, AttackMode attackMode, double r, double g, double b, int width, int height)
+        public Warrior(TeamType team, WeaponType weapontype, AttackMode attackMode, int width, int height)
         {
-            this.r = r;
             _team = team;
-            _weapon = new Weapon(weapontype);
+            
             if (attackMode == AttackMode.RANDOM)
                 _mode = GetRandomAttackMode();
-            this.r = r;
-            this.g = g;
-            this.b = b;
+            if (team == TeamType.HUMAN && _mode == AttackMode.ROGUE)
+            {
+                r = 1;
+                g = 0.71;
+                b = 0.75;
+            }
+            if (team == TeamType.HUMAN && _mode != AttackMode.ROGUE)
+            {
+                r = 0;
+                g = 0;
+                b = 0;
+            }
+            if (team == TeamType.ORC && _mode == AttackMode.ROGUE)
+                {
+                r = 0.75;
+                g = 0.79;
+                b = 0.34;
+            }
+            if (team == TeamType.ORC && _mode != AttackMode.ROGUE)
+            {
+                r = 0.12;
+                g = 0.32;
+                b = 0.16;
+            }
+            if (_mode == AttackMode.ROGUE)
+                _weapon = new Weapon(WeaponType.SWORD);
+            else
+                _weapon = new Weapon(weapontype);
             _width = width;
             _height = height;
 
@@ -136,7 +161,7 @@ namespace Classes
 
             }
 
-            if (_mode == AttackMode.ROGUE)
+            else if (_mode == AttackMode.ROGUE)
             {
                 Position warrPosition = new Position(GetX(), GetY());
                 var avoidPosition = warzone.GetEnemiesCenterPositionWithWeaponType(WeaponType.BOW, _team, warrPosition);
