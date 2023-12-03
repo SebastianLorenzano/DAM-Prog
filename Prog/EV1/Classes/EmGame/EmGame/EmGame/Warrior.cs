@@ -5,13 +5,10 @@
 namespace Classes
 {
 
-    // Que tengan proficiencias las razas con distintas armas, o distintas estrategias
     public enum TeamType
     {
         HUMAN,
-        DWARF,
         ORC,
-        ELF
     }
 
     public enum AttackMode
@@ -141,11 +138,14 @@ namespace Classes
         }
 
         public void MoveTo(Position position, WarZone warzone)
-        {
-                _x = position.x;        // Agregar limitaciones luego
+        {       
+            if (position.x > warzone.GetX() && position.x < warzone.GetWidth() && position.y > warzone.GetX() && position.y < warzone.GetHeight()) 
+            {
+                _x = position.x;
                 _y = position.y;
-        }
-               
+            }
+        }// Agregar limitaciones luego
+
         public void Move(WarZone warzone)
         { 
             if (_mode == AttackMode.BERSERKER)
