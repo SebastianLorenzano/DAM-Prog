@@ -46,7 +46,6 @@ namespace EVALUACION
 
         public Student(Student student)
         {
-
             _name = student.GetName();
             _gender = student.GetGender();
             _height = student.GetHeight();

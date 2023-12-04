@@ -297,13 +297,14 @@ namespace Classes
 
         public Position GetEnemiesCenterPosition(TeamType team)
         {
+            var wlist = _warriorList;
             int countX = 0, x = 0, y = 0, countY = 0;
             for (int i = 0; i < _warriorList.Count;i++)
             {
                 if (_warriorList[i].GetTeam() != team)
                 {
-                    x += _warriorList[i].GetX();
-                    y += _warriorList[i].GetY();
+                    x += wlist[i].GetX();
+                    y += wlist[i].GetY();
                     countX++;
                     countY++;
                 }
@@ -361,8 +362,9 @@ namespace Classes
 
         public Position GetClosestEnemyPosition(TeamType team, Position warrPosition) //Pense detenidamente durante 3 segundos _y concurri que no voy a transformar todo el codigo a position. No.
         {
+            var wlist = _warriorList;
             List<Warrior> list = new List<Warrior> ();
-            for (int i = 0; i < _warriorList.Count; i++)
+            for (int i = 0; i < wlist.Count; i++)
             {
                 if (_warriorList[i].GetTeam() != team)
                     list.Add(_warriorList[i]);
@@ -378,9 +380,10 @@ namespace Classes
         public Position GetClosestEnemyPositionWithWeaponType(WeaponType weaponType, TeamType team, Position warrPosition) //Pense detenidamente durante 3 segundos _y concurri que no voy a transformar todo el codigo a position. No.
         {
             List<Warrior> list = new List<Warrior>();
+            var wlist = _warriorList;
             for (int i = 0; i < _warriorList.Count; i++)
             {
-                if (_warriorList[i].GetTeam() != team && _warriorList[i].GetWeaponType() == weaponType)
+                if (wlist[i].GetTeam() != team && wlist[i].GetWeaponType() == weaponType)
                     list.Add(_warriorList[i]);
             }
             if (list.Count > 0)
@@ -394,10 +397,11 @@ namespace Classes
         public Position GetEnemiesCenterPositionWithWeaponType(WeaponType weaponType, TeamType team, Position warrPosition) // Calcula la posicion central de todos los tipos de enemigos exceptuando el tipo que tiene el arma que pasa
         {
             {
+                var wlist = _warriorList;
                 List<Warrior> list = new List<Warrior>();
                 for (int i = 0; i < _warriorList.Count; i++)
                 {
-                    if (_warriorList[i].GetTeam() != team && _warriorList[i].GetWeaponType() != weaponType)
+                    if (wlist[i].GetTeam() != team && wlist[i].GetWeaponType() != weaponType)
                         list.Add(_warriorList[i]);
                 }
                 if (list.Count > 0)
