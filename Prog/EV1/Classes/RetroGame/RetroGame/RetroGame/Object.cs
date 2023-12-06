@@ -4,7 +4,7 @@ using UDK;
 namespace RetroGame
 {
 
-    public class Coordenates
+    public class Coordenates                // Esta es la primera prueba de usar el punto en el centro de la figura como medida
     {
         public double middleX, middleY, widthDiv2, heightDiv2;
 
@@ -39,6 +39,34 @@ namespace RetroGame
         public double GetHeight()
         {
             return heightDiv2 * 2;
+        }
+
+        public void SetMiddleX(double x, double width = 0)   //Esto convierte x en MiddleX
+        {
+            if (width == 0)
+                width = widthDiv2 * 2;
+            middleX = x + width/2;
+        }
+
+        public void SetMiddleY(double y, double height = 0) 
+        {
+            if (height == 0)
+                height = heightDiv2 * 2;
+            middleY = y + height/2;
+        }
+
+        public void SetWidth(double width)
+        {
+            widthDiv2 = width / 2;
+        }
+
+        public void SetHeight(double height)
+        {
+            heightDiv2 = height / 2;
+        }
+        public Coordenates CloneCoor() 
+        {
+            return new Coordenates(middleX, middleY, widthDiv2 * 2, heightDiv2 * 2);
         }
     }
   
@@ -81,23 +109,33 @@ namespace RetroGame
 
         public virtual void SetX(double x)
         {
-            coor. = x;
+            coor.SetMiddleX(x);
         }
 
         public virtual void SetY(double y)
         {
-            coor.y = y;
+            coor.SetMiddleX(y);
+        }
+
+        public double GetMiddleX()
+        {
+            return coor.middleX;
+        }
+
+        public double GetMiddleY()
+        {
+            return coor.middleY;
         }
 
 
         public virtual void SetWidth(double w)
         {
-            _width = w;
+            coor.SetWidth(w);
         }
 
         public virtual void SetDouble(double h)
         {
-            _height = h;
+            coor.SetWidth(h);
         }
 
         public double GetR()
