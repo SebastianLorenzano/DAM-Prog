@@ -26,6 +26,7 @@ namespace Classes
         public bool HSpawnMaxxed = false;
         public bool OSpawnMaxxed = false;
         private List<Warrior> _warriorList = new List<Warrior>();
+        
 
         public WarZone()
         {
@@ -159,7 +160,7 @@ namespace Classes
             return _warriorList[index];
         }
 
-        public int GetWarriorIndex(Warrior warrior)
+        public int GetWarriorIndex(Warrior?  warrior)
         {
             for (int i = 0; i < _warriorList.Count; i++)
             {
@@ -213,7 +214,8 @@ namespace Classes
             return result;
         }
 
-        public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior>? lista = null)
+
+        public List<Warrior> GetWarriorsSortedByDistance(int x, int y, List<Warrior> lista = null)
         {
             if (lista == null)
                 lista = _warriorList;

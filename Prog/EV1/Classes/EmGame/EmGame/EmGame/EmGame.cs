@@ -15,7 +15,7 @@ namespace EmGame
         WarZone warzone = new WarZone();
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            warzone.CreateAllWarriors(200, 200);
+            warzone.CreateAllWarriors(500, 500);
         }
 
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)

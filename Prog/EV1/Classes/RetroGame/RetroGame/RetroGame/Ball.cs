@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RetroGame
 {
-    internal class Bullet
+    internal class Ball
     {
     }
 }

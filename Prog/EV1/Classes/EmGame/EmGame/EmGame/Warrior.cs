@@ -130,6 +130,8 @@ namespace Classes
 
         public void Attack(Warrior warr)
         {
+            if (warr == null)
+                return;
             if (_weapon.reloadTimeLeft == 0)
             {
                 warr._health -= GetWeaponDamage();
