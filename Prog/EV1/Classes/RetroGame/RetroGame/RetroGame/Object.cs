@@ -3,29 +3,101 @@ using UDK;
 
 namespace RetroGame
 {
-    public class Object
+
+    public class Coordenates
     {
-        double _x;
-        double _y;
-        rgba_f32 _rgba = new rgba_f32();
+        public double middleX, middleY, widthDiv2, heightDiv2;
+
+        public Coordenates()
+        {
+
+        }
+
+        public Coordenates(double x, double y,double width, double height)
+        {
+            middleX = x + width/2;
+            middleY = y + height/2;
+            widthDiv2 = width / 2;
+            heightDiv2 = height / 2;
+        }
+
         public double GetX()
         {
-            return _x;
+            return middleX - widthDiv2;
         }
 
         public double GetY()
         {
-            return _y;
+            return middleY - heightDiv2;
+        }
+
+        public double GetWidth() 
+        {
+            return widthDiv2 * 2;
+        }
+
+        public double GetHeight()
+        {
+            return heightDiv2 * 2;
+        }
+    }
+  
+
+    public class Object
+    {
+
+        protected Coordenates coor;
+        protected rgba_f32 _rgba = new rgba_f32();
+
+        public Object() 
+        {
+            coor = new Coordenates();
+        }
+
+        public Object(double x, double y, double width,double height)
+        {
+            coor = new Coordenates(x,y,width,height);
+        }
+
+        public double GetX()
+        {
+            return coor.GetX();
+        }
+
+        public double GetY()
+        {
+            return coor.GetY();
+        }
+
+        public double GetWidth()
+        {
+            return coor.GetWidth();
+        }
+
+        public double GetHeight()
+        {
+            return coor.GetHeight();
         }
 
         public virtual void SetX(double x)
         {
-            _x = x;
+            coor. = x;
         }
 
         public virtual void SetY(double y)
         {
-            _y = y;
+            coor.y = y;
+        }
+
+
+        public virtual void SetWidth(double w)
+        {
+            _width = w;
+        }
+
+        public virtual void SetDouble(double h)
+        {
+            _height = h;
         }
 
         public double GetR()

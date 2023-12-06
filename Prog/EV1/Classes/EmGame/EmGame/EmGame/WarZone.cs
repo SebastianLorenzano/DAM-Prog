@@ -37,11 +37,6 @@ namespace Classes
             OY = _height - 1;
         }
 
-        public List<Warrior> GetWarriorList()
-        {
-            return _warriorList;
-        }
-
         public int GetWarriorCount()
         {
             return _warriorList.Count;

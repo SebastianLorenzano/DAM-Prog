@@ -33,7 +33,10 @@ namespace EmGame
             }
             if (!warzone.AreAllTeamsRemaining() && hasWonText == 0)
             {
-                Console.WriteLine(warzone.GetWarriorList()[0].GetTeam() + "  Has Won.");
+                if (warzone.GetWarriorAt(0) != null)
+                { 
+                    Console.WriteLine(warzone.GetWarriorAt(0).GetTeam() + "  Has Won.");
+                }
                 hasWonText++;
             }
         }
