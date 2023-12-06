@@ -111,12 +111,12 @@ namespace Classes
         {
             return _health <= 0;
         }
-        public Warrior? ExecuteTurn(WarZone warzone)
+        public Warrior? ExecuteTurn(WarZone wz)
         {
-            List<Warrior>? result = warzone.GetEnemiesInRange(GetX(), GetY());
+            List<Warrior>? result = wz.GetEnemiesInRange(GetX(), GetY());
             if (result.Count == 0 || result == null)
             {
-                Move(warzone);
+                Move(wz);
             }
             else
             {
@@ -128,11 +128,11 @@ namespace Classes
             return null;
         }
 
-        public void Attack(Warrior warrior)
+        public void Attack(Warrior warr)
         {
             if (_weapon.reloadTimeLeft == 0)
             {
-                warrior._health -= GetWeaponDamage();
+                warr._health -= GetWeaponDamage();
                 _weapon.reloadTimeLeft = _weapon.GetReloadTime();
             }
         }
@@ -145,29 +145,29 @@ namespace Classes
             }
         }// Agregar limitaciones luego
 
-        public void Move(WarZone warzone)
+        public void Move(WarZone wz)
         { 
             if (_mode == AttackMode.BERSERKER)
             {
                 Position warrPosition = new Position(GetX(), GetY());
-                var goToPosition = warzone.GetClosestEnemyPosition(_team, warrPosition);
-                goToPosition = warzone.GetBestPosition(goToPosition, warrPosition);
-                MoveTo(goToPosition, warzone);
+                var goToPosition = wz.GetClosestEnemyPosition(_team, warrPosition);
+                goToPosition = wz.GetBestPosition(goToPosition, warrPosition);
+                MoveTo(goToPosition, wz);
             }
             else if (_mode == AttackMode.ROGUE)
             {
-                Position warrPosition = new Position(GetX(), GetY());
-                var avoidPosition = warzone.GetEnemiesCenterPositionWithWeaponType(WeaponType.BOW, _team, warrPosition);
-                var goToPosition = warzone.GetClosestEnemyPositionWithWeaponType(WeaponType.BOW, _team, warrPosition);
-                goToPosition = warzone.GetBestPosition(goToPosition, warrPosition, avoidPosition);
-                MoveTo(goToPosition, warzone);
+                Position warrPos = new Position(GetX(), GetY());
+                var avoidPosition = wz.GetEnemiesCenterPositionWithWeaponType(WeaponType.BOW, _team, warrPos);
+                var goToPosition = wz.GetClosestEnemyPositionWithWeaponType(WeaponType.BOW, _team, warrPos);
+                goToPosition = wz.GetBestPosition(goToPosition, warrPos, avoidPosition);
+                MoveTo(goToPosition, wz);
             }
             else 
             {
-                var position = warzone.GetEnemiesCenterPosition(_team);
-                Position warrPosition = new Position(GetX(), GetY());
-                position = warzone.GetBestPosition(position, warrPosition);
-                MoveTo(position, warzone);
+                var position = wz.GetEnemiesCenterPosition(_team);
+                Position warrPos = new Position(GetX(), GetY());
+                position = wz.GetBestPosition(position, warrPos);
+                MoveTo(position, wz);
             }
         }
     }
