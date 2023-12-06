@@ -136,13 +136,12 @@ namespace Classes
                 _weapon.reloadTimeLeft = _weapon.GetReloadTime();
             }
         }
-
-        public void MoveTo(Position position, WarZone warzone)
-        {       
-            if (position.x > warzone.GetX() && position.x < warzone.GetWidth() && position.y > warzone.GetX() && position.y < warzone.GetHeight()) 
+        public void MoveTo(Position pos, WarZone wz)
+        {
+            if (pos.x > wz.GetX() && pos.x < wz.GetWidth() && pos.y > wz.GetX() && pos.y < wz.GetHeight()) 
             {
-                _x = position.x;
-                _y = position.y;
+                _x = pos.x;
+                _y = pos.y;
             }
         }// Agregar limitaciones luego
 
