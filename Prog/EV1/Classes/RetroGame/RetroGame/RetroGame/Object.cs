@@ -108,8 +108,8 @@ namespace RetroGame
         }
 
         public virtual void SetX(double x)
-        {
-            coor.SetMiddleX(x);
+        {   
+            coor.SetMiddleX(x);                 // Si esta dentro de los parametros permitidos
         }
 
         public virtual void SetY(double y)
@@ -130,12 +130,14 @@ namespace RetroGame
 
         public virtual void SetWidth(double w)
         {
-            coor.SetWidth(w);
+            if (w < 0)
+                coor.SetWidth(w);
         }
 
         public virtual void SetDouble(double h)
         {
-            coor.SetWidth(h);
+            if (h < 0)
+                coor.SetWidth(h);
         }
 
         public double GetR()

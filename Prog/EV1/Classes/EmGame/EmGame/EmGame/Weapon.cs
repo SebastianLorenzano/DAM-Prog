@@ -55,7 +55,7 @@ namespace EmGame
             if (_weaponType == WeaponType.ARROW)
                 return 2;
             if (_weaponType == WeaponType.BOW)
-                return 5;
+                return 8;
             return 2;
         }
 
@@ -80,7 +80,10 @@ namespace EmGame
                 return WeaponType.SPEAR;
             if (r1 == 4)
             {
-                return WeaponType.BOW;
+                r1 = Utils.GetRandomInt(0, 2);
+                if (r1 == 0)
+                    return WeaponType.BOW;
+                return WeaponType.MAZE;
             }
             return WeaponType.FISTS;
         }

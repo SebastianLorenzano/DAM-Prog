@@ -15,7 +15,7 @@ namespace EmGame
         WarZone warzone = new WarZone();
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            warzone.CreateAllWarriors(500, 500);
+            warzone.CreateAllWarriors(500, 500);   // En modo release en mi pc se aguanta hasta 700 x 700, pero asegurarse de ponerlo en modo Release.
         }
 
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)

@@ -6,10 +6,11 @@ namespace RetroGame
 {
     public class RetroGame : UDK.IGameDelegate
     {
-        Map map = new();
+        Map map = new(0, 0, 108, 108);          // Width, Height, x, y
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-
+            map.CreatePlayerRectangle();
+            map.CreateRectangles(64);
         }
 
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)

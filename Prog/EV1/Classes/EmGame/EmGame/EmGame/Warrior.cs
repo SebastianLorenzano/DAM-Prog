@@ -67,7 +67,7 @@ namespace Classes
 
         public AttackMode GetRandomAttackMode()
         {
-            var r1 = Utils.GetRandomInt(0, 3);
+            var r1 = Utils.GetRandomInt(0, 4);
             if (r1 == 1)
                 return AttackMode.BERSERKER;
             if (r1 == 2)

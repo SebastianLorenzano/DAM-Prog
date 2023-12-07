@@ -17,14 +17,14 @@ namespace Classes
 
     public class WarZone : Rect
     {
-        public bool is_running = true;
-        public int
-            HX = 1,
+        public bool is_running = true;          // Estas son las coordenadas de spawn de los 
+       private int                              // tipos, una vez llega al maximo suma la Y y 
+            HX = 1,                             // reestablece la X al minimo.
             HY,
             OX = 1,
             OY;
-        public bool HSpawnMaxxed = false;
-        public bool OSpawnMaxxed = false;
+        private bool HSpawnMaxxed = false;
+        private bool OSpawnMaxxed = false;
         private List<Warrior> _warriorList = new List<Warrior>();
         
 
@@ -323,8 +323,8 @@ namespace Classes
                         if (GetDistance(result.x, result.y, goToPosition.x, goToPosition.y) > GetDistance(x, y, goToPosition.x, goToPosition.y) &&
                             GetWarriorAt(x, y) == null && x > _x && x < _width && y > _y && _y < _height)
                         {
-                            result.x = x;
-                            result.y = y;
+                            result.x = x;  // Un -1 aca  (en x) soluciona el que se junten al lado derecho, pero al mismo tiempo produce cambios raros. Merece la pena verlo igual, aunque prefiero dejarlo asi.
+                            result.y = y;       // Es lo unico que vi que puede solucionarlo, nose exactamente porque se comporta asi
                         }
                     }
                 }
@@ -350,7 +350,7 @@ namespace Classes
                 {
                     var distanceResult = GetDistance(result.x, result.y, toAvoidPosition.x, toAvoidPosition.y);
                     var distanceI = GetDistance(list[i].x, list[i].y, toAvoidPosition.x, toAvoidPosition.y);
-                    if (distanceResult < distanceI && distanceResult < 40)
+                    if (distanceResult < distanceI && distanceResult < 45)  // el 45 es la distancia en la que empiezan (ademas de moverse hacia los arqueros) a intentar alejarse del resto
                         result = list[i];
                 }
             }

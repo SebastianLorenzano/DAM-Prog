@@ -1,0 +1,10 @@
+Instrucciones en general:
+Poner en Modo Release para verlo, mejora mucho el rendimiento.
+La cantidad maxima en mi laptop es 700 vs 700, pero la recomendable para mi
+	es 500 vs 500; los comportamientos son mas notorios con esa cantidad
+	de soldados.
+El Framecount para 500 vs 500 es 50, mientras que para 700 vs 700 es 1. 
+
+Los verdes son los orcos, los negros / rosas son los humanos
+	En particular, los de colores claros son de comportamiento de 
+		ataque "ROGUE" (cazan a los arqueros)
