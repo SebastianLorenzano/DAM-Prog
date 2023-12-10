@@ -19,6 +19,7 @@ namespace Classes
         ROGUE,              // BUSCA A LOS ARQUEROS
     }
 
+    // Javi: Interesante herencia, ...
     public class Warrior : Rect
     {
         private int _health = 20;
@@ -128,6 +129,7 @@ namespace Classes
             return null;
         }
 
+        // Javi: AttackTo
         public void Attack(Warrior warr)
         {
             if (warr == null)
@@ -156,6 +158,7 @@ namespace Classes
                 goToPosition = wz.GetBestPosition(goToPosition, warrPosition);
                 MoveTo(goToPosition, wz);
             }
+            // Javi: XXXXXXXXXDDDDDDDDDDDD, ..., mola
             else if (_mode == AttackMode.ROGUE)
             {
                 Position warrPos = new Position(GetX(), GetY());
