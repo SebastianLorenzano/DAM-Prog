@@ -6,3 +6,8 @@ RetroGame no esta completado, a decir verdad fue un poco ambicioso empezarlo tan
 
 EmGame a algunas cosas le falta chequeos de null, y pense en antes de terminar ponerle internal a todo, pero me parece un poco deshonesto asi que lo voy a dejar asi.
 
+JAVI
+---------
+Con respecto a esto, lamento que no haya podido tener preparado el framework hasta ahora, para que puedas pintar las cosas bien. Hoy llegue a un punto que creo que me garantiza que el fin de semana que viene lo tendré preparado al menos para que puedas cumplir con tus objetivos.
+
+La motivación lo es todo. Si ves que te llama más un proyecto, no me importa tanto, lo que tengo que ver es que ... "yo contrataría a este tío"
