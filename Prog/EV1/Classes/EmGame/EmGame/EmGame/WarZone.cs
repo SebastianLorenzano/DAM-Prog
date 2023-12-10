@@ -22,7 +22,7 @@ namespace Classes
             HX = 1,                             // reestablece la X al minimo.
             HY,
             OX = 1,
-            OY;
+            OY; // Javi: No entiendo la funcionalidad de estos atributos. Por que no usas Position? Los nombres son muy malos
         private bool HSpawnMaxxed = false;
         private bool OSpawnMaxxed = false;
         private List<Warrior> _warriorList = new List<Warrior>();
@@ -30,6 +30,7 @@ namespace Classes
 
         public WarZone()
         {
+            // Javi: No deberías inventarte estos valores
             _x = 0;
             _y = 0;
             _width = 125;
@@ -134,9 +135,11 @@ namespace Classes
             Warrior? turn;
             for (int i = 0; i < _warriorList.Count; i++)
             {
+                // Javi: Mejor devuelve un enum
                 turn = _warriorList[i].ExecuteTurn(this);
                 if (turn != null)
                 {
+                    // Javi: el warrior index es i
                     RemoveWarrior(GetWarriorIndex(turn));
                     i--;
                 }
@@ -170,6 +173,7 @@ namespace Classes
             return -1;
         }
 
+        // Javi: Yo no hubiese hecho esta función así, ..., y no sé si aquí
         public bool IsEnemyInRange(int x, int y, Warrior warrior)
         {
             var w = GetWarriorAt(x, y);
@@ -202,6 +206,7 @@ namespace Classes
             return null;
         }
 
+        // Javi: Esta función no puede devolver null. Por favor, me recuerdas esto en clase?
         public List<Warrior>? GetEnemiesInRange(int x, int y)
         {
             List<Warrior>? result = new List<Warrior>();
@@ -236,6 +241,7 @@ namespace Classes
             return lista;
         }
 
+        // Javi: Tal y como está, ..., yo hubiese sacado esto fuera
         public List<Position> GetPositionsSortedByDistance(int x, int y, List<Position>? lista = null)
         {
             if (lista == null)
@@ -292,6 +298,7 @@ namespace Classes
             return IsTeamRemaining(TeamType.HUMAN) && IsTeamRemaining(TeamType.ORC);
         }
 
+        // Javi: Muy bien!!
         public Position GetEnemiesCenterPosition(TeamType team)
         {
             var wlist = _warriorList;
@@ -311,6 +318,7 @@ namespace Classes
             return new Position(x / countX, y / countY);
         }
 
+        // Javi: Función demasiado larga, sepárala en varias
         public Position GetBestPosition(Position goToPosition, Position warPosition, Position toAvoidPosition = null)
         {
             var result = new Position(warPosition.x, warPosition.y);
@@ -369,6 +377,7 @@ namespace Classes
             if (list.Count > 0)
             {
                 list = GetWarriorsSortedByDistance(warrPosition.x, warrPosition.y, list);
+                // Javi: ciudado, la lista puede contener 0 elementos
                 return new Position(list[0].GetX(), list[0].GetY());
             }
             return new Position(0, 0);
