@@ -3,6 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Classes
 {
+    // Javi: En mayúsculas
     public enum Estado
     {
         esperando,
@@ -28,7 +29,7 @@ namespace Classes
             if (_state == Estado.esperando)
             {
                 _state = Estado.procesando_moneda;
-                return;
+                return; // Javi: ya que tienes if, else if, else if, el return no es necesario. O usas return o usas else if
             }
             else if (_state == Estado.procesando_moneda)
             {
