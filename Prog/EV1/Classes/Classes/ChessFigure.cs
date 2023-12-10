@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Classes
 {
-
+    // Javi: Cuídame los intros innecesarios
 
 
 
@@ -85,6 +85,7 @@ namespace Classes
 
         public void Promote()
         {
+            // Javi: Esto no debería ir aquí
             Console.Write("ESCRIBIR NOMBRE DE PIEZA A PROMOCIONAR EN MAYUSC: ");
             var value = Console.ReadLine();
             var bool1 = true;
