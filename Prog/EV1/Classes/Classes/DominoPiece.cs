@@ -37,6 +37,7 @@ namespace Classes
 
         }
 
+        // Javi: No me pongas esto así ;)
         public int GetValue1()
         { return value1; }
 
@@ -48,6 +49,7 @@ namespace Classes
 
         public bool IsDouble()
         {
+            // Javi: return de una linea
             if (value1 == value2)
                 return true;
             return false;
@@ -55,12 +57,14 @@ namespace Classes
 
         public static bool IsValid(int value)
         {
+            // Javi: return de una linea
             if (value < 0 || value > 6) return false;
             return true;
         }
 
         public bool IsEqualTo(DominoPiece piece)
         {
+            // Javi: return de una linea
             if ((value1 == piece.value1 && value2 == piece.value2) || (value1 == piece.value2 && value2 == piece.value1))
                 return true;
             return false;
