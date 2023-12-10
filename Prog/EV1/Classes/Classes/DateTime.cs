@@ -138,6 +138,7 @@ namespace Classes
 
         public void IncrementDay()
         {
+            // Javi: Un poco kame hame ha
             if (IsValid())
             {
                 _day++;
