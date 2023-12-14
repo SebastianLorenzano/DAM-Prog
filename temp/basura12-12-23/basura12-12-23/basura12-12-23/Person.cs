@@ -32,6 +32,10 @@ namespace basura12_12_23
                 _gender = value;
             }
         }
+        public string GetFullName()
+        {
+            return _name;
+        }
 
 
         public Person() : this("", GenderType.OTHER)
