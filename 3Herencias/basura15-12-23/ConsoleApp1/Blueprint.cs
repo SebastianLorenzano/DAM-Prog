@@ -1,12 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace ConsoleApp1
 {
-    internal class Blueprint
+    public abstract class Blueprint : IBlueprint
     {
+        public void AddShape(IShape shape)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetArea()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IShape? GetShapeAt(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetShapeCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveShapeAt(int index)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace ConsoleApp1
 
         public int GetShapeCount();
 
-        public IShape GetShapeAt(int index);
+        public IShape? GetShapeAt(int index);
 
         public void RemoveShapeAt(int index);
 

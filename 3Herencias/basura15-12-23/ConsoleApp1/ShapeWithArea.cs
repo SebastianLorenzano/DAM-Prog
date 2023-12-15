@@ -1,7 +1,12 @@
 ﻿
 namespace ConsoleApp1
 {
-    public class ShapeWithArea
+    public abstract class ShapeWithArea : Shape
     {
+        public override bool HasArea()
+        {
+            return true;
+        }
+
     }
 }
