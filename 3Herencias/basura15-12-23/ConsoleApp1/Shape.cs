@@ -3,18 +3,25 @@ namespace ConsoleApp1
 {
     public abstract class Shape : IShape
     {
-        protected Point2D _position;
-        private string? _name;
+        protected Point2D _position = new Point2D();
+        private string _name = "";
 
         public abstract double GetArea();
 
-        public string GetName()
-        { 
+        public virtual string GetName()
+        {
+            return _name;
+        }
+
+        public virtual void SetName(string name)
+        {
+            if (name != null)
+                _name = name;
         }
 
         public abstract Point2D GetPosition();
 
-        public abstract ShapeType GetShapeType();
+        public abstract Shape GetShapeType();
 
         public abstract bool HasArea();
 
