@@ -1,5 +1,10 @@
-﻿namespace DAMLib;
-public class Class1
+﻿using System.Collections;
+using System.Windows.Markup;
+
+namespace DAMLib;
+
+
+public class DAMLib
 {
 
 }
