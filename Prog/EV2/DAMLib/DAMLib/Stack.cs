@@ -22,7 +22,7 @@ namespace DAMLib
             public T Pop()
             {
                 if (IsEmpty())
-                    return default;
+                    return default(T);
                 T result = _stack[_stack.Length - 1];
                 var newStack = new T[_stack.Length - 1];
                 for (int i = 0; i < newStack.Length; i++)
@@ -37,7 +37,7 @@ namespace DAMLib
             public T GetTop()
             {
                 if (IsEmpty())
-                    return default;
+                    return default(T);
                 return _stack[_stack.Length - 1];
 
             }
