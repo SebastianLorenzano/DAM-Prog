@@ -16,11 +16,18 @@ namespace DAMLib
                     result[i] = _stack[i];
                 }
                 result[_stack.Length] = newElement;
+                _stack = result;
             }
 
             public T Pop()
             {
-                return _stack[_stack.Length - 1];
+                T result = _stack[_stack.Length - 1];
+                var newStack = new T[_stack.Length - 1];
+                for (int i = 0; i < newStack.Length; i++)
+                {
+                    newStack[i] = _stack[i];
+                }
+                return result;
             }
 
 
