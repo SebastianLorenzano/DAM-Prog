@@ -21,19 +21,23 @@ namespace DAMLib
 
             public T Pop()
             {
+                if (IsEmpty())
+                    return default;
                 T result = _stack[_stack.Length - 1];
                 var newStack = new T[_stack.Length - 1];
                 for (int i = 0; i < newStack.Length; i++)
                 {
                     newStack[i] = _stack[i];
                 }
+                _stack = newStack;
                 return result;
             }
 
 
             public T GetTop()
             {
-
+                if (IsEmpty())
+                    return default;
                 return _stack[_stack.Length - 1];
 
             }
