@@ -8,16 +8,16 @@ namespace DAMLib
         private T[] _queue = new T[0];
         private int _count = 0;
 
-        public int Count
+        public int Count 
         {
             get => _count;
         }
 
-        public T First
+        public T First => _count > 0 ? _queue[0] : default(T);
         {
             get 
             {
-                if (Count > 0) 
+                if (_count > 0) 
                     return _queue[0];
                 return default(T);
             }
