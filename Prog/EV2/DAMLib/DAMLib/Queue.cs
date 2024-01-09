@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Reflection.Metadata.Ecma335;
 
 namespace DAMLib
 {
@@ -14,25 +14,8 @@ namespace DAMLib
         }
 
         public T First => _count > 0 ? _queue[0] : default(T);
-        {
-            get 
-            {
-                if (_count > 0) 
-                    return _queue[0];
-                return default(T);
-            }
-        }
 
-        public T Last
-        {
-            get 
-            {
-                if (Count > 0)
-                    return _queue[Count - 1];
-                return default(T);
-            }
-            
-        }
+        public T Last => _count > 0 ? _queue[_count - 1] : default(T);
 
         public bool Empty
         {
@@ -61,7 +44,8 @@ namespace DAMLib
 
         public T DeQueue()
         {
-
+            T var1;
+            return var1;
         }
 
     }
