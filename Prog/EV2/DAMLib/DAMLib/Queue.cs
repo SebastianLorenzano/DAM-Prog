@@ -3,7 +3,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace DAMLib
 {
-    public class Queue <T>
+    public class Queue<T>
     {
         private T[] _queue = Array.Empty<T>();
         private int _count = 0;
@@ -25,7 +25,7 @@ namespace DAMLib
         public void InQueue(T value)
         {
             T[] newQueue;
-            if (_queue.Length > Count)
+            if (_queue.Length > _count)
             {
                 _queue[_count] = value;
                 _count++;

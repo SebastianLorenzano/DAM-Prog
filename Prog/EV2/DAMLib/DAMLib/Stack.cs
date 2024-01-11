@@ -5,7 +5,7 @@ namespace DAMLib
     {
         public class DAMLib
         {
-            private T[] _stack = new T[0];
+            private T[] _stack = Array.Empty<T>();
 
 
             public void Push(T newElement)
