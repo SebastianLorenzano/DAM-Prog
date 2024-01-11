@@ -26,7 +26,8 @@ namespace DAMLib
                 newSet = new T[_count + 1];
                 for (int i = 0; i < _count; i++)
                     newSet[i] = _set[i];
-                _set[_count] = value;
+                newSet[_count] = value;
+                _set = newSet;
                 _count++;
             }
         }
@@ -34,8 +35,13 @@ namespace DAMLib
         public void Remove(T value)
         {
             int index = IndexOf(value);
-            if (index != -1)
+            if (index >= 0)
             {
+                _set[index] = _set[_count - 1];
+                _count--;
+
+
+                /*
                 T[] newSet;
                 int aux = 0;
                 newSet = new T[_count - 1];
@@ -47,8 +53,13 @@ namespace DAMLib
                         aux++;
                     }
                 }
+                _set = newSet;
+                _count--;
+                */
+
             }
         }
+
 
         public bool Contains(T value)
         {
@@ -57,7 +68,7 @@ namespace DAMLib
 
         public int IndexOf(T value)
         {
-            for (int i = 0; i < _set.Length; i++)
+            for (int i = 0; i < _count; i++)
                 if (_set[i].Equals(value))
                     return i;
             return -1;
