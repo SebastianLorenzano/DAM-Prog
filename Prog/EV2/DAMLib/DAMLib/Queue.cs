@@ -5,18 +5,18 @@ namespace DAMLib
 {
     public class Queue <T>
     {
-        private T[] _queue = new T[0];
+        private T[] _queue = Array.Empty<T>();
         private int _count = 0;
 
         public int Count 
         {
             get => _count;
         }
-
+#nullable disable
         public T First => _count > 0 ? _queue[0] : default(T);
 
         public T Last => _count > 0 ? _queue[_count - 1] : default(T);
-
+#nullable enable
         public bool Empty
         {
             get => _queue.Length == 0;
@@ -24,29 +24,35 @@ namespace DAMLib
 
         public void InQueue(T value)
         {
-            int aux = Count;
             T[] newQueue;
-            if (_queue.Length > aux)
+            if (_queue.Length > Count)
             {
-                _queue[aux] = value;
-                _count += 1;
+                _queue[_count] = value;
+                _count++;
             }
 
             else
             {
-                newQueue = new T[aux + 1];
-                for (int i = 0; i < Count - 1; i++)
+                newQueue = new T[_count + 1];
+                for (int i = 0; i < _count; i++)
                     newQueue[i] = _queue[i];
-                newQueue[Count] = value;
+                newQueue[_count] = value;
+                _count++;
                 _queue = newQueue;
             }
         }
 
         public T DeQueue()
         {
-            T var1;
-            return var1;
+            if (_count == 0)
+                return default(T);
+            T result = _queue[0];
+            T[] newQueue;
+            newQueue = new T[_count + 1];
+            for (int i = 0 ; i < _count - 1 ; i++)
+                newQueue[i] = _queue[i + 1];
+            _queue = newQueue;
+            return result;
         }
-
     }
 }
