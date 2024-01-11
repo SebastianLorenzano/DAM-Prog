@@ -26,8 +26,8 @@ namespace DAMLib
                 newSet = new T[_count + 1];
                 for (int i = 0; i < _count; i++)
                     newSet[i] = _set[i];
-                _count++;
                 _set[_count] = value;
+                _count++;
             }
         }
 
@@ -44,6 +44,7 @@ namespace DAMLib
                     if (i != index)
                     {
                         newSet[aux] = _set[i];
+                        aux++;
                     }
                 }
             }

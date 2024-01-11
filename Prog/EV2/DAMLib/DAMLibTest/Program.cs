@@ -1,10 +1,16 @@
-﻿namespace DAMLib
+﻿using DAMLib;
+
+namespace DAMLibTest
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Set<string> pepe = new();
+            pepe.Add("Ana");
+            pepe.Add("Juan");
+            pepe.Add("Ana");
+
         }
     }
 }
