@@ -37,29 +37,13 @@ namespace DAMLib
             int index = IndexOf(value);
             if (index >= 0)
             {
-                _set[index] = _set[_count - 1];
+                if (_set.Length > 1)
+                 _set[index] = _set[_count - 1];
+                _set[_count - 1] = default(T);
                 _count--;
-
-
-                /*
-                T[] newSet;
-                int aux = 0;
-                newSet = new T[_count - 1];
-                for (int i = 0; i < _count - 1; i++)
-                {
-                    if (i != index)
-                    {
-                        newSet[aux] = _set[i];
-                        aux++;
-                    }
-                }
-                _set = newSet;
-                _count--;
-                */
-
             }
         }
-
+        
 
         public bool Contains(T value)
         {
