@@ -33,12 +33,33 @@ namespace DAMLib
 
         public void Remove(T value)
         {
-
+            int index = IndexOf(value);
+            if (index != -1)
+            {
+                T[] newSet;
+                int aux = 0;
+                newSet = new T[_count - 1];
+                for (int i = 0; i < _count - 1; i++)
+                {
+                    if (i != index)
+                    {
+                        newSet[aux] = _set[i];
+                    }
+                }
+            }
         }
 
         public bool Contains(T value)
         {
-            return true;
+            return IndexOf(value) != -1;
+        }
+
+        public int IndexOf(T value)
+        {
+            for (int i = 0; i < _set.Length; i++)
+                if (_set[i].Equals(value))
+                    return i;
+            return -1;
         }
     }
 }
