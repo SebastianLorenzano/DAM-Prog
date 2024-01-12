@@ -60,5 +60,12 @@ namespace DAMLib
                         return i;
             return -1;
         }
+
+        public T GetElementAt(int i)
+        {
+            if ((i >= 0) || (i < _count))
+                return _set[i];
+            return default(T);
+        }
     }
 }
