@@ -5,6 +5,7 @@ namespace DAMLib
 {
     public class Queue<T>
     {
+
         private T[] _queue = Array.Empty<T>();
         private int _count = 0;
 
