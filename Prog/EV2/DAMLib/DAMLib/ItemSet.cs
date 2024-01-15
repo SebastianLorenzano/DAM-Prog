@@ -1,12 +1,21 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DAMLib
 {
-    public class SetWithHash<T>
+    public class ItemSet<T>
     {
-        T[] _set = Array.Empty<T>();
-        int[] _hash = Array.Empty<int>();
+        private class Item
+        {
+            public T element; 
+            public int hash;
+
+        }
+
+        Item[] _items = Array.Empty<Item>();
         int _count = 0;
 
         public bool Empty => _count == 0;
@@ -17,27 +26,26 @@ namespace DAMLib
         {
             if (!Contains(value) && value != null)
             {
-                if (_set.Length > _count)
+                if (_items.Length > _count)
                 {
-                    _set[_count] = value;
-                    _hash[_count] = value.GetHashCode();
+                    _items[_count].element = value;
+                    _items[_count].hash = value.GetHashCode();
                     _count++;
                 }
                 else
                 {
-                    T[] newSet;
-                    int[] newHash;
-                    newSet = new T[_count + 1];
-                    newHash = new int[_count + 1];
+                    Item[] newItems;
+                    newItems = new Item[_count + 1];
+
                     for (int i = 0; i < _count; i++)
                     {
-                        newSet[i] = _set[i];
-                        newHash[i] = _hash[i];
+                        newItems[i].element = _items[i].element;
+                        newItems[i] = _items[i];
 
                     }
-                    newSet[_count] = value;
-                    _hash[_count] = value.GetHashCode();
-                    _set = newSet;
+                    newItems[_count].element = value;
+                    newItems[_count].hash = value.GetHashCode();
+                    _items = newItems;
                     _count++;
                 }
             }
@@ -47,11 +55,9 @@ namespace DAMLib
         {
             int index = IndexOf(value);
             if (index >= 0)
-
             {
-                if (_set.Length > 1)
-                    _set[index] = _set[_count - 1];
-                _set[_count - 1] = default(T);
+                if (_items.Length > 1)
+                    _items[index] = _items[_count - 1];
                 _count--;
             }
         }
@@ -67,7 +73,7 @@ namespace DAMLib
             int hash = value.GetHashCode();
             if (value != null)
                 for (int i = 0; i < _count; i++)
-                    if (hash == _hash[i] && _set[i].Equals(value))
+                    if (hash == _items[i].hash && _items[i].element.Equals(value))
                         return i;
             return -1;
         }
@@ -75,9 +81,10 @@ namespace DAMLib
         public T GetElementAt(int i)
         {
             if ((i >= 0) || (i < _count))
-                return _set[i];
+                return _items[i].element;
             return default(T);
         }
     }
-}
 
+}
+}

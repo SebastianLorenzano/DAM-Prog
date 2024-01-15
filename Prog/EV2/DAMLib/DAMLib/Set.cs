@@ -14,7 +14,7 @@ namespace DAMLib
 
         public void Add(T value)
         {
-            if (!Contains(value))
+            if (value is not null && !Contains(value))
             {
                 if (_set.Length > _count)
                 {
