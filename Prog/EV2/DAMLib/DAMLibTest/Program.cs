@@ -6,7 +6,7 @@ namespace DAMLibTest
     {
         static void Main(string[] args)
         {
-            Set<string> pepe = new();
+            ItemSet<string> pepe = new();
             pepe.Add("Ana");
             pepe.Add("Juan");
             pepe.Add("Luis");
