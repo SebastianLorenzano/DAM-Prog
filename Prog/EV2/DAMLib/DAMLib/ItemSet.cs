@@ -8,11 +8,22 @@ namespace DAMLib
 {
     public class ItemSet<T>
     {
+        /* 
+         Hacer un Binary Search a traves del cual se comparen los Hash para encontrar mas rapido el objeto.
+         Para hacer eso, organizar la lista.
+        Cuando este todo hecho, intentar hacer que el Add funcione mas rapido. para hacer eso, cuando busca usando el Binary Search y no lo encuentra, recuerda la posicion donde termino, mueve la lista
+            Una para adelante y pone el nuevo item de la lista en la posicion que debe.
+         */
         private class Item
         {
             public T element; 
             public int hash;
 
+            internal Item(T element, int hash)
+            {
+                this.element = element;
+                this.hash = hash;
+            }
         }
 
         Item[] _items = Array.Empty<Item>();
@@ -38,13 +49,9 @@ namespace DAMLib
                     newItems = new Item[_count + 1];
 
                     for (int i = 0; i < _count; i++)
-                    {
-                        newItems[i].element = _items[i].element;
-                        newItems[i] = _items[i];
+                        newItems[i] = _items[i];      
 
-                    }
-                    newItems[_count].element = value;
-                    newItems[_count].hash = value.GetHashCode();
+                    newItems[_count] = new(value, value.GetHashCode());
                     _items = newItems;
                     _count++;
                 }
@@ -84,7 +91,39 @@ namespace DAMLib
                 return _items[i].element;
             return default(T);
         }
-    }
 
+        private int BinarySearch(int hash)
+        {
+            int i = _items[0].hash;
+            int j = _items[_count - 1].hash;
+            if (i < hash || hash > j)
+                return -1;
+            while (i < j)
+                {
+                   int aux =  
+                }
+
+
+            int index = -1;
+            return index;
+        }
+    }
+    private int BinariSearch(int hash)
+    {
+
+        int min = 0;
+        int max = array.Length - 1;
+        while (min <= max)
+        {
+            int mid = (max + min) / 2;
+            if (array[mid] == hash)
+                return mid;
+            else if (array[mid] < hash)
+                min = mid + 1;
+            else if (array[mid] > hash)
+                max = mid - 1;
+        }
+        return -1;
+    }
 }
 
