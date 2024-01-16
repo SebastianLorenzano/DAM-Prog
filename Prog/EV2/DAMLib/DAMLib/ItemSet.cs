@@ -64,7 +64,7 @@ namespace DAMLib
             if (index >= 0)
             {
                 if (_items.Length > 1)
-                    _items[index] = _items[_count - 1];
+                    RearrangeAfterRemove(index);
                 _count--;
             }
         }
@@ -80,8 +80,11 @@ namespace DAMLib
             int hash = value.GetHashCode();
             if (value != null)
                 for (int i = 0; i < _count; i++)
+                {
                     if (hash == _items[i].hash && _items[i].element.Equals(value))
                         return i;
+                }
+
             return -1;
         }
 
@@ -92,38 +95,52 @@ namespace DAMLib
             return default(T);
         }
 
+        public void RearrangeAfterRemove(int index)
+        {
+            for (int i = index; i < _count - 1; i++)
+            {
+                _items[i] = _items[i + 1];
+            }
+        }
+
+
+
+        public void OrderByHash()
+        {
+            Item aux;
+            for (int i = 0; i < _count - 1; i++)
+            {
+                for (int j = i + 1; j < _count; j++)
+                {
+                    if (_items[i].hash > _items[j].hash)
+                    {
+                        aux = _items[i];
+                        _items[i] = _items[j];
+                        _items[j] = aux;
+                    }
+                }
+            }
+        }
+
         private int BinarySearch(int hash)
         {
-            int i = _items[0].hash;
-            int j = _items[_count - 1].hash;
-            if (i < hash || hash > j)
+            int min = _items[0].hash;
+            int max = _items[_count - 1].hash;
+            if (min < hash || hash > max)
                 return -1;
-            while (i < j)
-                {
-                   int aux =  
-                }
-
-
-            int index = -1;
-            return index;
+            while (min < max)
+            {
+                int mid = (max + min) / 2;
+                if (hash == _items[mid].hash)
+                    return mid;
+                else if (_items[mid].hash < hash)
+                    min = mid + 1;
+                else if (_items[mid].hash > hash)
+                    max = mid - 1;
+            }
+            return -1;
         }
     }
-    private int BinariSearch(int hash)
-    {
 
-        int min = 0;
-        int max = array.Length - 1;
-        while (min <= max)
-        {
-            int mid = (max + min) / 2;
-            if (array[mid] == hash)
-                return mid;
-            else if (array[mid] < hash)
-                min = mid + 1;
-            else if (array[mid] > hash)
-                max = mid - 1;
-        }
-        return -1;
-    }
 }
 
