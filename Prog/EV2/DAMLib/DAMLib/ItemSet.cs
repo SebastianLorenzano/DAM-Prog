@@ -122,8 +122,9 @@ namespace DAMLib
             }
         }
 
-        private int BinarySearch(int hash)
+        private int BinarySearch(T element)
         {
+            int hash = element.GetHashCode();
             int min = _items[0].hash;
             int max = _items[_count - 1].hash;
             if (min < hash || hash > max)
@@ -132,12 +133,47 @@ namespace DAMLib
             {
                 int mid = (max + min) / 2;
                 if (hash == _items[mid].hash)
-                    return mid;
+                    return EqualHash(mid, element);
                 else if (_items[mid].hash < hash)
                     min = mid + 1;
                 else if (_items[mid].hash > hash)
                     max = mid - 1;
             }
+            return -1;
+        }
+
+        private int EqualHash(int index, T element)
+        {
+            int hash = _items[index].hash;
+            for (int i = index + 1;; i++)
+            {
+                if (_items[i].hash != hash)
+                    break;
+                if (_items[i].element.Equals(element))
+                    return i;
+            }
+            for (int i = index - 1; ; i--)
+            {
+                if (_items[i].hash != hash)
+                    break;
+                if (_items[i].element.Equals(element))
+                    return i;
+            }
+            
+            /*                  
+             *      
+            for (int i = index + 1; _items[i].hash == _items[index].hash; i++)
+            {
+                if (element.Equals(_items[i].element))
+                    return i;
+            }
+            for (int i = index - 1; _items[i].hash == _items[index].hash; i--)
+            {
+                if (element.Equals(_items[i].element))
+                    return i;
+            }
+            */
+
             return -1;
         }
     }
