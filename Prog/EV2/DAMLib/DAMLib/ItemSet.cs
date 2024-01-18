@@ -125,55 +125,42 @@ namespace DAMLib
         private int BinarySearch(T element)
         {
             int hash = element.GetHashCode();
-            int min = _items[0].hash;
-            int max = _items[_count - 1].hash;
+            int min = 0;
+            int max = _count - 1;
             if (min < hash || hash > max)
                 return -1;
             while (min < max)
             {
                 int mid = (max + min) / 2;
-                if (hash == _items[mid].hash)
-                    return EqualHash(mid, element);
-                else if (_items[mid].hash < hash)
+                int midHash = _items[mid].hash;
+                if (midHash == hash)
+                    return EqualHash(mid, element, hash);
+                else if (midHash < hash)
                     min = mid + 1;
-                else if (_items[mid].hash > hash)
+                else if (midHash > hash)
                     max = mid - 1;
             }
             return -1;
         }
 
-        private int EqualHash(int index, T element)
+        private int EqualHash(int index, T element, int hash)
         {
-            int hash = _items[index].hash;
-            for (int i = index + 1;; i++)
-            {
-                if (_items[i].hash != hash)
-                    break;
-                if (_items[i].element.Equals(element))
-                    return i;
-            }
-            for (int i = index - 1; ; i--)
-            {
-                if (_items[i].hash != hash)
-                    break;
-                if (_items[i].element.Equals(element))
-                    return i;
-            }
-            
-            /*                  
-             *      
-            for (int i = index + 1; _items[i].hash == _items[index].hash; i++)
-            {
-                if (element.Equals(_items[i].element))
-                    return i;
-            }
-            for (int i = index - 1; _items[i].hash == _items[index].hash; i--)
-            {
-                if (element.Equals(_items[i].element))
-                    return i;
-            }
-            */
 
+                for (int i = index + 1; index < _count - 1; i++)
+                {
+                    if (_items[i].hash != hash)
+                        break;
+                    if (_items[i].element.Equals(element))
+                        return i;
+                }
+
+                for (int i = index - 1; index >= 0; i--)
+                {
+                    if (_items[i].hash != hash)
+                        break;
+                    if (_items[i].element.Equals(element))
+                        return i;
+                }
             return -1;
         }
     }
