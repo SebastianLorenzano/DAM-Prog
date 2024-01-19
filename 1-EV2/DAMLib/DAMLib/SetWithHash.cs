@@ -62,7 +62,7 @@ namespace DAMLib
             return IndexOf(value) != -1;
         }
 
-        public int IndexOf(T value)
+        private int IndexOf(T value)
         {
             int hash = value.GetHashCode();
             if (value != null)
