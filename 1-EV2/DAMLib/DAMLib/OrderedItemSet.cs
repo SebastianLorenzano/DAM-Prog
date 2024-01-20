@@ -37,9 +37,11 @@ namespace DAMLib
         {
             if (value == null)
                 return;
-            int index = IndexOf(value);     // TODO: TENGO QUE HACER QUE ESTA FUNCION RECIBA CON OUT 2 INTS, UNO LA POSICION DEL OBJETO (-1 SI NO ESTA) Y OTRO LA POSICION
+            int indexContains = -1;
+            int indexDestined = -1;
+            IndexOf(value, out indexContains, out indexDestined);     // TODO: TENGO QUE HACER QUE ESTA FUNCION RECIBA CON OUT 2 INTS, UNO LA POSICION DEL OBJETO (-1 SI NO ESTA) Y OTRO LA POSICION
                                             // QUE TENDRIA QUE TENER EL OBJETO SI ESTUVIESE
-            if (index >= 0)
+            if (indexContains >= 0)
             { 
                 if (_items.Length > _count)
                 {
@@ -79,17 +81,28 @@ namespace DAMLib
             return IndexOf(value) != -1;
         }
 
-        public int IndexOf(T value)
+        public void IndexOf(T element, out int indexContains, out int indexDestined)
         {
-            int hash = value.GetHashCode();
-            if (value != null)
-                for (int i = 0; i < _count; i++)
-                {
-                    if (hash == _items[i].hash && _items[i].element.Equals(value))
-                        return i;
-                }
-
-            return -1;
+            indexContains = -1;
+            indexDestined = -1;
+            if (element == null || _items.Length == 0) 
+                return;
+            int hash = element.GetHashCode();
+            int min = 0;
+            int max = _count - 1;
+            if (_items[min].hash > hash || hash > _items[max].hash)
+                return;
+            while (min < max)
+            {
+                int mid = (max + min) / 2;
+                int midHash = _items[mid].hash;
+                if (midHash == hash)
+                    EqualHash(mid, element, hash, out indexContains, out indexDestined);
+                else if (midHash < hash)
+                    min = mid + 1;
+                else if (midHash > hash)
+                    max = mid - 1;
+            }
         }
 
         public T GetElementAt(int i)
@@ -97,6 +110,14 @@ namespace DAMLib
             if ((i >= 0) || (i < _count))
                 return _items[i].element;
             return default(T);
+        }
+
+        public void RearrangerBeforeAdd(int index)
+        {
+            for (int i = _count - 1; i > index; i++)
+            {
+
+            }
         }
 
         public void RearrangeAfterRemove(int index)
@@ -125,37 +146,45 @@ namespace DAMLib
                 }
             }
         }
-
-        private int BinarySearch(T element)
+        /*
+        private void BinarySearch(T element, int hash, out int indexContains, out int indexDestined)
         {
-            int hash = element.GetHashCode();
+            indexContains = -1; 
+            indexDestined = -1;
             int min = 0;
             int max = _count - 1;
             if (min < hash || hash > max)
-                return -1;
+                return;
             while (min < max)
             {
                 int mid = (max + min) / 2;
                 int midHash = _items[mid].hash;
                 if (midHash == hash)
-                    return EqualHash(mid, element, hash);
+                    EqualHash(mid, element, hash, out indexContains, out indexDestined);
                 else if (midHash < hash)
                     min = mid + 1;
                 else if (midHash > hash)
                     max = mid - 1;
             }
-            return -1;
+            return;
         }
+        */
 
-        private int EqualHash(int index, T element, int hash)
+        private void EqualHash(int index, T element, int hash, out int indexContains, out int indexDestined)
         {
-
+            indexContains = -1;
+            indexDestined = -1;
             for (int i = index + 1; index < _count - 1; i++)
             {
                 if (_items[i].hash != hash)
                     break;
                 if (_items[i].element.Equals(element))
-                    return i;
+                {
+                    indexContains = i;
+                    return;
+                }
+                else
+                    indexDestined = i;
             }
 
             for (int i = index - 1; index >= 0; i--)
@@ -163,9 +192,14 @@ namespace DAMLib
                 if (_items[i].hash != hash)
                     break;
                 if (_items[i].element.Equals(element))
-                    return i;
+                {
+                    indexContains = i;
+                    return;
+                }
+                else
+                    indexDestined = i;
             }
-            return -1;
+            return;
         }
     }
 
