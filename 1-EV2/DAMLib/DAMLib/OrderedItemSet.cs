@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DAMLib
 {
@@ -33,20 +34,21 @@ namespace DAMLib
 
         public int Count => _count;
 
-        public void Add(T value)
+        public void Add(T element)
         {
-            if (value == null)
+            if (element == null)
                 return;
             int indexContains = -1;
             int indexDestined = -1;
-            IndexOf(value, out indexContains, out indexDestined);     // TODO: TENGO QUE HACER QUE ESTA FUNCION RECIBA CON OUT 2 INTS, UNO LA POSICION DEL OBJETO (-1 SI NO ESTA) Y OTRO LA POSICION
+            int hash = element.GetHashCode();
+            IndexOf(element, hash, out indexContains, out indexDestined);     // TODO: TENGO QUE HACER QUE ESTA FUNCION RECIBA CON OUT 2 INTS, UNO LA POSICION DEL OBJETO (-1 SI NO ESTA) Y OTRO LA POSICION
                                             // QUE TENDRIA QUE TENER EL OBJETO SI ESTUVIESE
             if (indexContains < 0)
             { 
                 if (_items.Length > _count)
                 {
-                    _items[_count].element = value;
-                    _items[_count].hash = value.GetHashCode();
+                    _items[_count].element = element;
+                    _items[_count].hash = element.GetHashCode();
                     _count++;
                 }
                 else
@@ -57,21 +59,41 @@ namespace DAMLib
 
                     for (int i = 0; i < indexDestined; i++)
                         newItems[i] = _items[i];
-                    newItems[indexDestined] = new (value, value.GetHashCode());
-                    
-                    for (int i = indexDestined + 1; i < _count; i++)
-                        newItems[i] = _items[i - 1];
+                    newItems[indexDestined] = new (element, element.GetHashCode());
+                    if (indexDestined < _count)
+                    {
+                        for (int i = indexDestined + 1; i < _count; i++)
+                            newItems[i] = _items[i - 1];
+                    }
                     _items = newItems;
-                    
                 }
             }
         }
 
-        public void Remove(T value)
+        /*
+                        else
+                {
+                    Item[] newItems;
+        newItems = new Item[_count + 1];
+
+                    for (int i = 0; i<_count; i++)
+                    {
+                        newItems[i].element = _items[i].element;
+                        newItems[i] = _items[i];
+
+                    }
+    newItems[_count].element = value;
+                    newItems[_count].hash = value.GetHashCode();
+                    _items = newItems;
+                    _count++;
+                }
+        */
+public void Remove(T element)
         {
             int indexContains = -1;
             int indexDestined = -1;
-            IndexOf(value, out indexContains, out indexDestined);
+            int hash = element.GetHashCode();
+            IndexOf(element, hash, out indexContains, out indexDestined);
             if (indexContains >= 0)
             {
                 if (_items.Length > 1)
@@ -83,25 +105,28 @@ namespace DAMLib
 
         public bool Contains(T value)
         {
+            if (value == null)
+                return false;
             int indexContains = -1;
             int indexDestined = -1;
-            IndexOf(value, out indexContains, out indexDestined);
+            int hash = value.GetHashCode();
+            IndexOf(value, hash, out indexContains, out indexDestined);
             return indexContains >= 0;
         }
 
-        public void IndexOf(T element, out int indexContains, out int indexDestined)
+        public void IndexOf(T element, int hash, out int indexContains, out int indexDestined)
         {
             indexContains = -1;
             indexDestined = -1;
             if (element == null || _items.Length == 0) 
                 return;
-            int hash = element.GetHashCode();
             int min = 0;
             int max = _count - 1;
             if (_items[min].hash > hash || hash > _items[max].hash)
                 return;
             while (min < max)
             {
+                indexContains = min;
                 int mid = (max + min) / 2;
                 int midHash = _items[mid].hash;
                 if (midHash == hash)

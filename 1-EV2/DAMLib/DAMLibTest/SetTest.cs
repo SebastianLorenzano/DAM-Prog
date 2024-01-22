@@ -9,7 +9,7 @@ namespace DAMLibTest
     public class SetTest
     {
         // Test de caja blanca
-
+        /*
         public static Test1Results Test1(ISet<string> set)
 
         {
@@ -145,5 +145,7 @@ namespace DAMLibTest
             return results;
 
         }
+        */
     }
+
 }

@@ -7,7 +7,7 @@ namespace DAMLibTest
         static void Main(string[] args)
         {
 
-            ItemSet<string> pepe = new();
+            OrderedItemSet<string> pepe = new();
             pepe.Add("Ana");
             pepe.Add("Juan");
             pepe.Add("Luis");
