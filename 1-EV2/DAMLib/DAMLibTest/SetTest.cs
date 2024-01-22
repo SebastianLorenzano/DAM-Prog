@@ -8,37 +8,71 @@ namespace DAMLibTest
 {
     public class SetTest
     {
-        public class Test1Results
+        // Test de caja blanca
+
+        public static Test1Results Test1(ISet<string> set)
 
         {
 
-            public bool Empty1 { get; set; }
+            Test1Results results = new Test1Results();
 
-            public int Count1 { get; set; }
+            {
 
-            public bool EmptyJuan { get; set; }
+                set.Clear();
 
-            public int CountJuan { get; set; }
+                results.Empty1 = set.IsEmpty;
 
-            public bool ContainsJuan { get; set; }
+                results.Count1 = set.Count;
 
-            public bool EmptyJuan2 { get; set; }
+                set.Remove(null);
 
-            public int CountJuan2 { get; set; }
+                set.Add(null);
 
-            public bool ContainsJuan2 { get; set; }
+                set.Contains(null);
 
-            public bool EmptyAna { get; set; }
 
-            public int CountAna { get; set; }
 
-            public bool ContainsAna2 { get; set; }
+                set.Add("Juan");
 
-            public bool EmptyAna2 { get; set; }
+                results.EmptyJuan = set.IsEmpty;
 
-            public int CountAna2 { get; set; }
+                results.CountJuan = set.Count;
 
-            public bool ContainsAna { get; set; }
+                results.ContainsJuan = set.Contains("Juan");
+
+
+
+                set.Add("Juan");
+
+                results.EmptyJuan2 = set.IsEmpty;
+
+                results.CountJuan2 = set.Count;
+
+                results.ContainsJuan2 = set.Contains("Juan");
+
+
+
+                set.Add("Ana");
+
+                results.EmptyAna = set.IsEmpty;
+
+                results.CountAna = set.Count;
+
+                results.ContainsAna = set.Contains("Ana");
+
+
+
+                set.Add("Ana");
+
+                results.EmptyAna2 = set.IsEmpty;
+
+                results.CountAna2 = set.Count;
+
+                results.ContainsAna2 = set.Contains("Ana");
+
+            }
+
+            return results;
 
         }
 
