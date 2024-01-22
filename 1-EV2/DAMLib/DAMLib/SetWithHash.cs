@@ -3,7 +3,7 @@
 
 namespace DAMLib
 {
-    public class SetWithHash<T>
+    public class SetWithHash<T> : ISet<T>
     {
         T[] _set = Array.Empty<T>();
         int[] _hash = Array.Empty<int>();

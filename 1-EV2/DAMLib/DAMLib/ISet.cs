@@ -8,6 +8,10 @@ namespace DAMLib
 {
     public interface ISet<T>
     {
-        
+        bool Empty { get; }
+        int Count { get; }
+        void Add(T item);
+        void Remove(T item);
+        bool Contains(T item);
     }
 }

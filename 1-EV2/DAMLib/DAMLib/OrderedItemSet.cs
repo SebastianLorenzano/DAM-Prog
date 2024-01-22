@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAMLib
 {
-    public class OrderedItemSet<T>
+    public class OrderedItemSet<T> : ISet<T>
     {
         /* 
          Hacer un Binary Search a traves del cual se comparen los Hash para encontrar mas rapido el objeto.
@@ -41,7 +41,7 @@ namespace DAMLib
             int indexDestined = -1;
             IndexOf(value, out indexContains, out indexDestined);     // TODO: TENGO QUE HACER QUE ESTA FUNCION RECIBA CON OUT 2 INTS, UNO LA POSICION DEL OBJETO (-1 SI NO ESTA) Y OTRO LA POSICION
                                             // QUE TENDRIA QUE TENER EL OBJETO SI ESTUVIESE
-            if (indexContains >= 0)
+            if (indexContains < 0)
             { 
                 if (_items.Length > _count)
                 {
@@ -51,26 +51,31 @@ namespace DAMLib
                 }
                 else
                 {
-                    Item[] newItems;
-                    newItems = new Item[_count + 1];
-
-                    for (int i = 0; i < _count; i++)
-                        newItems[i] = _items[i];
-
-                    newItems[_count] = new(value, value.GetHashCode());
-                    _items = newItems;
                     _count++;
+                    Item[] newItems;
+                    newItems = new Item[_count];
+
+                    for (int i = 0; i < indexDestined; i++)
+                        newItems[i] = _items[i];
+                    newItems[indexDestined] = new (value, value.GetHashCode());
+                    
+                    for (int i = indexDestined + 1; i < _count; i++)
+                        newItems[i] = _items[i - 1];
+                    _items = newItems;
+                    
                 }
             }
         }
 
         public void Remove(T value)
         {
-            int index = IndexOf(value);
-            if (index >= 0)
+            int indexContains = -1;
+            int indexDestined = -1;
+            IndexOf(value, out indexContains, out indexDestined);
+            if (indexContains >= 0)
             {
                 if (_items.Length > 1)
-                    RearrangeAfterRemove(index);
+                    RearrangeAfterRemove(indexContains);
                 _count--;
             }
         }
@@ -78,7 +83,10 @@ namespace DAMLib
 
         public bool Contains(T value)
         {
-            return IndexOf(value) != -1;
+            int indexContains = -1;
+            int indexDestined = -1;
+            IndexOf(value, out indexContains, out indexDestined);
+            return indexContains >= 0;
         }
 
         public void IndexOf(T element, out int indexContains, out int indexDestined)

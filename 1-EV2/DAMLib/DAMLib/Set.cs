@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace DAMLib
 {
-    public class Set<T>
+    public class Set<T> : ISet<T>
     {
         T[] _set = Array.Empty<T>();
         int _count = 0;

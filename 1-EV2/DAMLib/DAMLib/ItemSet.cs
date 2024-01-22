@@ -3,7 +3,7 @@
 
 namespace DAMLib
 {
-    public class ItemSet<T>
+    public class ItemSet<T> : ISet<T>
     {
         private class Item
         {
