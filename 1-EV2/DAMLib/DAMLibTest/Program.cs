@@ -6,7 +6,6 @@ namespace DAMLibTest
     {
         static void Main(string[] args)
         {
-            /*
 
             OrderedItemSet<string> pepe = new();
             pepe.Add("Ana");
@@ -18,8 +17,7 @@ namespace DAMLibTest
             pepe.Add("Lucia");
             pepe.Remove("Jose");
             pepe.Add("Jose");
-            */
-
+            /*
             DAMLib.Dictionary<string, int> d = new DAMLib.Dictionary<string, int>();
 
             var result = d.Filter(
@@ -30,7 +28,7 @@ namespace DAMLibTest
                 }
             );
 
-
+        */
 
 
 

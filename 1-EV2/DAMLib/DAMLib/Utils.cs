@@ -6,6 +6,14 @@ namespace DAMLib
 {
     public class Utils
     {
+        public static void Swap<T>(ref T a,ref T b)
+        {
+            T aux = a;
+            a = b;
+            b = aux;
+        }
+
+
         public static bool CuadraticFormula(double a, double b, double c,
                                             out double x1, out double x2)
         {
@@ -18,8 +26,8 @@ namespace DAMLib
                 return false;
             double root = Math.Sqrt(r);
             double denom = 1.0 / (2 * a);
-            x1 = (-b + root)/ denom;
-            x2 = (-b - root)/ denom;
+            x1 = (-b + root) * denom;
+            x2 = (-b - root) * denom;
             return x1 != double.NaN || x2 != double.NaN;
         }
 

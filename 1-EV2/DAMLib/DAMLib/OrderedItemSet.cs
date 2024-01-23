@@ -39,7 +39,7 @@ namespace DAMLib
             if (element == null)
                 return;
             int indexContains = -1;
-            int indexDestined = -1;
+            int indexDestined = 0;
             int hash = element.GetHashCode();
             IndexOf(element, hash, out indexContains, out indexDestined);     // TODO: TENGO QUE HACER QUE ESTA FUNCION RECIBA CON OUT 2 INTS, UNO LA POSICION DEL OBJETO (-1 SI NO ESTA) Y OTRO LA POSICION
                                             // QUE TENDRIA QUE TENER EL OBJETO SI ESTUVIESE
@@ -60,34 +60,12 @@ namespace DAMLib
                     for (int i = 0; i < indexDestined; i++)
                         newItems[i] = _items[i];
                     newItems[indexDestined] = new (element, element.GetHashCode());
-                    if (indexDestined < _count)
-                    {
                         for (int i = indexDestined + 1; i < _count; i++)
                             newItems[i] = _items[i - 1];
-                    }
                     _items = newItems;
                 }
             }
         }
-
-        /*
-                        else
-                {
-                    Item[] newItems;
-        newItems = new Item[_count + 1];
-
-                    for (int i = 0; i<_count; i++)
-                    {
-                        newItems[i].element = _items[i].element;
-                        newItems[i] = _items[i];
-
-                    }
-    newItems[_count].element = value;
-                    newItems[_count].hash = value.GetHashCode();
-                    _items = newItems;
-                    _count++;
-                }
-        */
 public void Remove(T element)
         {
             int indexContains = -1;
@@ -108,7 +86,7 @@ public void Remove(T element)
             if (value == null)
                 return false;
             int indexContains = -1;
-            int indexDestined = -1;
+            int indexDestined = 0;
             int hash = value.GetHashCode();
             IndexOf(value, hash, out indexContains, out indexDestined);
             return indexContains >= 0;
@@ -117,7 +95,7 @@ public void Remove(T element)
         public void IndexOf(T element, int hash, out int indexContains, out int indexDestined)
         {
             indexContains = -1;
-            indexDestined = -1;
+            indexDestined = 0;
             if (element == null || _items.Length == 0) 
                 return;
             int min = 0;
@@ -127,7 +105,7 @@ public void Remove(T element)
             while (min < max)
             {
                 indexContains = min;
-                int mid = (max + min) / 2;
+                int mid = (max + min) >> 1;     
                 int midHash = _items[mid].hash;
                 if (midHash == hash)
                     EqualHash(mid, element, hash, out indexContains, out indexDestined);
@@ -162,7 +140,6 @@ public void Remove(T element)
         }
 
 
-
         public void OrderByHash()
         {
             Item aux;
@@ -179,29 +156,6 @@ public void Remove(T element)
                 }
             }
         }
-        /*
-        private void BinarySearch(T element, int hash, out int indexContains, out int indexDestined)
-        {
-            indexContains = -1; 
-            indexDestined = -1;
-            int min = 0;
-            int max = _count - 1;
-            if (min < hash || hash > max)
-                return;
-            while (min < max)
-            {
-                int mid = (max + min) / 2;
-                int midHash = _items[mid].hash;
-                if (midHash == hash)
-                    EqualHash(mid, element, hash, out indexContains, out indexDestined);
-                else if (midHash < hash)
-                    min = mid + 1;
-                else if (midHash > hash)
-                    max = mid - 1;
-            }
-            return;
-        }
-        */
 
         private void EqualHash(int index, T element, int hash, out int indexContains, out int indexDestined)
         {

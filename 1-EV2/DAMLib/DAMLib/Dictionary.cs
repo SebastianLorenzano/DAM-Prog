@@ -4,7 +4,7 @@
 namespace DAMLib
 {
 
-    delegate bool DictionaryFilterDelegate<K, V>(K key, V value);
+    public delegate bool DictionaryFilterDelegate<K, V>(K key, V value);
 
 
     public class Dictionary<K, V>
@@ -29,7 +29,7 @@ namespace DAMLib
 
         public void Add(K key, V value)
         {
-            if (key != null && !Contains(key))
+            if (key != null && value != null && !Contains(key))
             {
                 if (_items.Length > _count)
                 {
@@ -124,12 +124,34 @@ namespace DAMLib
 
         public Dictionary<K, V> Filter(DictionaryFilterDelegate<K, V> where)
         {
+            if (where == null)
+                throw new Exception();
+            Dictionary<K, V> result = new();
             for (int i = 0; i < _count; i++)
             {
                 Item item = _items[i];
                 bool addToNewDictionary = where(item.key, item.value);
+                if (addToNewDictionary)
+                    result.Add(item.key, item.value);
             }
+            return result;
         } 
+
+        public Dictionary<K, V> Remove(DictionaryFilterDelegate<K, V> where)
+        {
+            if (where == null)
+                throw new Exception();
+            Dictionary<K, V> result = new();        //TODO: Se clona la lista y despues se le saca las cosas, sin tocar la lista original
+            for (int i = 0; i < _count; i++)
+            {
+                Item item = _items[i];
+                bool removeFromNewDictionary = where(item.key, item.value);
+                if (removeFromNewDictionary)
+                    Remove(item.key);
+            }
+            return this;
+        }
+
 
 
 
