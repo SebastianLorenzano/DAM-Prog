@@ -36,7 +36,6 @@ namespace DAMLib
 
                     for (int i = 0; i < _count; i++)
                     {
-                        newItems[i].element = _items[i].element;
                         newItems[i] = _items[i];
 
                     }
