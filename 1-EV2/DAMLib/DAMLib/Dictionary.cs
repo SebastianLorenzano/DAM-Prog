@@ -129,7 +129,7 @@ namespace DAMLib
                 Item item = _items[i];
                 bool addToNewDictionary = where(item.key, item.value);
             }
-        }
+        } 
 
 
 
