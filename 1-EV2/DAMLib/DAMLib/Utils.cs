@@ -1,7 +1,4 @@
 ﻿
-using System;
-using System.Runtime.CompilerServices;
-
 namespace DAMLib
 {
     public class Utils
@@ -39,5 +36,6 @@ namespace DAMLib
             return (x1, x2, exists);
 
         }
+
     }
 }
