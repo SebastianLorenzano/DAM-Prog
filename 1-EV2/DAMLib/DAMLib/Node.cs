@@ -4,7 +4,7 @@ namespace DAMLib
     public class Node<T>
     {
         public T _item;
-        List<Node<T>> _children;
+        List<Node<T>> _children = new();
         Node<T>? _parent;
 
         public Node<T>? Parent 
