@@ -135,6 +135,7 @@ public void Remove(T element)
         {
             for (int i = index; i < _count - 1; i++)
             {
+
                 _items[i] = _items[i + 1];
             }
         }
