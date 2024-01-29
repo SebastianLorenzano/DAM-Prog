@@ -50,10 +50,10 @@ namespace DAMLib
         {
             if (_parent == null)
                 return;
-            _parent._children.Remove(this);
-            _parent = null;
-        }
-
+            _parent._children.Remove(this);         //Antes de que critiques el uso de Remove(), lei la documentación
+            _parent = null;                             // y vi el proceso que hace. Simplemente llama a un IndexOf() 
+        }                                               // y hace un RemoveAt() de esa posición si es >= 0, asi que es 
+                                                        // completamente legal. 
         public void AddChild(Node<T> node)
         {
             if (node == null)
