@@ -1,6 +1,7 @@
 ﻿
 namespace DAMLib
 {
+    delegate void VisistDelegate<T>(Node<T> node);
     public class Node<T>
     {
         public T _item;
@@ -23,11 +24,11 @@ namespace DAMLib
         public int GetLevel()
         { 
             int level = 0;
-            Node<T>? node = this;
-            while (node != null)
+            var parent = _parent;
+            while (parent != null)
             {
                 level++;
-                node = node._parent;
+                parent = parent._parent;
             }
             return level;
         }
@@ -37,6 +38,24 @@ namespace DAMLib
             if (_parent == null)
                 return this;
             return _parent.GetRoot();
+        }
+
+        public bool Contains(Node<T> node) 
+        {
+            if (node == null)
+                return false;
+            return (IndexOf(node) >= 0);
+        }
+
+        private int IndexOf(Node<T> node)
+        {
+            for(int i = 0;  i < _children.Count; i++) 
+            {
+                var c = _children[i];
+                if (node == c)
+                    return i;
+            }
+            return -1;
         }
 
         public Node<T>? GetChildAt(int index)
@@ -50,10 +69,11 @@ namespace DAMLib
         {
             if (_parent == null)
                 return;
-            _parent._children.Remove(this);         //Antes de que critiques el uso de Remove(), lei la documentación
-            _parent = null;                             // y vi el proceso que hace. Simplemente llama a un IndexOf() 
-        }                                               // y hace un RemoveAt() de esa posición si es >= 0, asi que es 
-                                                        // completamente legal. 
+            int index = _parent.IndexOf(this);
+            if (index >= 0)
+                _parent._children.RemoveAt(index);
+            _parent = null;                             
+        }                                               
         public void AddChild(Node<T> node)
         {
             if (node == null)
@@ -70,13 +90,13 @@ namespace DAMLib
                 node.AddChild(this);
         }
 
-        public bool ContainsAscendant(Node<T> node)
+        public bool ContainsAscestor(Node<T> node)
         {
             if (node == null || _parent == null && this != node)
                 return false;
             if (this == node)
                 return true;
-            return _parent.ContainsAscendant(node);
+            return _parent.ContainsAscestor(node);
         }
 
         public bool ContainsDescendant(Node<T> node)
@@ -94,8 +114,16 @@ namespace DAMLib
             return false;
         }
 
+        bool IsSibling(Node<T> node)
+        {
+            if (node == null || _parent == null)
+                return false;
+            if (this == node)                                   
+                return false;
+            return _parent.Contains(node);
+        }
 
-
+        public 
 
     }
 }
