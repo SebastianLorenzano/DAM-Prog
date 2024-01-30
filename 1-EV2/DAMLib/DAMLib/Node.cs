@@ -144,14 +144,14 @@ namespace DAMLib
         public List<Node<T>> FindNodes(CheckDelegate<T> checker)
         {
             var list = new List<Node<T>>();
+            if (checker == null)
+                return list;
             FindNodes(checker, list);
             return list;
         }
 
         public void FindNodes(CheckDelegate<T> checker, List<Node<T>> result)
         {
-            if (checker == null)
-                return;
             if (checker(this))
                 result.Add(this);
 
