@@ -1,7 +1,9 @@
 ﻿
+using System.Collections.Generic;
+
 namespace DAMLib
 {
-    delegate void VisistDelegate<T>(Node<T> node);
+    public delegate bool CheckDelegate<T>(Node<T> node);
     public class Node<T>
     {
         public T _item;
@@ -123,7 +125,56 @@ namespace DAMLib
             return _parent.Contains(node);
         }
 
-        public 
+        public Node<T>? FindNode(CheckDelegate<T> checker)
+        {
+            if (checker == null)
+                return null;
+            if (checker(this))
+                return this;
+            for (int i = 0; i < _children.Count; i++)
+            {
+                var child = _children[i];
+                var result = child.FindNode(checker);
+                if (result != null)
+                    return result;
+            }
+            return null;
+        }
 
+        public List<Node<T>> FindNodes(CheckDelegate<T> checker)
+        {
+            var list = new List<Node<T>>();
+            if (checker == null)
+                return null;
+            if (checker(this))
+                list.Add(this);
+
+            for (int i = 0; i < _children.Count;i++)
+            {
+                var list2 = _children[i].FindNodes(checker);
+                for (int j = 0; j < list2.Count; j++)
+                {
+                    list.Add(list2[j]);
+                }
+            }
+            return list;
+        }
+
+        public void FindNodes(CheckDelegate<T> checker, List<Node<T>> result)
+        {
+            if (checker == null)
+                return;
+            if (checker(this))
+                result.Add(this);
+
+            for (int i = 0; i < _children.Count; i++)
+                _children[i].FindNodes(checker, result);
+        }
+        
+        public List<Node<T>> Filter(CheckDelegate<T> checker)
+        {
+            return FindNodes(checker);
+        }
     }
 }
+
