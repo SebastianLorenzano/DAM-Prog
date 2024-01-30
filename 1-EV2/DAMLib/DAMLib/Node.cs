@@ -144,19 +144,7 @@ namespace DAMLib
         public List<Node<T>> FindNodes(CheckDelegate<T> checker)
         {
             var list = new List<Node<T>>();
-            if (checker == null)
-                return null;
-            if (checker(this))
-                list.Add(this);
-
-            for (int i = 0; i < _children.Count;i++)
-            {
-                var list2 = _children[i].FindNodes(checker);
-                for (int j = 0; j < list2.Count; j++)
-                {
-                    list.Add(list2[j]);
-                }
-            }
+            FindNodes(checker, list);
             return list;
         }
 
