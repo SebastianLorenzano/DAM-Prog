@@ -12,8 +12,8 @@ namespace DAMLib
 
         public Node<T>? Parent 
         { 
-            get => _parent; 
-            set => _parent = value; 
+            get => _parent;
+            set => SetParent(value); 
         }
         public List<Node<T>> Children => _children;
 
