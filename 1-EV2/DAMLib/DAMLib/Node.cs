@@ -13,8 +13,8 @@ namespace DAMLib
         public Node<T>? Parent 
         { 
             get => _parent;
-            set => SetParent(value); 
-        }
+            set => SetParent(value!);           //El signo de exclamacion lo que hace aqui es sacar la advertencia de null, 
+        }                                           //es equivalente a poner una instruccion #nullable disable #nullable enable 
         public List<Node<T>> Children => _children;
 
         public bool IsRoot => _parent == null;
