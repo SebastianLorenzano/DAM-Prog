@@ -16,7 +16,6 @@ namespace DAMLib
             set => SetParent(value!);           //El signo de exclamacion lo que hace aqui es sacar la advertencia de null, 
         }                                           //es equivalente a poner una instruccion #nullable disable #nullable enable 
         public List<Node<T>> Children => _children;
-
         public bool IsRoot => _parent == null;
         public bool IsLeaf => _children.Count == 0;
         public int ChildrenCount => _children.Count;
@@ -116,7 +115,7 @@ namespace DAMLib
             return false;
         }
 
-        bool IsSibling(Node<T> node)
+        public bool IsSibling(Node<T> node)
         {
             if (node == null || _parent == null)
                 return false;
