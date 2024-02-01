@@ -52,8 +52,7 @@ namespace DAMLib
         {
             for(int i = 0;  i < _children.Count; i++) 
             {
-                var c = _children[i];
-                if (node == c)
+                if (node == _children[i])
                     return i;
             }
             return -1;
@@ -61,9 +60,7 @@ namespace DAMLib
 
         public Node<T>? GetChildAt(int index)
         {
-            if (index < 0 || index >= _children.Count)
-                return null;
-            return _children[index];
+            return (index < 0 || index >= _children.Count) ? null : _children[index];
         }
 
         public void Unlink()
@@ -86,9 +83,13 @@ namespace DAMLib
         public void SetParent(Node<T> node)
         {
             if (node == null)
+            {
                 _parent = null;
-            else
-                node.AddChild(this);
+                return;
+            }
+            if (Contains(node))
+                throw new ArgumentException("Tried Adding its own child as a Parent.");
+            node.AddChild(this);
         }
 
         public bool ContainsAscestor(Node<T> node)
@@ -97,7 +98,7 @@ namespace DAMLib
                 return false;
             if (this == node)
                 return true;
-            return _parent.ContainsAscestor(node);
+            return _parent!.ContainsAscestor(node);
         }
 
         public bool ContainsDescendant(Node<T> node)
