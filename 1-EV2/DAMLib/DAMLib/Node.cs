@@ -8,15 +8,21 @@ namespace DAMLib
     {
         public T _item;
         List<Node<T>> _children = new();
-        Node<T>? _parent;
+        WeakReference<Node<T>>? _parent;
 
         public Node<T>? Parent 
-        { 
-            get => _parent;
+        {
+            get 
+            {
+                Node<T>? parent;
+                _parent.TryGetTarget(out parent);
+                return parent;
+            }
+            
             set => SetParent(value!);           //El signo de exclamacion lo que hace aqui es sacar la advertencia de null, 
-        }                                           //es equivalente a poner una instruccion #nullable disable #nullable enable 
+        }                                           //es equivalente a poner una instruccion #nullable disable
         public List<Node<T>> Children => _children;
-        public bool IsRoot => _parent == null;
+        public bool IsRoot => Parent == null;
         public bool IsLeaf => _children.Count == 0;
         public int ChildrenCount => _children.Count;
         public int Level => GetLevel();
@@ -25,20 +31,20 @@ namespace DAMLib
         public int GetLevel()
         { 
             int level = 0;
-            var parent = _parent;
+            var parent = Parent;
             while (parent != null)
             {
                 level++;
-                parent = parent._parent;
+                parent = parent.Parent;
             }
             return level;
         }
 
         public Node<T> GetRoot()
         {
-            if (_parent == null)
+            if (Parent == null)
                 return this;
-            return _parent.GetRoot();
+            return Parent.GetRoot();
         }
 
         public bool Contains(Node<T> node) 
@@ -65,12 +71,12 @@ namespace DAMLib
 
         public void Unlink()
         {
-            if (_parent == null)
+            if (Parent == null)
                 return;
-            int index = _parent.IndexOf(this);
+            int index = Parent!.IndexOf(this);
             if (index >= 0)
-                _parent._children.RemoveAt(index);
-            _parent = null;                             
+                Parent._children.RemoveAt(index);
+            Parent = null;                             
         }                                               
         public void AddChild(Node<T> node)
         {
@@ -84,7 +90,7 @@ namespace DAMLib
         {
             if (node == null)
             {
-                _parent = null;
+                Parent = null;
                 return;
             }
             if (Contains(node))
@@ -94,11 +100,11 @@ namespace DAMLib
 
         public bool ContainsAscestor(Node<T> node)
         {
-            if (node == null || _parent == null && this != node)
+            if (node == null || Parent == null && this != node)
                 return false;
             if (this == node)
                 return true;
-            return _parent!.ContainsAscestor(node);
+            return Parent!.ContainsAscestor(node);
         }
 
         public bool ContainsDescendant(Node<T> node)
@@ -118,11 +124,11 @@ namespace DAMLib
 
         public bool IsSibling(Node<T> node)
         {
-            if (node == null || _parent == null)
+            if (node == null || Parent == null)
                 return false;
             if (this == node)                                   
                 return false;
-            return _parent.Contains(node);
+            return Parent.Contains(node);
         }
 
         public Node<T>? FindNode(CheckDelegate<T> checker)
