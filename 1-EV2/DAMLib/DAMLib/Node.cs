@@ -16,7 +16,7 @@ namespace DAMLib
             {
                 Node<T>? parent;
                 _parent.TryGetTarget(out parent);
-                return parent;
+                return parent;                      // TODO: Fix SetParent() so it works as a WeakReference()
             }
             
             set => SetParent(value!);           //El signo de exclamacion lo que hace aqui es sacar la advertencia de null, 
