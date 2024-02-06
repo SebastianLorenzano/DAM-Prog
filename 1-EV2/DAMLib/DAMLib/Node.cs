@@ -8,7 +8,7 @@ namespace DAMLib
     {
         public T _item;
         List<Node<T>> _children = new();
-        WeakReference<Node<T>?> _parent;
+        WeakReference<Node<T>?> _parent = new(null);
 
         public Node<T>? Parent 
         {
@@ -16,7 +16,7 @@ namespace DAMLib
             {
                 Node<T>? parent;
                 _parent.TryGetTarget(out parent);
-                return parent;                      
+                return parent;                       
             }
             
             set => SetParent(value!);           //El signo de exclamacion lo que hace aqui es sacar la advertencia de null, 
