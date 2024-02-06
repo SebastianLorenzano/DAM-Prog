@@ -21,7 +21,6 @@ namespace DAMLib
             
             set => SetParent(value!);           //El signo de exclamacion lo que hace aqui es sacar la advertencia de null, 
         }                                           //es equivalente a poner una instruccion #nullable disable
-        public List<Node<T>> Children => _children;
         public bool IsRoot => Parent == null;
         public bool IsLeaf => _children.Count == 0;
         public int ChildrenCount => _children.Count;
@@ -42,23 +41,24 @@ namespace DAMLib
 
         public Node<T> GetRoot()
         {
-            if (Parent == null)
+            var parent = Parent;
+            if (parent == null)
                 return this;
-            return Parent.GetRoot();
+            return parent.GetRoot();
         }
 
         public bool Contains(Node<T> node) 
         {
             if (node == null)
                 return false;
-            return (IndexOf(node) >= 0);
+            return IndexOf(node) >= 0;
         }
 
         private int IndexOf(Node<T> node)
         {
             for(int i = 0;  i < _children.Count; i++) 
             {
-                if (node == _children[i])
+                if (_children[i] == node)
                     return i;
             }
             return -1;
@@ -71,11 +71,12 @@ namespace DAMLib
 
         public void Unlink()
         {
-            if (Parent == null)
+            var parent = Parent;
+            if (parent == null)
                 return;
-            int index = Parent!.IndexOf(this);
+            int index = parent.IndexOf(this);
             if (index >= 0)
-                Parent._children.RemoveAt(index);
+                parent._children.RemoveAt(index);
             Parent = null;                             
         }                                               
         public void AddChild(Node<T> node)
@@ -84,6 +85,8 @@ namespace DAMLib
                 return;
             node.Unlink();
             node._parent.SetTarget(this);
+            if (_children == null)
+                _children = new();
             _children.Add(node);
 
         }
@@ -92,7 +95,7 @@ namespace DAMLib
         {
             if (node == null)
             {
-                _parent.SetTarget(null);
+                Unlink(); 
                 return;
             }
             if (Contains(node))
