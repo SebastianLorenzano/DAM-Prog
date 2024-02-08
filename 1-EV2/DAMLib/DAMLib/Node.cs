@@ -8,12 +8,14 @@ namespace DAMLib
     {
         public T? _item;
         List<Node<T>> _children;
-        WeakReference<Node<T>?> _parent = new(null);        //TODO: Make _parent work at the beggining as null and for it to create when needed
+        WeakReference<Node<T>?> _parent;        //TODO: Make _parent work at the beggining as null and for it to create when needed
 
         public Node<T>? Parent
         {
             get
             {
+                if (_parent == null)
+                    return null;
                 Node<T>? parent;
                 _parent.TryGetTarget(out parent);
                 return parent;
@@ -115,9 +117,12 @@ namespace DAMLib
         {
             if (node == null)
             {
-                Unlink(); 
+                if (_parent != null)
+                    Unlink(); 
                 return;
             }
+            if (_parent == null)
+                _parent = new WeakReference<Node<T>?>(null);
             if (_children != null && Contains(node))
                 throw new ArgumentException("Tried Adding its own child as a Parent.");
             node.AddChild(this);
