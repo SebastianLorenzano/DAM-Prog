@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace DAMLib
 {
@@ -43,7 +44,7 @@ namespace DAMLib
 
         }
 
-        public Node(T? item)
+        public Node(T? item) : this()
         {
             _item = item;
         }
@@ -97,8 +98,8 @@ namespace DAMLib
                 return;
             int index = parent.IndexOf(this);
             if (index >= 0)
-                parent._children.RemoveAt(index);
-            Parent = null;                             
+                parent._children.RemoveAt(index);       //Preguntar a Javi si hace falta usar SetTarget o al modificar
+            _parent.SetTarget(null);                      // la variable strong se modifica el Target             
         }                                               
         public void AddChild(Node<T> node)
         {
