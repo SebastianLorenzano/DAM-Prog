@@ -3,14 +3,17 @@ namespace TPVLib
 
     internal class RAMTPV : ITPV
     {
-        public int _currentGeneratingId = 1;
-        private List<Product> _products = new();
+        private int nextGeneratedId = 1;
+        private Dictionary<long, Product> _products = new();
         public long AddProduct(Product product)
         {
-            product.id = _currentGeneratingId++;
-            Product newProduct = new(product);
-            _products.Add(newProduct);
-            return newProduct.id;
+            if (product == null)
+                return -1;
+            Product newProduct = product.Clone();
+            long index = nextGeneratedId++;
+            newProduct.Id = index;
+            _products.Add(index, newProduct);
+            return index;
         }
 
         public List<Product> GetProducts(int offset, int limit)
@@ -20,17 +23,34 @@ namespace TPVLib
 
         public Product? GetProductWithID(long id)
         {
-            throw new NotImplementedException();
+            foreach (var product in _products)
+            {
+                if (product.Key == id)
+                    return product.Value;
+            }
+            return null;
         }
 
         public void RemoveProductWithID(long id)
         {
-            throw new NotImplementedException();
+            foreach (var product in _products)
+            {
+                if (product.Key == id)
+                    _products.Remove(id);
+            }
         }
 
         public void UpdateProductWithID(long id, Product product)
         {
-            throw new NotImplementedException();
+            Product? productInList;
+            if (_products.TryGetValue(id, out productInList))
+                productInList = product;
+            
         }
+
+
+
+
+
     }
 }
