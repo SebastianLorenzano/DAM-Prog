@@ -14,9 +14,6 @@
         void UpdateProductWithID(long id, Product product);
         List<Product> GetProducts(int offset, int limit);
 
-
-
-
         static ITPV CreateNewTPV()
         {
             return new RAMTPV();

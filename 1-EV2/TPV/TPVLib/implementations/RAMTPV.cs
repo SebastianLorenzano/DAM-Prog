@@ -8,7 +8,7 @@ namespace TPVLib
         public long AddProduct(Product product)
         {
             if (product == null)
-                return -1;
+                throw new Exception("Adding a Product Failed");
             Product newProduct = product.Clone();
             long index = nextGeneratedId++;
             newProduct.Id = index;
@@ -18,7 +18,15 @@ namespace TPVLib
 
         public List<Product> GetProducts(int offset, int limit)
         {
-            throw new NotImplementedException();
+            var result = new List<Product>();
+            if (offset < 0 || offset > _products.Count)
+                return result;
+            limit = Math.Min(limit, _products.Count);
+            for (int i = 0; i < limit; i++)
+            {
+                result.Add(_products[i + offset]);
+            }
+            return result;
         }
 
         public Product? GetProductWithID(long id)
@@ -26,18 +34,26 @@ namespace TPVLib
             foreach (var product in _products)
             {
                 if (product.Key == id)
-                    return product.Value;
+                    return product.Value.Clone();
             }
             return null;
         }
 
-        public void RemoveProductWithID(long id)
+        public Product? GetProductWithName(string name)
         {
             foreach (var product in _products)
             {
-                if (product.Key == id)
-                    _products.Remove(id);
+                if (product.Value.Name == name)
+                    return product.Value.Clone();
             }
+            return null;
+        }
+
+
+
+        public void RemoveProductWithID(long id)
+        {
+            _products.Remove(id);
         }
 
         public void UpdateProductWithID(long id, Product product)
@@ -45,12 +61,7 @@ namespace TPVLib
             Product? productInList;
             if (_products.TryGetValue(id, out productInList))
                 productInList = product;
-            
         }
-
-
-
-
 
     }
 }
