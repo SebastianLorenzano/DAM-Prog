@@ -36,7 +36,8 @@ namespace TPVLib
         }
 
         public static void ShowTicketsMenu(ITPV tpv)
-        {Console.WriteLine("1- Products");
+        {
+            Console.WriteLine("1- Products");
             Console.WriteLine("1-Add Ticket");
             Console.WriteLine("2-Change Ticket");
             Console.WriteLine("3-Delete Ticket");

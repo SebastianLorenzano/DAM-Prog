@@ -9,15 +9,12 @@ namespace TPVLib
         public TicketHeader Header { get; set; }
         public TicketBody Body { get; set; }
 
-
-
-
     }
 
 
     public class TicketHeader
     {
-        public long Id { get; set; }
+        public long id;
         public string ScanBar { get; set; }
         public DateTime date { get; set; }
         public string name { get; set; }
@@ -25,50 +22,24 @@ namespace TPVLib
 
     public class TicketBody
     {
-        public List<Line> _lines; 
+        public long id;
+
+
+        public List<Line> _lines = new();
 
         public void RemoveLine(Line line)
         {
-            _lines.Remove(line);
+            _lines.(line);
         }
 
     }
 
     public class Line
     {
-        public int cantidad; 
-        private WeakReference<TicketBody> _body = new WeakReference<TicketBody>(null);
+        public long _id;
+
         private Product _product;
-        public int Cantidad
-        {
-            get 
-            {
-                return cantidad;
-            }
-            set 
-            {
-                if (value == 0)
-                    Body.RemoveLine(this);
-
-                if (value > 1000000)
-                    throw new ArgumentOutOfRangeException("The amount is invalid.");
-            }
-        }
-        /*
-        public int Cantidad => Cantidad;
-
-        public void SetCantidad(int value)
-        {
-            if (value == 0)
-                Body.RemoveLine(this);
-
-            if (value > 1000000)
-                throw new ArgumentOutOfRangeException("The amount is invalid.");
-        }
-        */
-
-
-
+        public int Cantidad { get; set; }
 
         public Product Product
         {
@@ -77,29 +48,25 @@ namespace TPVLib
             set => _product = value.Clone();
         }
 
-        public TicketBody Body
-        {
-            get
-            {
-                var body = _body.TryGetTarget(out var target) ? target : null;
-                return body;
-
-            }
-            set
-            {
-                if (value == null)
-                    Body.RemoveLine(this);
-            }
-        }
-
-        public Line(Product product, int cantidad, TicketBody body)
+        public Line(Product product, int cantidad)
         {
             Product = product;
             Cantidad = cantidad;
-            Body = body;
         }
     }
 }
 
-   
+/*
+public int Cantidad => Cantidad;
+
+public void SetCantidad(int value)
+{
+    if (value == 0)
+        Body.RemoveLine(this);
+
+    if (value > 1000000)
+        throw new ArgumentOutOfRangeException("The amount is invalid.");
+}
+*/
+
 

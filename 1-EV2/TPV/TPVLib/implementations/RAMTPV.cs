@@ -63,6 +63,10 @@ namespace TPVLib
             if (_products.TryGetValue(id, out productInList))
                 productInList = product;
         }
+
+
+
+
 /*
         public long AddTicket(Ticket ticket)
         {
@@ -80,6 +84,19 @@ namespace TPVLib
             }
         }
 */
+
+        public bool AddTicketBodyWithId(long id, TicketBody body)
+        {
+            Line[] array = body._lines.ToArray();        
+        }
+
+        public List<Line> GetTicketLinesWithId(long id, Ticket body)
+        {
+            var result = new List<Line>();
+
+
+
+        }
 
     }
 }

@@ -1,7 +1,12 @@
 ﻿namespace TPVLib
 {
-    public interface Idatabase
+    public interface IDatabase
     {
+        void BeginTransaction();
+        void CommitTransaction();
+        void Rollback();
+        void Close();
+
 
         long AddProduct(Product product);
         void RemoveProductWithID(long id);
@@ -9,8 +14,10 @@
         void UpdateProductWithID(long id, Product product);
         List<Product> GetProducts(int offset, int limit);
 
-        long AddTicketHeader(Ticker);
-        void AddTicketBody(TicketBody body);
+        long AddTicketHeader(TicketHeader header);
+        Ticket GetTicketWithID(long id);
+
+
 
     }
 }
