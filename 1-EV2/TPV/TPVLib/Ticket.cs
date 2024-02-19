@@ -6,8 +6,8 @@ namespace TPVLib
 
     public class Ticket
     {
-        public Header Header { get; set; }
-        public Body Body { get; set; }
+        public TicketHeader Header { get; set; }
+        public TicketBody Body { get; set; }
 
 
 
@@ -15,7 +15,7 @@ namespace TPVLib
     }
 
 
-    public class Header
+    public class TicketHeader
     {
         public long Id { get; set; }
         public string ScanBar { get; set; }
@@ -23,7 +23,7 @@ namespace TPVLib
         public string name { get; set; }
     }
 
-    public class Body
+    public class TicketBody
     {
         public List<Line> _lines; 
 
@@ -35,14 +35,16 @@ namespace TPVLib
     }
 
     public class Line
-    { 
-
-        private int _cantidad;
-        private WeakReference<Body> _body = new WeakReference<Body>(null);
+    {
+        public int cantidad; 
+        private WeakReference<TicketBody> _body = new WeakReference<TicketBody>(null);
         private Product _product;
         public int Cantidad
         {
-            get => _cantidad;
+            get 
+            {
+                return cantidad;
+            }
             set 
             {
                 if (value == 0)
@@ -52,6 +54,21 @@ namespace TPVLib
                     throw new ArgumentOutOfRangeException("The amount is invalid.");
             }
         }
+        /*
+        public int Cantidad => Cantidad;
+
+        public void SetCantidad(int value)
+        {
+            if (value == 0)
+                Body.RemoveLine(this);
+
+            if (value > 1000000)
+                throw new ArgumentOutOfRangeException("The amount is invalid.");
+        }
+        */
+
+
+
 
         public Product Product
         {
@@ -60,7 +77,7 @@ namespace TPVLib
             set => _product = value.Clone();
         }
 
-        public Body Body
+        public TicketBody Body
         {
             get
             {
@@ -75,7 +92,7 @@ namespace TPVLib
             }
         }
 
-        public Line(Product product, int cantidad, Body body)
+        public Line(Product product, int cantidad, TicketBody body)
         {
             Product = product;
             Cantidad = cantidad;
@@ -85,4 +102,4 @@ namespace TPVLib
 }
 
    
-}
+

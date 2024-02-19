@@ -5,6 +5,9 @@ namespace TPVLib
     {
         private int nextGeneratedId = 1;
         private Dictionary<long, Product> _products = new();
+
+
+
         public long AddProduct(Product product)
         {
             if (product == null)
@@ -49,8 +52,6 @@ namespace TPVLib
             return null;
         }
 
-
-
         public void RemoveProductWithID(long id)
         {
             _products.Remove(id);
@@ -62,6 +63,23 @@ namespace TPVLib
             if (_products.TryGetValue(id, out productInList))
                 productInList = product;
         }
+/*
+        public long AddTicket(Ticket ticket)
+        {
+            try
+            {
+                _database.BeginTransaction();
+
+                long id = _database.AddTicket(ticket.Header);
+                
+
+            }
+            catch (Exception ex)
+            { 
+            
+            }
+        }
+*/
 
     }
 }
