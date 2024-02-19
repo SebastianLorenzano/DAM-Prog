@@ -4,27 +4,41 @@ using TPVLib;
 namespace TPVLib
 {
 
-    public class TicketHeader
+    public class Ticket
     {
-        
+        public Header Header { get; set; }
+        public Body Body { get; set; }
+
+
+
+
     }
 
-    public class TicketBody
-    {
-        public List<TicketLine> _lines; 
 
-        public void RemoveLine(TicketLine line)
+    public class Header
+    {
+        public long Id { get; set; }
+        public string ScanBar { get; set; }
+        public DateTime date { get; set; }
+        public string name { get; set; }
+    }
+
+    public class Body
+    {
+        public List<Line> _lines; 
+
+        public void RemoveLine(Line line)
         {
             _lines.Remove(line);
         }
 
     }
 
-    public class TicketLine
+    public class Line
     { 
 
         private int _cantidad;
-        private WeakReference<TicketBody> _body;
+        private WeakReference<Body> _body = new WeakReference<Body>(null);
         private Product _product;
         public int Cantidad
         {
@@ -46,7 +60,7 @@ namespace TPVLib
             set => _product = value.Clone();
         }
 
-        public TicketBody Body
+        public Body Body
         {
             get
             {
@@ -61,22 +75,14 @@ namespace TPVLib
             }
         }
 
-        public TicketLine(Product product, int cantidad, TicketBody body)
+        public Line(Product product, int cantidad, Body body)
         {
             Product = product;
             Cantidad = cantidad;
-            Body = new WeakReference<TicketBody>(body);
+            Body = body;
         }
     }
 }
 
-    public class Ticket
-    {
-        public TicketHeader Header { get; set; }
-        public TicketBody Body { get; set; }
-        
-        
-
-
-    }
+   
 }
