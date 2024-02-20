@@ -11,6 +11,7 @@ namespace TPVLib
 
     public enum TaxType
     {
+        CERO,
         UNO,
         DOS
     }

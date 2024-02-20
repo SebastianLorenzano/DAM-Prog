@@ -9,7 +9,7 @@
         // List<Product> GetProducts(int offset, int limit)     offset = desde donde empieza   count = cuantos agarra
 
         long AddProduct(Product product);
-        void RemoveProductWithID(long id);
+        bool RemoveProductWithID(long id);
         Product? GetProductWithID(long id);
         void UpdateProductWithID(long id, Product product);
         List<Product> GetProducts(int offset, int limit);

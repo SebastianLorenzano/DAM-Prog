@@ -3,65 +3,79 @@ namespace TPVLib
 
     internal class RAMTPV : ITPV
     {
-        private int nextGeneratedId = 1;
+
         private Dictionary<long, Product> _products = new();
+        private Dictionary<long, Ticket> _tickets = new();
+        private IDatabase _db;
 
-
+        public RAMTPV (IDatabase db)
+        {
+            _db = db;
+        }
 
         public long AddProduct(Product product)
         {
-            if (product == null)
-                throw new Exception("Adding a Product Failed");
-            Product newProduct = product.Clone();
-            long index = nextGeneratedId++;
-            newProduct.Id = index;
-            _products.Add(index, newProduct);
-            return index;
+            long id = -1;
+            try
+            {
+                id = _db.AddProduct(product.Clone());
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return id;
         }
 
         public List<Product> GetProducts(int offset, int limit)
         {
-            var result = new List<Product>();
-            if (offset < 0 || offset > _products.Count)
-                return result;
-            limit = Math.Min(limit, _products.Count);
-            for (int i = 0; i < limit; i++)
+            try
             {
-                result.Add(_products[i + offset]);
+                return _db.GetProducts(offset, limit);
             }
-            return result;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new List<Product>();
+            }
         }
 
         public Product? GetProductWithID(long id)
         {
-            foreach (var product in _products)
-            {
-                if (product.Key == id)
-                    return product.Value.Clone();
-            }
-            return null;
+            return _db.GetProductWithID(id);
         }
 
         public Product? GetProductWithName(string name)
         {
-            foreach (var product in _products)
-            {
-                if (product.Value.Name == name)
-                    return product.Value.Clone();
-            }
-            return null;
+            return _db.GetProductWithName(name);
         }
 
-        public void RemoveProductWithID(long id)
+        public bool RemoveProductWithID(long id)
         {
-            _products.Remove(id);
+            bool result = false;
+            try
+            {
+                _db.RemoveProductWithID(id);
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return result;
         }
 
         public void UpdateProductWithID(long id, Product product)
         {
-            Product? productInList;
-            if (_products.TryGetValue(id, out productInList))
-                productInList = product;
+            try
+            {
+                _db.UpdateProductWithID(id, product);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
 
