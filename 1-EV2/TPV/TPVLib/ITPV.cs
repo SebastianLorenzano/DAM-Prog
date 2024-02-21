@@ -15,9 +15,9 @@
         List<Product> GetProducts(int offset, int limit);
 
 
-        static ITPV CreateNewTPV()
+        static ITPV CreateNewTPV(IDatabase db)
         {
-            return new RAMTPV();
+            return new RAMTPV(db);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace TPVLib.implementations
 {
-    public class Database : IDatabase
+    public class RAMDatabase : IDatabase
     {
         private Dictionary<long, Product> _products = new();
         private int nextGeneratedId = 1;

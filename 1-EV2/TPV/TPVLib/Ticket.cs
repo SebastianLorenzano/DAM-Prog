@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TPVLib;
-
-namespace TPVLib
+﻿namespace TPVLib
 {
 
     public class Ticket
@@ -29,7 +26,7 @@ namespace TPVLib
 
         public void RemoveLine(Line line)
         {
-            _lines.(line);
+            _lines.Remove(line);
         }
 
     }
