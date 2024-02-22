@@ -6,7 +6,7 @@ namespace TPVLib
 
         private Dictionary<long, Product> _products = new();
         private Dictionary<long, TicketHeader> _ticketHeaders = new();
-        private Dictionary<long, TicketLine> _ticketBodies = new();
+        private Dictionary<long, TicketLine> _ticketLines = new();
         private IDatabase _db;
 
         public RAMTPV (IDatabase db)    //Inyeccion de dependencias
