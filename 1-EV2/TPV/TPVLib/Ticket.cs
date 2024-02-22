@@ -11,7 +11,7 @@
 
     public class TicketHeader
     {
-        public long id;
+        public long TicketId;
         public string ScanBar { get; set; }
         public DateTime date { get; set; }
         public string name { get; set; }
@@ -19,23 +19,22 @@
 
     public class TicketBody
     {
-        public long id;
+        public long TicketId;
 
 
-        public List<Line> _lines = new();
-
-        public void RemoveLine(Line line)
+        public List<TicketLine> _lines = new();
+        public void RemoveLine(TicketLine line)
         {
             _lines.Remove(line);
         }
 
     }
 
-    public class Line
+    public class TicketLine
     {
-        public long _id;
+        public long TicketId;
 
-        private Product _product;
+        public Product _product;
         public int Cantidad { get; set; }
 
         public Product Product
@@ -45,7 +44,7 @@
             set => _product = value.Clone();
         }
 
-        public Line(Product product, int cantidad)
+        public TicketLine(Product product, int cantidad)
         {
             Product = product;
             Cantidad = cantidad;

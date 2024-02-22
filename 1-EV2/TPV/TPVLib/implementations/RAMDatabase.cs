@@ -1,10 +1,15 @@
 ﻿
+using System.Linq;
+
 namespace TPVLib.implementations
 {
     public class RAMDatabase : IDatabase
     {
         private Dictionary<long, Product> _products = new();
+        private Dictionary<long, TicketHeader> _ticketHeaders = new();
+        private Dictionary<long, TicketBody> _ticketBodies = new();
         private int nextGeneratedId = 1;
+        private int nextGeneratedTicketId = 1;
         public long AddProduct(Product product)
         {
             if (product == null)
@@ -22,6 +27,27 @@ namespace TPVLib.implementations
             throw new NotImplementedException();
         }
 
+        private void AddTicketBodyWithId(long ticketId, TicketBody body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddTicketLineWithId(long ticketId, TicketLine line)
+        {
+            if (line == null)
+                throw new Exception("The Product doesn't exist. Updating a Product Failed");
+            if (!_ticketBodies.ContainsKey(ticketId))
+                AddTicketBodyWithId(ticketId, new TicketBody());
+            var lines = _ticketBodies[ticketId]._lines;
+            int index = lines.IndexOf(line);
+            if (index >= 0)
+                lines[index].Cantidad += line.Cantidad;
+            else
+                lines.Add(line);
+        }
+
+               
+        
         public List<Product> GetProducts(int offset, int limit)
         {
             var result = new List<Product>();
@@ -60,10 +86,11 @@ namespace TPVLib.implementations
             throw new NotImplementedException();
         }
 
-        public void RemoveProductWithID(long id)
+        public bool RemoveProductWithID(long id)
         {
             if (!_products.Remove(id))
                 throw new Exception("The Product doesn't exist. Removing a Product Failed");
+            return true;
         }
 
 

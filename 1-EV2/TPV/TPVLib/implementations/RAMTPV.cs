@@ -5,40 +5,22 @@ namespace TPVLib
     {
 
         private Dictionary<long, Product> _products = new();
-        private Dictionary<long, Ticket> _tickets = new();
+        private Dictionary<long, TicketHeader> _ticketHeaders = new();
+        private Dictionary<long, TicketLine> _ticketBodies = new();
         private IDatabase _db;
 
-        public RAMTPV (IDatabase db)
+        public RAMTPV (IDatabase db)    //Inyeccion de dependencias
         {
             _db = db;
         }
 
         public long AddProduct(Product product)
         {
-            long id = -1;
-            try
-            {
-                id = _db.AddProduct(product.Clone());
-                
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return id;
+            return _db.AddProduct(product.Clone());
         }
-
         public List<Product> GetProducts(int offset, int limit)
         {
-            try
-            {
-                return _db.GetProducts(offset, limit);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return new List<Product>();
-            }
+            return _db.GetProducts(offset, limit);
         }
 
         public Product? GetProductWithID(long id)
@@ -53,17 +35,8 @@ namespace TPVLib
 
         public bool RemoveProductWithID(long id)
         {
-            bool result = false;
-            try
-            {
-                _db.RemoveProductWithID(id);
-                result = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return result;
+
+            return _db.RemoveProductWithID(id);
         }
 
         public void UpdateProductWithID(long id, Product product)
@@ -101,12 +74,12 @@ namespace TPVLib
 
         public bool AddTicketBodyWithId(long id, TicketBody body)
         {
-            Line[] array = body._lines.ToArray();        
+                    
         }
 
-        public List<Line> GetTicketLinesWithId(long id, Ticket body)
+        public List<TicketLine> GetTicketLinesWithId(long id, Ticket body)
         {
-            var result = new List<Line>();
+            var result = new List<TicketLine>();
 
 
 
