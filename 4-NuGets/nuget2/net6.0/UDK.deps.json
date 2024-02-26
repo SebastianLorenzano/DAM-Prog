@@ -14,7 +14,6 @@
           "StbImageSharp": "2.27.13",
           "StbRectPackSharp": "1.0.4",
           "StbSharp": "0.7.2.38",
-          "UDK-native": "1.0.0",
           "UDK-sgen": "1.0.0",
           "UDK-shapes": "1.0.0"
         },
@@ -43,32 +42,32 @@
           "runtimes/win-x64/native/freetype.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.10.1.0"
           },
           "runtimes/win-x86/native/freetype.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.10.1.0"
           },
           "runtimes/win10-arm/native/freetype.dll": {
             "rid": "win10-arm",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.10.1.0"
           },
           "runtimes/win10-arm64/native/freetype.dll": {
             "rid": "win10-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.10.1.0"
           },
           "runtimes/win10-x64/native/freetype.dll": {
             "rid": "win10-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.10.1.0"
           },
           "runtimes/win10-x86/native/freetype.dll": {
             "rid": "win10-x86",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.10.1.0"
           }
         }
       },
@@ -255,11 +254,6 @@
       "System.Memory/4.5.3": {},
       "System.Runtime.CompilerServices.Unsafe/5.0.0": {},
       "System.ValueTuple/4.5.0": {},
-      "UDK-native/1.0.0": {
-        "runtime": {
-          "UDK-native.dll": {}
-        }
-      },
       "UDK-sgen/1.0.0": {
         "runtime": {
           "UDK-sgen.dll": {}
@@ -410,11 +404,6 @@
       "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
       "path": "system.valuetuple/4.5.0",
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
-    },
-    "UDK-native/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "UDK-sgen/1.0.0": {
       "type": "project",
