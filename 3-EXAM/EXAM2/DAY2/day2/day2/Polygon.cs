@@ -4,15 +4,15 @@ namespace day2
 {
     public class Polygon : Shape
     {
-        private Point2D[] points = Array.Empty<Point2D>();
+        private Point2D[] _points = Array.Empty<Point2D>();
 
         public bool IsClosed = false;
-        public int PointCount => points.Length;
+        public int PointCount => _points.Length;
         public override bool HasArea => IsClosed;
-        public override double Area => IsClosed ? Utils.GetArea(points) : 0;
-        public override double Perimeter => Utils.GetPerimeter(points);
+        public override double Area => IsClosed ? Utils.GetArea(_points) : 0;
+        public override double Perimeter => Utils.GetPerimeter(_points);
         public override Point2D Center => GetCenter();
-        public override Rect2D Rect => Utils.GetBoundingBox(points);
+        public override Rect2D Rect => Utils.GetBoundingBox(_points);
 
         public Polygon(string name, Color color) : base(name, color)
         {
@@ -22,9 +22,9 @@ namespace day2
         public Point2D GetCenter()
         {
             double MinX = 0, MinY = 0, MaxX = 0, MaxY = 0; 
-            for (int i = 0; i < points.Length; i++)
+            for (int i = 0; i < _points.Length; i++)
             {
-                var p = points[i];
+                var p = _points[i];
                 if (p.X < MinX)
                     MinX = p.X;
                 else if (p.X > MaxX)
@@ -43,7 +43,7 @@ namespace day2
 
         public void Clear()
         {
-            points = new Point2D[0];
+            _points = new Point2D[0];
         }
 
         public void Open()
@@ -59,20 +59,20 @@ namespace day2
         {
             if (point == null)
                 return;
-            var result = new Point2D[points.Length + 1];
-            for (int i = 0; i < points.Length; ++i) 
+            var result = new Point2D[_points.Length + 1];
+            for (int i = 0; i < _points.Length; ++i) 
             {
-                result[i] = points[i];
+                result[i] = _points[i];
             }
-            result[points.Length] = point;
-            points = result;
+            result[_points.Length] = point;
+            _points = result;
         }
 
         public Point2D? GetPointAt(int index)
         {
-            if (index < 0 || index >= points.Length)
+            if (index < 0 || index >= _points.Length)
                 return null;
-            return points[index];
+            return _points[index];
         }
 
     }

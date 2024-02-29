@@ -60,7 +60,5 @@ namespace day2
                 return new Point2D() { X = MaxX, Y = MinY };
              return null;
         }
-
-
     }
 }
