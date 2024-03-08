@@ -5,9 +5,7 @@ namespace day2
     {
 
         public double MinX, MinY, MaxX, MaxY;
-
         public override bool HasArea => true;
-
         public override double Area => Utils.GetArea(ToArray());
         public override double Perimeter => Utils.GetPerimeter(ToArray());
 
