@@ -1,7 +1,4 @@
-﻿using System.Runtime.ExceptionServices;
-using System.Security.Cryptography.X509Certificates;
-
-namespace day3
+﻿namespace day3
 {
 
     public class ExList<T>
