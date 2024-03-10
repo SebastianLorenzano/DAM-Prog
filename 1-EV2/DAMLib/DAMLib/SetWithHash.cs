@@ -52,6 +52,7 @@ namespace DAMLib
                 if (_set.Length > 1)
                     _set[index] = _set[_count - 1];
                 _set[_count - 1] = default(T);
+                _hash[_count - 1] = 0;
                 _count--;
             }
         }

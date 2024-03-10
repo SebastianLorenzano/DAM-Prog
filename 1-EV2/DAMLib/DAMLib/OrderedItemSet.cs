@@ -76,7 +76,8 @@ public void Remove(T element)
             {
                 if (_items.Length > 1)
                     RearrangeAfterRemove(indexContains);
-                _count--;
+                _items[_count - 1].element = default(T);
+                _items[_count-- - 1].hash = 0;
             }
         }
 

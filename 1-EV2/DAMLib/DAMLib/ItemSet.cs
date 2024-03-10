@@ -54,6 +54,8 @@ namespace DAMLib
             {
                 if (_items.Length > 1)
                     _items[index] = _items[_count - 1];
+                _items[_count - 1].element = default(T);
+                _items[_count - 1].hash = 0;
                 _count--;
             }
         }
