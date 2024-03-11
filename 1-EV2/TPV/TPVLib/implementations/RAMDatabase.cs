@@ -8,8 +8,8 @@ namespace TPVLib.implementations
         private Dictionary<long, Product> _products = new();
         private Dictionary<long, TicketHeader> _ticketHeaders = new();
         private Dictionary<long, TicketBody> _ticketBodies = new();
-        private int nextGeneratedId = 1;
-        private int nextGeneratedTicketId = 1;
+        private long nextGeneratedId = 1;
+        private long nextGeneratedTicketId = 1;
         public long AddProduct(Product product)
         {
             if (product == null)
@@ -24,21 +24,27 @@ namespace TPVLib.implementations
 
         public long AddTicketHeader(TicketHeader header)
         {
-            throw new NotImplementedException();
+            if (header == null)
+                throw new Exception("The Ticket doesn't exist. Adding a Ticket Failed");
+            long id = nextGeneratedTicketId++;
+            header.TicketId = id;
+            _ticketHeaders.Add(header.TicketId, header);
+            return id;
+
         }
 
-        private void AddTicketBodyWithId(long ticketId, TicketBody body)
+        private void CreateTicketBodyWithId(long id)
         {
-            throw new NotImplementedException();
+            if (!_ticketBodies.ContainsKey(id))
+                _ticketBodies.Add(id, new TicketBody());
         }
 
-        public void AddTicketLineWithId(long ticketId, TicketLine line)
+        public void AddTicketLineWithId(long id, TicketLine line)
         {
             if (line == null)
                 throw new Exception("The Product doesn't exist. Updating a Product Failed");
-            if (!_ticketBodies.ContainsKey(ticketId))
-                AddTicketBodyWithId(ticketId, new TicketBody());
-            var lines = _ticketBodies[ticketId]._lines;
+            CreateTicketBodyWithId(id);
+            var lines = _ticketBodies[id]._lines;
             int index = lines.IndexOf(line);
             if (index >= 0)
                 lines[index].Cantidad += line.Cantidad;
@@ -46,8 +52,7 @@ namespace TPVLib.implementations
                 lines.Add(line);
         }
 
-               
-        
+              
         public List<Product> GetProducts(int offset, int limit)
         {
             var result = new List<Product>();
@@ -81,10 +86,12 @@ namespace TPVLib.implementations
             return null;
         }
 
-        public Ticket GetTicketWithID(long id)
+        public Ticket? GetTicketWithID(long id)
         {
-            throw new NotImplementedException();
+            Ticket result;
+            
         }
+
 
         public bool RemoveProductWithID(long id)
         {
@@ -105,6 +112,10 @@ namespace TPVLib.implementations
             else
                 throw new Exception("The Product doesn't exist. Updating a Product Failed");
         }
+
+
+
+
 
         public void BeginTransaction()
         {
@@ -127,5 +138,14 @@ namespace TPVLib.implementations
             throw new NotImplementedException();
         }
 
+        long IDatabase.AddTicketBodyWithId(long id, TicketBody body)
+        {
+            throw new NotImplementedException();
+        }
+
+        long IDatabase.AddTicketLineWithId(long id, TicketLine line)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
