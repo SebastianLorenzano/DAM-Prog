@@ -1,5 +1,6 @@
 ﻿
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace TPVLib.implementations
 {
@@ -22,15 +23,34 @@ namespace TPVLib.implementations
             return index;
         }
 
+        public long AddTicket(Ticket ticket)
+        {
+            if (ticket == null)
+                throw new Exception();
+            long id = AddTicketHeader(ticket.Header);
+            ticket.Header.TicketId = id;
+            AddTicketBody(ticket.Body);
+            return id;
+
+        }
         public long AddTicketHeader(TicketHeader header)
         {
             if (header == null)
                 throw new Exception("The Ticket doesn't exist. Adding a Ticket Failed");
             long id = nextGeneratedTicketId++;
             header.TicketId = id;
-            _ticketHeaders.Add(header.TicketId, header);
+            _ticketHeaders.Add(header.TicketId, header.Clone());
             return id;
+        }
 
+        public void AddTicketBody(TicketBody body)
+        {
+            if (body == null)
+                return;
+            long id = body.TicketId;
+            CreateTicketBodyWithId(id);
+            foreach (var item in body._lines)
+                AddTicketLineWithId(id, item);
         }
 
         private void CreateTicketBodyWithId(long id)
@@ -88,10 +108,47 @@ namespace TPVLib.implementations
 
         public Ticket? GetTicketWithID(long id)
         {
-            Ticket result;
             
+            TicketBody body;
+            TicketHeader header;
+            bool headerTry = TryGetTicketHeaderWithID(id, out header);
+            if (headerTry)
+                return null;
+            TryGetTicketBodyWithID(id, out body);
+            return new Ticket() { Body = body, Header = header };
+
         }
 
+        public bool TryGetTicketHeaderWithID(long id, out TicketHeader header)
+        {
+            header = null;
+            if (id < 0)
+                return false;
+            foreach (var item in _ticketHeaders)
+                if (item.Key == id)
+                {
+                    header = item.Value;
+                    return true;
+                }
+            return false;
+        }
+
+        public bool TryGetTicketBodyWithID(long id, out TicketBody body)
+        {
+            body = new();
+            if (id < 0)
+                return false;
+            foreach (var item in _ticketBodies)
+            {
+                if (item.Key == id)
+                {
+                    body = item.Value;
+                    return true;
+                }
+                    
+            }
+            return false;
+        }
 
         public bool RemoveProductWithID(long id)
         {

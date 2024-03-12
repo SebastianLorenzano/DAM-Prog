@@ -13,7 +13,7 @@ namespace TPVLib
         // Aca guardo codigo que tuve que borrar pero quiero conservar para otro momento
 
 
-
+        /*
         internal class Pepe : ITPV
         {
 
@@ -92,40 +92,8 @@ namespace TPVLib
             }
 
 
-
-
-            /*
-                    public long AddTicket(Ticket ticket)
-                    {
-                        try
-                        {
-                            _database.BeginTransaction();
-
-                            long id = _database.AddTicket(ticket.Header);
-
-
-                        }
-                        catch (Exception ex)
-                        { 
-
-                        }
-                    }
-            */
-            /*
-            public bool AddTicketBodyWithId(long id, TicketBody body)
-            {
-                TicketLine[] array = body._lines.ToArray();
             }
-
-            public List<TicketLine> GetTicketLinesWithId(long id, Ticket body)
-            {
-                var result = new List<TicketLine>();
-
-            */
-
-            }
-
+        */
         }
     }
-}
-}
+

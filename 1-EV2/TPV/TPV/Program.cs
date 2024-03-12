@@ -1,4 +1,5 @@
 ﻿using TPVLib;
+using TPVLib.implementations;
 
 namespace TPV
 {
@@ -7,7 +8,7 @@ namespace TPV
         static void Main(string[] args)
         {
 
-            var tpv = ITPV.CreateNewTPV();
+            var tpv = ITPV.CreateNewTPV(new RAMDatabase());
         }
     }
 }

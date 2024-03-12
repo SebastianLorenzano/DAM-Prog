@@ -15,6 +15,17 @@
         public string ScanBar { get; set; }
         public DateTime date { get; set; }
         public string name { get; set; }
+
+        public TicketHeader Clone()
+        {
+            return new TicketHeader()
+            {
+                TicketId = TicketId,
+                ScanBar = ScanBar,
+                date = date,
+                name = name
+            };
+        }
     }
 
     public class TicketBody
@@ -22,10 +33,20 @@
         public long TicketId;
 
 
-        public List<TicketLine> _lines = new();
-        public void RemoveLine(TicketLine line)
+        internal List<TicketLine> _lines = new();
+
+        public TicketLine[] ArrayTo()
         {
-            _lines.Remove(line);
+            return _lines.ToArray();
+        }
+
+        public TicketBody Clone()
+        {
+            return new TicketBody()
+            {
+                TicketId = TicketId,
+                _lines = new List<TicketLine>(_lines)
+            };
         }
 
     }

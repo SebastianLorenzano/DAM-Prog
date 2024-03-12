@@ -19,5 +19,7 @@
         {
             return new RAMTPV(db);
         }
+
+        long AddTicket(Ticket ticket);
     }
 }

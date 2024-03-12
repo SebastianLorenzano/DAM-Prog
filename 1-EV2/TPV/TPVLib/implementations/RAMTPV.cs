@@ -51,36 +51,26 @@ namespace TPVLib
             }
         }
 
-
-
-
-/*
         public long AddTicket(Ticket ticket)
         {
-            try
-            {
-                _database.BeginTransaction();
-
-                long id = _database.AddTicket(ticket.Header);
-                
-
-            }
-            catch (Exception ex)
-            { 
-            
-            }
+            if (ticket == null)
+                return -1;
+            long id = _db.AddTicket(ticket);
+            return id;
         }
-*/
+
+
+
 
         public bool AddTicketBodyWithId(long id, TicketBody body)
         {
-                    
+                    throw new NotImplementedException();
         }
 
         public List<TicketLine> GetTicketLinesWithId(long id, Ticket body)
         {
             var result = new List<TicketLine>();
-
+            throw new NotImplementedException();
 
 
         }
