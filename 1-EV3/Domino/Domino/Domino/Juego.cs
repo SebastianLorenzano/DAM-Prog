@@ -92,13 +92,15 @@
 
         public void UsePiece(string name, Piece? piece)
         {
+            if (name == null)
+                name = "Unknown";
             if (piece != null)
             {
                 Console.WriteLine("El Jugador " +  name + " no ha tirado ninguna ficha.");
             }
             else
             {
-                Console.WriteLine("El Jugador " + name + " ha tirado la ficha con valores " + piece.ToString);
+                Console.WriteLine("El Jugador " + name + " ha tirado la ficha con valores " + piece.ToString());
             }
         }
     }
