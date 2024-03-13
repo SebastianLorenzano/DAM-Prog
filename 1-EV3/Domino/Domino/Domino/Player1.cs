@@ -1,34 +1,43 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domino
+﻿namespace Domino
 {
-    public abstract class Player
+    public abstract class Player1
     {
         protected List<Piece> _playerPieces = new();
         protected string _name;
         public string Name
         {
-            get { return _name; }
-            set { SetName(value); }
+            get => _name;
+            set => SetName(value);
         }
         public int PieceCount => _playerPieces.Count;
 
-        public Player(string name)
+
+
+        public Player1(string name)
         {
             if (name == null)
                 name = "Uknown";
             Name = name;
         }
 
+
         public void SetName(string name)
         {
             if (name != null)
                 _name = name;
         }
-        public void AddPiece(Piece piece) 
+
+        public void AddPiece(Piece piece)
         {
             if (piece != null)
                 _playerPieces.Add(piece);
+        }
+
+        public void RemovePiece(Piece piece)
+        {
+            int index = IndexOf(piece);
+            if (index >= 0)
+                _playerPieces.RemoveAt(index);
         }
 
         public Piece? GetPieceAt(int index)
@@ -36,6 +45,11 @@ namespace Domino
             if (index < 0 || index >= _playerPieces.Count)
                 return _playerPieces[index];
             return null;
+        }
+
+        public bool Contains(Piece piece)
+        {
+            return IndexOf(piece) >= 0;
         }
 
         public int IndexOf(Piece piece)
@@ -50,17 +64,6 @@ namespace Domino
             return -1;
         }
 
-        public bool Contains(Piece piece)
-        {
-            return IndexOf(piece) >= 0;
-        }
-
-        public void RemovePiece(Piece piece)
-        {
-            int index = IndexOf(piece);
-            if (index >= 0)
-                _playerPieces.RemoveAt(index);
-        }
 
         public List<Piece> GetDoubles()
         {
@@ -79,41 +82,29 @@ namespace Domino
             return result;
         }
 
-        public List<Piece> GetDoublesSorted(List<Piece> list)
-        {
-            var result = GetDoubles(list);
-            Utils.SortPiecesByFirstValue(ref result);
-            return result;
-        }
-
-        public List<Piece> GetPlayablePieces(Juego juego)
+        public List<Piece> GetPlayablePieces(Game game)
         {
             var result = new List<Piece>();
-            var gamePieces = juego.GetAvailablePieces();
+            
             for (int i = 0; i < _playerPieces.Count; i++)
             {
-                var playerPieceParts = _playerPieces[i].GetPieceParts();
-                for (int j = 0; j < gamePieces.Count; j++)
-                {
-                    var gamePiece = gamePieces[j];
-                    if (gamePiece.ContainsValue(playerPieceParts[0].value) >= 0 || gamePiece.ContainsValue(playerPieceParts[1].value) >= 0)
-                    {
-                        result.Add(_playerPieces[i]);
-                        break;
-                    }
-                }
+                var pieceParts = _playerPieces[i].GetPieceParts();
+                if (game.ContainsValue(pieceParts[0].value) || game.ContainsValue(pieceParts[1].value))
+                    result.Add(_playerPieces[i]);
             }
             return result;
         }
 
+        public abstract Piece? PickPieceToThrow(Game game);
 
-        public abstract Piece? PickPieceToThrow(Juego juego);
-
-        public virtual void UsePiece(Juego juego)
+        public virtual void UsePiece(Game game)
         {
-            var piece = PickPieceToThrow(juego);
+            var piece = PickPieceToThrow(game);
             RemovePiece(piece);
-            juego.UsePiece(Name, piece);
+            game.UsePiece(Name, piece);
         }
+
+
+
     }
 }

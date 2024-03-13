@@ -3,10 +3,10 @@
     public class Utils
     {
 
-        public static void SortPieces(ref List<Piece> pieces)
+        public static void SortPiecesByFirstValue(ref List<Piece> pieces)
         {
-            for (int i = 0; i < pieces.Length - 1; i++)
-                for (int j = i + 1; j < pieces.Length; j++)
+            for (int i = 0; i < pieces.Count - 1; i++)
+                for (int j = i + 1; j < pieces.Count; j++)
                 {
                     if (pieces[i].GetValue1() < pieces[j].GetValue1())
                     {

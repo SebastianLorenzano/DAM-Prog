@@ -4,6 +4,7 @@
     {
         private List<Player> _players = new();
         private List<Piece> _pieces = new();
+        private Dictionary<int, Piece> _availablePieces = new();
 
         public int PieceCount => _pieces.Count;
         public Piece? FirstPiece => PieceCount > 0 ? _pieces[0] : null;
@@ -52,6 +53,28 @@
             _pieces.RemoveAt(index);
         }
 
+        public void AddAvailablePiece(Piece piece)
+        {
+            if (piece != null)
+            {
+                _availablePieces.Add(IndexOfPiece(piece), piece);
+            }
+        }
+
+        public void RemoveAvailablePiece(Piece piece)
+        {
+            if (piece != null)
+                _availablePieces.Remove(IndexOfPiece(piece));
+        }
+
+        public List<Piece> GetAvailablePieces()
+        {
+            var result = new List<Piece>();
+            foreach (var item in _availablePieces)
+                result.Add(item.Value);
+            return result;
+        }
+
         private int IndexOfPiece(Piece piece)
         {
             if (piece == null)
@@ -92,14 +115,22 @@
 
         public void UsePiece(string name, Piece? piece)
         {
+<<<<<<< Updated upstream
             if (name == null)
                 name = "Unknown";
+=======
+
+>>>>>>> Stashed changes
             if (piece != null)
             {
                 Console.WriteLine("El Jugador " +  name + " no ha tirado ninguna ficha.");
             }
             else
             {
+<<<<<<< Updated upstream
+=======
+                GetAvailablePieces();
+>>>>>>> Stashed changes
                 Console.WriteLine("El Jugador " + name + " ha tirado la ficha con valores " + piece.ToString());
             }
         }
