@@ -25,7 +25,8 @@
         }
 
         /* VER SI SE PUEDE HACER ESTO        
-         
+        Enumerators 
+
          //TODO 
         public void Foreach()
         {

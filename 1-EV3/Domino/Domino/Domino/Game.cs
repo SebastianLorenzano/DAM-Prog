@@ -1,4 +1,6 @@
-﻿namespace Domino
+﻿using System.Numerics;
+
+namespace Domino
 {
     public class Game
     {
@@ -252,9 +254,8 @@
 
         }
 
-        public void StartRound()
+        public void GivePiecesToPlayers()
         {
-
             while (_pieces.Count >= 1)
             {
                 for (int i = 0; i < _players.Count; i++)
@@ -263,28 +264,41 @@
                     var player = GetPlayerAt(i);
                     player.AddPiece(TakePieceAt(randomPiece));
                 }
-                
             }
+        }
+
+        public void PlayTurns()
+        {
+            for (int i = 0; i < _players.Count; i++)
+            {
+                Player player = _players[i];
+                PlayPlayerTurn(ref player);
+                if (player.PieceCount == 0 || consecutivePasses == _players.Count)
+                {
+                    isRoundRunning = false;
+                    break;
+                }
+            }
+        }
+
+        public void PlayPlayerTurn(ref Player player)
+        {
+            bool played = player.UsePiece(this);
+            if (played)
+                consecutivePasses = 0;
+            else
+                consecutivePasses++;
+
+        }
+
+        public void StartRound()
+        {
+            GivePiecesToPlayers();
             isRoundRunning = true;
             while (isRoundRunning)
-                for (int i = 0; i < _players.Count; i++)
-                {
-                    var player = GetPlayerAt(i);
-                    bool played  =  player.UsePiece(this);
-                    if (played)
-                        consecutivePasses = 0;
-                    else
-                        consecutivePasses++;
-                    if (player.PieceCount == 0 || consecutivePasses == _players.Count)
-                    {
-                        isRoundRunning = false;
-                        break;
-                    }
-                }
+                PlayTurns();
             RemoveLosers();
             PrepareRoundRestart();
-
-
         }
 
         public void PrepareRoundRestart()
