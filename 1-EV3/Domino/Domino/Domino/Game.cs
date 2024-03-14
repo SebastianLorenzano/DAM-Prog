@@ -141,6 +141,19 @@
             return -1;
         }
 
+        public string AvailableValuesToString()
+        {
+            string result = "( ";
+            for (int i = 0; i < _availableValues.Count; i++)
+            {
+                if (i != _availableValues.Count - 1)
+                    result += _availableValues[i].ToString() + ", ";
+                else
+                    result += _availableValues[i].ToString();
+            }
+            return result += " )";
+        }
+
 
         public bool UsePiece(string name, Piece piece)
         {
@@ -182,26 +195,13 @@
             }
         }
 
-        public string AvailableValuesToString()
-        {
-            string result = "( ";
-            for (int i = 0; i < _availableValues.Count; i++)
-            { 
-                if (i != _availableValues.Count - 1)
-                    result += _availableValues[i].ToString() + ", ";
-                else
-                    result += _availableValues[i].ToString();
-            }
-            return result += " )";
-        }
-
         public void RemoveLosers()
         {
             List<Player> losers = new();
             int loserPoints = 0;
             for (int i = 0; i < _players.Count; i++)
             {
-                var player = _players.GetPlayerAt(i);
+                var player = _players[i];
                 int points = player.GetPointsAndGiveBackPieces(this);
                 if (points == loserPoints)
                     losers.Add(player);

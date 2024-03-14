@@ -1,4 +1,6 @@
-﻿namespace Domino
+﻿using System.Runtime.CompilerServices;
+
+namespace Domino
 {
     public class Utils
     {
@@ -20,6 +22,15 @@
         public static int GetRandom(int min, int max)
         {
             return r.Next(min, max + 1);
+        }
+
+
+        /* VER COMO FUNCIONA */
+        public static void Swap<T>(this IList<T> list, int i, int j)
+        {
+            var aux = list[i];
+            list[i] = list[j];
+            list[j] = aux;
         }
     }
     
