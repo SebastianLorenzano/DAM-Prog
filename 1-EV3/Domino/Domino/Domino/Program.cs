@@ -15,8 +15,12 @@ namespace Domino
             var pieces = new List<Piece>();
             for (int i = 0; i <= 6; i++)
             {
-                for (int j = 0;  j <= 6; j++) 
-                    pieces.Add(new Piece(i, j));
+                for (int j = 0; j <= 6; j++)
+                {
+                    var piece = Piece.Create(i, j);
+                    if (piece != null)
+                        pieces.Add(piece);
+                }
             }
 
             Game game = new Game(new PlayersList(players), new DominoDeck(pieces));
