@@ -1,17 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domino
+﻿namespace Domino
 {
     public abstract class Player
     {
-        protected List<Piece> _playerPieces = new();
+        protected DominoDeck _playerPieces = new();
         protected string _name;
         public string Name
         {
-            get { return _name; }
-            set { SetName(value); }
+            get => _name;
+            set => SetName(value);
         }
         public int PieceCount => _playerPieces.Count;
+
+
 
         public Player(string name)
         {
@@ -20,100 +20,93 @@ namespace Domino
             Name = name;
         }
 
+
         public void SetName(string name)
         {
             if (name != null)
                 _name = name;
         }
-        public void AddPiece(Piece piece) 
-        {
-            if (piece != null)
-                _playerPieces.Add(piece);
-        }
 
-        public Piece? GetPieceAt(int index)
+        public void AddPiece(Piece piece)
         {
-            if (index < 0 || index >= _playerPieces.Count)
-                return _playerPieces[index];
-            return null;
-        }
-
-        public int IndexOf(Piece piece)
-        {
-            if (piece == null)
-                return -1;
-            for (int i = 0; i < _playerPieces.Count; i++)
-            {
-                if (_playerPieces[i] == piece)
-                    return i;
-            }
-            return -1;
-        }
-
-        public bool Contains(Piece piece)
-        {
-            return IndexOf(piece) >= 0;
+            _playerPieces.Add(piece);
         }
 
         public void RemovePiece(Piece piece)
         {
-            int index = IndexOf(piece);
-            if (index >= 0)
-                _playerPieces.RemoveAt(index);
+            _playerPieces.Remove(piece);
         }
+
+        public Piece? GetPieceAt(int index)
+        {
+            return _playerPieces.GetPieceAt(index);
+        }
+
+        public bool ContainsPiece(Piece piece)
+        {
+            return _playerPieces.Contains(piece);
+        }
+
+        public int IndexOfPiece(Piece piece)
+        {
+            return _playerPieces.IndexOf(piece);
+        }
+
 
         public List<Piece> GetDoubles()
         {
-            return GetDoubles(_playerPieces);
+            return _playerPieces.GetDoubles();
         }
 
         public static List<Piece> GetDoubles(List<Piece> list)
         {
-            var result = new List<Piece>();
-            var p = list;
-            for (int i = 0; i < p.Count; i++)
-            {
-                if (p[i].IsDouble)
-                    result.Add(p[i]);
-            }
-            return result;
+            return DominoDeck.GetDoubles(list);
         }
 
-        public List<Piece> GetDoublesSorted(List<Piece> list)
-        {
-            var result = GetDoubles(list);
-            Utils.SortPiecesByFirstValue(ref result);
-            return result;
-        }
-
-        public List<Piece> GetPlayablePieces(Juego juego)
+        public List<Piece> GetPlayablePieces(Game game)
         {
             var result = new List<Piece>();
-            var gamePieces = juego.GetAvailablePieces();
+            
             for (int i = 0; i < _playerPieces.Count; i++)
             {
-                var playerPieceParts = _playerPieces[i].GetPieceParts();
-                for (int j = 0; j < gamePieces.Count; j++)
-                {
-                    var gamePiece = gamePieces[j];
-                    if (gamePiece.ContainsValue(playerPieceParts[0].value) >= 0 || gamePiece.ContainsValue(playerPieceParts[1].value) >= 0)
-                    {
-                        result.Add(_playerPieces[i]);
-                        break;
-                    }
-                }
+                var piece = _playerPieces.GetPieceAt(i);
+                var pieceParts = piece.GetPieceParts();
+                if (game.ContainsValue(pieceParts[0].value) || game.ContainsValue(pieceParts[1].value))
+                    result.Add(piece);
+            }
+            return result;
+        }
+
+        public abstract Piece? PickPieceToThrow(Game game);
+
+        public virtual bool UsePiece(Game game)
+        {
+            var piece = PickPieceToThrow(game);
+            RemovePiece(piece);
+            return game.UsePiece(Name, piece);
+        }
+
+        public int GetPointsAndGiveBackPieces(Game game)
+        {
+            int result = 0;
+            for (int i = 0; i < _playerPieces.Count; i++)
+            {
+                var piece = _playerPieces.GetPieceAt(i);
+                if (piece == null)
+                    return 0;
+                if (piece.IsDouble)
+                    result += piece.GetValue1() * 2;
+                else
+                    result += piece.GetValue1() + piece.GetValue2();
+                game.AddPiece(piece);
+                _playerPieces.RemoveAt(i);
+                i--;
+
             }
             return result;
         }
 
 
-        public abstract Piece? PickPieceToThrow(Juego juego);
 
-        public virtual void UsePiece(Juego juego)
-        {
-            var piece = PickPieceToThrow(juego);
-            RemovePiece(piece);
-            juego.UsePiece(Name, piece);
-        }
     }
 }

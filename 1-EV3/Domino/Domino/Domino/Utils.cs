@@ -2,7 +2,7 @@
 {
     public class Utils
     {
-
+        private static Random r = new Random();
         public static void SortPiecesByFirstValue(ref List<Piece> pieces)
         {
             for (int i = 0; i < pieces.Count - 1; i++)
@@ -16,5 +16,11 @@
                     }
                 }
         }
+
+        public static int GetRandom(int min, int max)
+        {
+            return r.Next(min, max + 1);
+        }
     }
+    
 }
