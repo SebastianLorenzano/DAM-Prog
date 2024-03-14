@@ -26,12 +26,15 @@ namespace Domino
 
 
         /* VER COMO FUNCIONA */
+
+        /*
         public static void Swap<T>(this IList<T> list, int i, int j)
         {
             var aux = list[i];
             list[i] = list[j];
             list[j] = aux;
         }
+        */
     }
     
 }
