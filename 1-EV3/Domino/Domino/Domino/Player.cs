@@ -86,7 +86,7 @@
             return game.UsePiece(Name, piece);
         }
 
-        public int GetPointsAndGiveBackPieces(Game game)
+        public int GetPointsAndGetBackPieces(Game game)
         {
             int result = 0;
             for (int i = 0; i < _playerPieces.Count; i++)

@@ -204,7 +204,7 @@ namespace Domino
             for (int i = 0; i < _players.Count; i++)
             {
                 var player = _players[i];
-                int points = player.GetPointsAndGiveBackPieces(this);
+                int points = player.GetPointsAndGetBackPieces(this);
                 if (points == loserPoints)
                     losers.Add(player);
                 else if (points > loserPoints)
