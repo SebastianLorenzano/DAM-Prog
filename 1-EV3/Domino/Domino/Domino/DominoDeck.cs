@@ -6,6 +6,11 @@
         public int Count => _pieces.Count;
         public Piece? First => Count > 0 ? _pieces[0] : null;
         public Piece? Last => Count > 0 ? _pieces[Count - 1] : null;
+        public Piece? this[int index]
+        {
+            get => _pieces[index];
+            set => _pieces[index] = value;
+        }
         
         public DominoDeck()
         {
@@ -112,6 +117,20 @@
                 }
             }
             return result;
+        }
+
+        public DominoDeck Fill()
+        {
+            for (int i = 0; i <= 6; i++)
+            {
+                for (int j = 0; j <= 6; j++)
+                {
+                    var piece = Piece.Create(i, j);
+                    if (piece != null)
+                        _pieces.Add(piece);
+                }
+            }
+            return this;
         }
 
         public DominoDeck Clone()

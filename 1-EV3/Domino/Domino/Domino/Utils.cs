@@ -1,4 +1,6 @@
-﻿namespace Domino
+﻿using System.Runtime.CompilerServices;
+
+namespace Domino
 {
     public class Utils
     {
@@ -21,6 +23,18 @@
         {
             return r.Next(min, max + 1);
         }
+
+
+        /* VER COMO FUNCIONA */
+
+        /*
+        public static void Swap<T>(this IList<T> list, int i, int j)
+        {
+            var aux = list[i];
+            list[i] = list[j];
+            list[j] = aux;
+        }
+        */
     }
     
 }

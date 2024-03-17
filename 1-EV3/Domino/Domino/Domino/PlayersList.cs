@@ -7,6 +7,13 @@
         public int Count => _players.Count;
         public Player? First => Count > 0 ? _players[0] : null;
         public Player? Last => Count > 0 ? _players[Count - 1] : null;
+
+        public Player? this[int index]
+        {
+            get => _players[index];
+            set => _players[index] = value;
+        }
+
         public PlayersList()
         {
 
@@ -17,10 +24,20 @@
             _players = players.ToList();
         }
 
+        /* VER SI SE PUEDE HACER ESTO        
+        Enumerators 
+
+         //TODO 
+        public void Foreach()
+        {
+            base.Foreach();
+        }
+
+        */
 
         public void AddPlayer(Player player)
         {
-            if (player != null)
+            if (player != null || !_players.Contains(player))
                 _players.Add(player);
         }
 

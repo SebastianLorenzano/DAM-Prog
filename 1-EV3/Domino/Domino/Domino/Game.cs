@@ -1,4 +1,6 @@
-﻿namespace Domino
+﻿using System.Numerics;
+
+namespace Domino
 {
     public class Game
     {
@@ -141,6 +143,19 @@
             return -1;
         }
 
+        public string AvailableValuesToString()
+        {
+            string result = "( ";
+            for (int i = 0; i < _availableValues.Count; i++)
+            {
+                if (i != _availableValues.Count - 1)
+                    result += _availableValues[i].ToString() + ", ";
+                else
+                    result += _availableValues[i].ToString();
+            }
+            return result += " )";
+        }
+
 
         public bool UsePiece(string name, Piece piece)
         {
@@ -182,27 +197,14 @@
             }
         }
 
-        public string AvailableValuesToString()
-        {
-            string result = "( ";
-            for (int i = 0; i < _availableValues.Count; i++)
-            { 
-                if (i != _availableValues.Count - 1)
-                    result += _availableValues[i].ToString() + ", ";
-                else
-                    result += _availableValues[i].ToString();
-            }
-            return result += " )";
-        }
-
         public void RemoveLosers()
         {
             List<Player> losers = new();
             int loserPoints = 0;
             for (int i = 0; i < _players.Count; i++)
             {
-                var player = _players.GetPlayerAt(i);
-                int points = player.GetPointsAndGiveBackPieces(this);
+                var player = _players[i];
+                int points = player.GetPointsAndGetBackPieces(this);
                 if (points == loserPoints)
                     losers.Add(player);
                 else if (points > loserPoints)
@@ -252,9 +254,8 @@
 
         }
 
-        public void StartRound()
+        public void GivePiecesToPlayers()
         {
-
             while (_pieces.Count >= 1)
             {
                 for (int i = 0; i < _players.Count; i++)
@@ -263,28 +264,41 @@
                     var player = GetPlayerAt(i);
                     player.AddPiece(TakePieceAt(randomPiece));
                 }
-                
             }
+        }
+
+        public void PlayTurns()
+        {
+            for (int i = 0; i < _players.Count; i++)
+            {
+                Player player = _players[i];
+                PlayPlayerTurn(ref player);
+                if (player.PieceCount == 0 || consecutivePasses == _players.Count)
+                {
+                    isRoundRunning = false;
+                    break;
+                }
+            }
+        }
+
+        public void PlayPlayerTurn(ref Player player)
+        {
+            bool played = player.UsePiece(this);
+            if (played)
+                consecutivePasses = 0;
+            else
+                consecutivePasses++;
+
+        }
+
+        public void StartRound()
+        {
+            GivePiecesToPlayers();
             isRoundRunning = true;
             while (isRoundRunning)
-                for (int i = 0; i < _players.Count; i++)
-                {
-                    var player = GetPlayerAt(i);
-                    bool played  =  player.UsePiece(this);
-                    if (played)
-                        consecutivePasses = 0;
-                    else
-                        consecutivePasses++;
-                    if (player.PieceCount == 0 || consecutivePasses == _players.Count)
-                    {
-                        isRoundRunning = false;
-                        break;
-                    }
-                }
+                PlayTurns();
             RemoveLosers();
             PrepareRoundRestart();
-
-
         }
 
         public void PrepareRoundRestart()

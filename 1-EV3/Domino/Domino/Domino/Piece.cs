@@ -22,11 +22,9 @@ namespace Domino
         public bool IsDouble => _pieceParts[0].value == _pieceParts[1].value;
         public bool IsOcuppied => _pieceParts[0].isOcuppied && _pieceParts[1].isOcuppied;
 
-        public Piece(int value1, int value2)
+        private Piece(int value1, int value2)
         {
-            if (value1 >= 0 && value1 <= 6)
                 _pieceParts[0] = new PiecePart(value1);
-            if (value2 >= 0 && value2 <= 6)
                 _pieceParts[1] = new PiecePart(value2);
         }
         
@@ -55,7 +53,15 @@ namespace Domino
                 
         }
 
+        public static Piece? Create(int value1, int value2)
+        {
+            if (0 > value1 || value1 > 6) 
+                return null;
+            if (0 > value2 || value2 > 6)
+                return null;
+            return new Piece(value1, value2);
 
+        }
 
         public override string ToString()
         {

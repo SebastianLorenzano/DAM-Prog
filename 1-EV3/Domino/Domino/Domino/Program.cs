@@ -12,15 +12,11 @@ namespace Domino
             players.Add(new ConservativePlayer("Marta"));
             players.Add(new ImpulsivePlayer("Luis"));
 
-            var pieces = new List<Piece>();
-            for (int i = 0; i <= 6; i++)
-            {
-                for (int j = 0;  j <= 6; j++) 
-                    pieces.Add(new Piece(i, j));
-            }
-
-            Game game = new Game(new PlayersList(players), new DominoDeck(pieces));
+            Game game = new Game(new PlayersList(players), new DominoDeck().Fill());
             game.StartGame();
         }
+
+        /* Si cada una de esas funciones devuelve al mazo, puede usar sus funciones  */
+        /* Deck d = new Deck().Fill().Shuffle(); */
     }
 }
