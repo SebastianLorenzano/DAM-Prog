@@ -1,9 +1,8 @@
 ﻿namespace Race
 {
+    public delegate void VisitDelegate<T>(T element);
     public interface IRace
     {
-        delegate void VisitDelegate<T>(T element);
-        
         void AddObject(RaceObject obj, double position);
         void Init(double distance);
         void SimulateStep();
