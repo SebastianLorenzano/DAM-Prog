@@ -16,3 +16,7 @@ Esta organizado en:
 	En algunos de estos programas no fue verificado su funcionamiento, ya que nada aqui es evaluado.
 3- EXAM: Estos son los examenes. Cada uno tiene su descripción dentro de su propio README
 4- NuGets: Aqui son almacenados los NuGets utilizados.
+
+
+
+
