@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace ndupcopy
 {
@@ -22,5 +23,6 @@ namespace ndupcopy
                 { Hash = hash, Size = size, Path = path, IsDisabled = is_disabled};
             return null;
         }
+
     }
 }
