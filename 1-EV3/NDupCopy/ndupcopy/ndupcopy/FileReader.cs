@@ -1,4 +1,7 @@
-﻿namespace ndupcopy
+﻿using System;
+using System.Collections.Generic;
+
+namespace ndupcopy
 {
     public class FileReader
     {
@@ -13,12 +16,81 @@
                 foreach (var filePath in filePaths)
                     result.Add(GetFileInfo(filePath));
             }
+            return result.ToArray();
         }
 
-        public static FileInfo GetFileInfo(string path)
+        public static FileInfo? GetFileInfo(string path)
         {
-
+            if (path == null)
+                return null;
+            var hashS = HashCalculator.GetHash(path);
+            return new FileInfo()
+            {
+                Path = path,
+                Size = new System.IO.FileInfo(path).Length,
+                HashS = hashS,
+                HashL = hashS.GetHashCode(),
+                IsDisabled = false
+            };
         }
+
+        public static bool CompareTwoFiles(FileInfo f1, FileInfo f2)
+        {
+            return f1.HashL == f2.HashL && f1.Size == f2.Size && f1.HashS == f2.HashS && CompareByteByByte(f1, f2);
+        }
+
+        public static bool CompareByteByByte(FileInfo f1, FileInfo f2) 
+        {
+            const int BYTES_TO_READ = sizeof(Int64);
+            int iterations = (int)Math.Ceiling((double)f1.Size / BYTES_TO_READ);
+
+                using (FileStream fs1 = File.OpenRead(f1.Path))
+                using (FileStream fs2 = File.OpenRead(f2.Path))
+                {
+                    byte[] one = new byte[BYTES_TO_READ];
+                    byte[] two = new byte[BYTES_TO_READ];
+
+                    for (int i = 0; i < iterations; i++)
+                    {   
+                        fs1.Read(one, 0, BYTES_TO_READ);                   // Ya que el Read toma en cuenta si llega al final de la linea y
+                        fs2.Read(two, 0, BYTES_TO_READ);                   //  si lee menos cantidad, no es necesario estar atento de si devuelve mas o no
+
+                        if (BitConverter.ToInt64(one, 0) != BitConverter.ToInt64(two, 0))
+                            return false;
+                    }
+                }
+
+                return true;
+            }
+
+
+
+        /*                                                                   Sacado de internet completamente para comparar
+        static bool FilesAreEqual_OneByte(FileInfo first, FileInfo second)
+        {
+            if (first.Length != second.Length)
+                return false;
+
+            if (string.Equals(first.FullName, second.FullName, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            using (FileStream fs1 = first.OpenRead())
+            using (FileStream fs2 = second.OpenRead())
+            {
+                for (int i = 0; i < first.Length; i++)
+                {
+                    if (fs1.ReadByte() != fs2.ReadByte())
+                        return false;
+                }
+            }
+
+            return true;
+        }
+        */
+
+
+
+
 
     }
 }
