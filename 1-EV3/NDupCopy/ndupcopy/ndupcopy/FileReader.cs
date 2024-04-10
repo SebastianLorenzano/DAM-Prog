@@ -27,7 +27,7 @@ namespace ndupcopy
             return new FileInfo()
             {
                 Path = path,
-                Size = new System.IO.FileInfo(path).Length,
+                Length = new System.IO.FileInfo(path).Length,
                 HashS = hashS,
                 HashL = hashS.GetHashCode(),
                 IsDisabled = false
@@ -36,13 +36,16 @@ namespace ndupcopy
 
         public static bool CompareTwoFiles(FileInfo f1, FileInfo f2)
         {
-            return f1.HashL == f2.HashL && f1.Size == f2.Size && f1.HashS == f2.HashS && CompareByteByByte(f1, f2);
+            if (f1 == null || f2 == null)
+                return false;
+            return f1.HashL == f2.HashL && f1.Length == f2.Length && f1.HashS == f2.HashS && CompareByteByByte(f1, f2);
         }
 
-        public static bool CompareByteByByte(FileInfo f1, FileInfo f2) 
+        /*
+        public static bool CompareByteByByteInt64(FileInfo f1, FileInfo f2) 
         {
             const int BYTES_TO_READ = sizeof(Int64);
-            int iterations = (int)Math.Ceiling((double)f1.Size / BYTES_TO_READ);
+            int iterations = (int)Math.Ceiling((double)f1.Length / BYTES_TO_READ);
 
                 using (FileStream fs1 = File.OpenRead(f1.Path))
                 using (FileStream fs2 = File.OpenRead(f2.Path))
@@ -62,31 +65,26 @@ namespace ndupcopy
 
                 return true;
             }
+        */
 
 
-
-        /*                                                                   Sacado de internet completamente para comparar
-        static bool FilesAreEqual_OneByte(FileInfo first, FileInfo second)
+                                                                         
+        internal static bool CompareByteByByte(FileInfo f1, FileInfo f2)
         {
-            if (first.Length != second.Length)
+            if (f1 == null || f2 == null)
                 return false;
-
-            if (string.Equals(first.FullName, second.FullName, StringComparison.OrdinalIgnoreCase))
-                return true;
-
-            using (FileStream fs1 = first.OpenRead())
-            using (FileStream fs2 = second.OpenRead())
+            using (FileStream fs1 = File.OpenRead(f1.Path))
+            using (FileStream fs2 = File.OpenRead(f2.Path))
             {
-                for (int i = 0; i < first.Length; i++)
+                for (int i = 0; i < f1.Length; i++)
                 {
                     if (fs1.ReadByte() != fs2.ReadByte())
                         return false;
                 }
             }
-
             return true;
         }
-        */
+        
 
 
 
