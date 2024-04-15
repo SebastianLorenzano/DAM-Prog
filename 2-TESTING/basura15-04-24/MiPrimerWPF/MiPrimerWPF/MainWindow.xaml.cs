@@ -20,5 +20,28 @@ namespace MiPrimerWPF
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnClick(object sender, RoutedEventArgs e)
+        {
+            bool state = CheckBoxMain.IsChecked.Value;
+            CheckBoxMain.IsChecked = !state;
+            ButtonMain.Content += "0";
+        }
+
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AlternateCheck(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

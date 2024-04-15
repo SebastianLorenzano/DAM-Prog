@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="ButtonMain" Content="Button" HorizontalAlignment="Left" Margin="343,224,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="125" Width="174" Click="OnClick">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-179.211"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <CheckBox x:Name="CheckBoxMain" Content="CheckBox" HorizontalAlignment="Left" Margin="568,0,0,0" VerticalAlignment="Center" Checked="CheckBox_Checked" Click="AlternateCheck"/>
 
     </Grid>
 </Window>
