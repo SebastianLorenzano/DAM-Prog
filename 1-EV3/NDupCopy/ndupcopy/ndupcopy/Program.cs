@@ -8,9 +8,9 @@ namespace ndupcopy
 
         public class AppParams
         {
-            public string[]? input_folders { get; set; }
-            public string[]? options { get; set; }
-            public string[]? output_folders { get; set; }
+            public string[]? Input_Folders { get; set; }
+            public string[]? Options { get; set; }
+            public string[]? Output_Folders { get; set; }
         }
 
         static void Main(string[] args)

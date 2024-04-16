@@ -40,43 +40,16 @@ namespace ndupcopy
                 return false;
             return f1.HashL == f2.HashL && f1.Length == f2.Length && f1.HashS == f2.HashS && CompareByteByByte(f1, f2);
         }
-
-        /*
-        public static bool CompareByteByByteInt64(FileInfo f1, FileInfo f2) 
+                                              
+        private static bool CompareByteByByte(FileInfo f1, FileInfo f2)
         {
-            const int BYTES_TO_READ = sizeof(Int64);
-            int iterations = (int)Math.Ceiling((double)f1.Length / BYTES_TO_READ);
-
-                using (FileStream fs1 = File.OpenRead(f1.Path))
-                using (FileStream fs2 = File.OpenRead(f2.Path))
-                {
-                    byte[] one = new byte[BYTES_TO_READ];
-                    byte[] two = new byte[BYTES_TO_READ];
-
-                    for (int i = 0; i < iterations; i++)
-                    {   
-                        fs1.Read(one, 0, BYTES_TO_READ);                   // Ya que el Read toma en cuenta si llega al final de la linea y
-                        fs2.Read(two, 0, BYTES_TO_READ);                   //  si lee menos cantidad, no es necesario estar atento de si devuelve mas o no
-
-                        if (BitConverter.ToInt64(one, 0) != BitConverter.ToInt64(two, 0))
-                            return false;
-                    }
-                }
-
-                return true;
-            }
-        */
-
-
-                                                                         
-        internal static bool CompareByteByByte(FileInfo f1, FileInfo f2)
-        {
-            if (f1 == null || f2 == null)
+            if (f1 == null || f2 == null || f1.Length != f2.Length)
                 return false;
             using (FileStream fs1 = File.OpenRead(f1.Path))
             using (FileStream fs2 = File.OpenRead(f2.Path))
             {
-                for (int i = 0; i < f1.Length; i++)
+                long n = fs1.Length;
+                for (int i = 0; i < n; i++)
                 {
                     if (fs1.ReadByte() != fs2.ReadByte())
                         return false;
@@ -84,9 +57,24 @@ namespace ndupcopy
             }
             return true;
         }
-        
 
+        public static void MoveFile(string originFolder, string absolutePath, string destination)
+        {
+            if (absolutePath == null || destination == null)
+                return;
+            if (!Directory.Exists(destination))
+                throw new Exception("Directory does not exist or file does not exist");
+            if (!File.Exists(absolutePath))
+                throw new Exception("File does not exist");
+                
+            var relativePath = absolutePath.Substring(originFolder.Length);
+            destination = Path.Combine(destination, relativePath);
 
+            if (!Directory.Exists(Path.GetDirectoryName(destination)))
+                Directory.CreateDirectory(Path.GetDirectoryName(destination));
+            File.Move(absolutePath, destination);
+
+        }
 
 
 
