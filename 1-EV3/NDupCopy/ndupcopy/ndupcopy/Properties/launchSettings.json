@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ndupcopy": {
+      "commandName": "Project",
+      "commandLineArgs": "\"Input_Folders\"= [\"valor1\", \"valor2\", \"valor3\"],\n    \"Param2\": 2\"Options\"=\"\"\r\n\"Output_Folders\"=\"C:\\Users\\seblor3\\Downloads\\NFOLDERDUP\\output\""
+    }
+  }
+}

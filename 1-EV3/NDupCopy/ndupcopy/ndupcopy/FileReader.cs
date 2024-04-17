@@ -43,9 +43,9 @@ namespace ndupcopy
                                               
         private static bool CompareByteByByte(FileInfo f1, FileInfo f2)
         {
-            if (f1 == null || f2 == null || f1.Length != f2.Length)
-                return false;
-            using (FileStream fs1 = File.OpenRead(f1.Path))
+            if (f1 == null || f2 == null || f1.Length != f2.Length)     // It's checked already on CompareTwoFiles(), but because it's not gonna be almost used in most cases, it 
+                return false;                                            // doesn't hurt to add it as a precaution in case CompareTwoFiles() gets changed and it doesn't make a difference
+            using (FileStream fs1 = File.OpenRead(f1.Path))                 // in performance
             using (FileStream fs2 = File.OpenRead(f2.Path))
             {
                 long n = fs1.Length;
@@ -57,26 +57,6 @@ namespace ndupcopy
             }
             return true;
         }
-
-        public static void MoveFile(string originFolder, string absolutePath, string destination)
-        {
-            if (absolutePath == null || destination == null)
-                return;
-            if (!Directory.Exists(destination))
-                throw new Exception("Directory does not exist or file does not exist");
-            if (!File.Exists(absolutePath))
-                throw new Exception("File does not exist");
-                
-            var relativePath = absolutePath.Substring(originFolder.Length);
-            destination = Path.Combine(destination, relativePath);
-
-            if (!Directory.Exists(Path.GetDirectoryName(destination)))
-                Directory.CreateDirectory(Path.GetDirectoryName(destination));
-            File.Move(absolutePath, destination);
-
-        }
-
-
 
     }
 }
