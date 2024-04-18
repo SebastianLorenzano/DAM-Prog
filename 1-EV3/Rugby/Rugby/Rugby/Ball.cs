@@ -5,5 +5,13 @@
         public int x, y;
 
         public Player? IsHolding { get; set;}
+
+
+
+
+        public void StartRound(Stadium stadium)
+        {
+
+        }
     }
 }
