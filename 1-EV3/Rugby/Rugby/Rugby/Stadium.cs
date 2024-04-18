@@ -8,8 +8,10 @@ namespace Rugby
         private List<Character> _chars = new();
         private Ball _ball = new();
         private Team[] _teams = new Team[2];
+        public bool round_finished = false;
 
         const int GAME_DURATION = 1000;
+        const int MAX_DEMENTORS = 4;
 
         public int Width 
         { 
@@ -63,8 +65,21 @@ namespace Rugby
 
         public Player? GetPlayerWhoHasBall()
         {
-            return _ball.IsHolding;
+            return _ball.PlayerWithBall;
         }
+
+        public void FillGame()
+        {
+            FillPlayers();
+            FillDementors();
+        }
+
+        public void FillDementors()
+        {
+            for (int i = 0; i < MAX_DEMENTORS; i++)
+                _chars.Add(new Dementor());
+        }
+
 
         public void FillPlayers()
         {
@@ -103,13 +118,6 @@ namespace Rugby
             }
         }
 
-
-        public void FillGame()
-        {
-            throw new NotImplementedException(); //TODO: SHOULD ADD PLAYERS AND BALL
-        } 
-
-
         public void RandomizeTurns()
         {
             throw new NotImplementedException();
@@ -120,7 +128,11 @@ namespace Rugby
         {
             for (int i = 0; i < GAME_DURATION; i++)
                 foreach (var c in _chars)
-                    c.ExecuteTurn();
+                {
+                    if (!round_finished)    // TODO: When ball is out of bounds, round is finished
+                        c.ExecuteTurn();
+                }
+                    
         }
     }
 }

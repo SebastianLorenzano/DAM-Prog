@@ -16,6 +16,14 @@
 
         }
 
-      
+        public static void MoveToStartingPosition(Player player)
+        {
+            if (player.DefaultPosition == (0, 0))
+                throw new Exception("Default position is not set");
+            player.x = player.DefaultPosition.Item1;
+            player.y = player.DefaultPosition.Item2;
+        }
+
+
     }
 }

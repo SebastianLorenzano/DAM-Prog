@@ -1,10 +1,15 @@
 ﻿namespace Rugby
 {
-    public abstract class Character
+
+
+    public abstract class Entity
     {
         public int x, y;
-        public int speed;
+    }
+    
 
+    public abstract class Character : Entity
+    {
 
         public abstract void ExecuteTurn();
 

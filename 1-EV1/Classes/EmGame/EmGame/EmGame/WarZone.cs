@@ -140,7 +140,7 @@ namespace Classes
                 if (turn != null)
                 {
                     // Javi: el warrior index es i
-                    RemoveWarrior(GetWarriorIndex(turn));
+                    RemoveWarrior(GetWarriorIndex(i));
                     i--;
                 }
             }
@@ -284,6 +284,7 @@ namespace Classes
             int dy = y2 - y1;
             return Math.Sqrt(dx * dx + dy * dy);
         }
+
         public bool IsTeamRemaining(TeamType team)
         {
             for (int i = 0; i < _warriorList.Count; i++)
