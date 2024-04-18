@@ -15,5 +15,8 @@
             int dy = entity2.y - entity1.x;
             return (int)(Math.Floor(Math.Sqrt(dx * dx + dy * dy)));       // Rounds down the distance to the nearest integer and casts it
         }
+
+        public 
+
     }
 }

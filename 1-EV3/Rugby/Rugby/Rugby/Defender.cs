@@ -6,6 +6,11 @@
         {
 
         }
+
+        public override void ExecuteTurn()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class SpecialDefender : Defender

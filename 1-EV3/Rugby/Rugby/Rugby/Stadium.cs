@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Rugby
 {
@@ -24,7 +25,8 @@ namespace Rugby
             set => SetHeight(value); 
         }
         public int CharCount => _chars.Count;
-
+        public Team? FirstTeam => _teams.Length > 0 ? _teams[0] : null;
+        public Team? SecondTeam => _teams.Length > 1 ? _teams[1] : null;
         public Stadium(int width, int height, Team team1, Team team2) 
         {
             SetWidth(width);

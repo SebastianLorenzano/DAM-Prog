@@ -3,7 +3,7 @@
     public abstract class Player : Character
     {
         public string name = "Player";
-        private Team _team;
+        protected Team _team;
         public Team Team => _team;
         public (int, int) DefaultPosition { get; init; }
 
