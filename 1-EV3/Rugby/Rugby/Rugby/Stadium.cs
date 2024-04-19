@@ -1,11 +1,8 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
-
-namespace Rugby
+﻿namespace Rugby
 {
+    public delegate void VisitEntity(Entity entity);
     public class Stadium
     {
-        private int _width = 10, _height = 20;
         private List<Character> _chars = new();
         private Ball _ball = new();
         private Team[] _teams = new Team[2];
@@ -13,24 +10,15 @@ namespace Rugby
 
         const int GAME_DURATION = 1000;
         const int MAX_DEMENTORS = 4;
-
-        public int Width 
-        { 
-            get => _width; 
-            set => SetWidth(value); 
-        }
-        public int Height
-        {
-            get => _height; 
-            set => SetHeight(value); 
-        }
+        const int WIDTH = 19;
+        const int HEIGHT = 9;
+        public int Width => WIDTH;
+        public int Height => HEIGHT;
         public int CharCount => _chars.Count;
         public Team? FirstTeam => _teams.Length > 0 ? _teams[0] : null;
         public Team? SecondTeam => _teams.Length > 1 ? _teams[1] : null;
         public Stadium(int width, int height, Team team1, Team team2) 
         {
-            SetWidth(width);
-            SetHeight(height);
             if (team1 == null)
                 team1 = new Team("Team1");
             if (team2 == null)
@@ -38,18 +26,6 @@ namespace Rugby
             _teams[0] = team1;
             _teams[1] = team2;
         }
-
-        public void SetWidth(int width)
-        {
-            if (width > 0 && width < 100)
-                _width = width;
-        }
-        public void SetHeight(int height)
-        {
-            if (height > 0 && height < 100)
-                _height = height;
-        }
-
         public Character? GetCharacterAtIndex(int index)
         {
             if (index >= 0 && index < _chars.Count)
@@ -65,9 +41,36 @@ namespace Rugby
             return null;
         }
 
-        public Player? GetPlayerWhoHasBall()
+        public void SetBallNewPosition(int x, int y)        // This function also takes into account if a player has the ball at the end
+        {
+                _ball.x = x;
+                _ball.y = y;
+            if (GetCharacterAt(x, y) is Player player)
+                _ball.PlayerWithBall = player;
+            else
+                _ball.PlayerWithBall = null;
+        }
+
+        public Player? GetPlayerWithBall()
         {
             return _ball.PlayerWithBall;
+        }
+
+        public void SetPlayerWithBall(Player? player)
+        {
+            _ball.PlayerWithBall = player;
+        }
+
+        public void VisitEntities(VisitEntity visit)
+        {
+            if (visit != null)
+                foreach (var c in _chars)
+                    visit(c);
+        }
+
+        public bool IsOutOfBounds(int x, int y)
+        {
+            return x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT;
         }
 
         public void FillGame()
@@ -85,38 +88,39 @@ namespace Rugby
 
         public void FillPlayers()
         {
+            int playerNum = 0;
             var team1Pos = Team.GetTeam1DefaultPositions();
             var team2Pos = Team.GetTeam2DefaultPositions();
-            FillSpecDefenders(team1Pos, team2Pos);
-            FillDefenders(team1Pos, team2Pos);
-            FillAttackers(team1Pos, team2Pos);
+            FillSpecDefenders(team1Pos, team2Pos, ref playerNum);
+            FillDefenders(team1Pos, team2Pos, ref playerNum);
+            FillAttackers(team1Pos, team2Pos, ref playerNum);
         }
 
-        public void FillSpecDefenders((int x, int y)[] team1Pos, (int x, int y)[] team2Pos)
+        public void FillSpecDefenders((int x, int y)[] team1Pos, (int x, int y)[] team2Pos, ref int playerNum)
         {
             for (int i = 0; i < 2; i++)
             {
-                _chars.Add(new SpecialDefender(_teams[0]) { DefaultPosition = team1Pos[i] });
-                _chars.Add(new SpecialDefender(_teams[1]) { DefaultPosition = team2Pos[i] });
+                _chars.Add(new SpecialDefender(_teams[0], "Player" + playerNum++) { DefaultPosition = team1Pos[i] });;
+                _chars.Add(new SpecialDefender(_teams[1], "Player" + playerNum++) { DefaultPosition = team2Pos[i] });
             }
 
         }
 
-        public void FillDefenders((int x, int y)[] team1Pos, (int x, int y)[] team2Pos)
+        public void FillDefenders((int x, int y)[] team1Pos, (int x, int y)[] team2Pos, ref int playerNum)
         {
             for (int i = 2; i < 6; i++)
             {
-                _chars.Add(new Defender(_teams[0]) { DefaultPosition = team1Pos[i] });
-                _chars.Add(new Defender(_teams[1]) { DefaultPosition = team2Pos[i] });
+                _chars.Add(new Defender(_teams[0], "Player" + playerNum++) { DefaultPosition = team1Pos[i] });
+                _chars.Add(new Defender(_teams[1], "Player" + playerNum++) { DefaultPosition = team2Pos[i] });
             }
         }
 
-        public void FillAttackers((int x, int y)[] team1Pos, (int x, int y)[] team2Pos)
+        public void FillAttackers((int x, int y)[] team1Pos, (int x, int y)[] team2Pos, ref int playerNum)
         {
             for (int i = 6; i < 10; i++)
             {
-                _chars.Add(new Attacker(_teams[0]) { DefaultPosition = team1Pos[i] });
-                _chars.Add(new Attacker(_teams[1]) { DefaultPosition = team2Pos[i] });
+                _chars.Add(new Attacker(_teams[0], "Player" + playerNum++) { DefaultPosition = team1Pos[i] });
+                _chars.Add(new Attacker(_teams[1], "Player" + playerNum++) { DefaultPosition = team2Pos[i] });
             }
         }
 
@@ -132,7 +136,7 @@ namespace Rugby
                 foreach (var c in _chars)
                 {
                     if (!round_finished)    // TODO: When ball is out of bounds, round is finished
-                        c.ExecuteTurn();
+                        c.ExecuteTurn(this);
                 }
                     
         }

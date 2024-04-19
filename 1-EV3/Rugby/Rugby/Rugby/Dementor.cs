@@ -15,7 +15,7 @@
 
 
 
-        public override void ExecuteTurn()
+        public override void ExecuteTurn(Stadium stadium)
         {
             throw new NotImplementedException();
         }

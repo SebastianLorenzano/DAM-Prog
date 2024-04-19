@@ -11,7 +11,7 @@
     public abstract class Character : Entity
     {
 
-        public abstract void ExecuteTurn();
+        public abstract void ExecuteTurn(Stadium stadium);
 
 
     }

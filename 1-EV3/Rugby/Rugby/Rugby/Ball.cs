@@ -3,9 +3,18 @@
     public class Ball
     {
         public int x, y;
+        private Player? _playerWithBall;
+        public Player? PlayerWithBall { get => _playerWithBall; set => SetPlayerWithBall(value); }
 
-        public Player? PlayerWithBall { get; set;}
-
+        public void SetPlayerWithBall(Player player)
+        {
+            if (player != null)
+            {
+                x = player.x;
+                y = player.y;
+            }
+            PlayerWithBall = player;
+        }
 
         public bool IsOutOfBonds(Stadium stadium)
         {
