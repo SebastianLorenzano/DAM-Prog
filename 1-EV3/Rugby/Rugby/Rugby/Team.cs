@@ -1,14 +1,23 @@
 ﻿namespace Rugby
 {
+
+    public enum TeamNumber
+    {
+        TEAM1 = 1,
+        TEAM2 = 2
+    }
+
     public class Team
     {
         private string _name = "";
         public string Name => _name;
+        public TeamNumber TeamNumber { get; init; }
 
-        public Team(string name)
+        public Team(string name, TeamNumber teamNumber)
         {
             if (name != null)
                 _name = name;
+            TeamNumber = teamNumber;
         }
 
         public List<Player> GetTeamPlayers(Stadium stadium)

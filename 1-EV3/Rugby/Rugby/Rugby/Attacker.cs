@@ -7,9 +7,22 @@
 
         }
 
-        public override void ExecuteTurn(Stadium stadium)
+        protected override void ExecuteTurnWithBall(Stadium stadium)
         {
-            throw new NotImplementedException();
+            if (MoveForward(stadium))
+            {
+                if (Utils.GetRandomInt(0, 4) == 0)
+                    ExecuteTurnWithBall(stadium);
+            }
+
+            else
+                ThrowShortPass(stadium);
+        }
+
+        protected override void ExecuteTurnWithoutBall(Stadium stadium)
+        {
+         if (GetDistanceToGoal() > 2)
+                MoveForward(stadium);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Rugby
         protected Team _team;
         public Team Team => _team;
         public Position DefaultPosition { get; init; }
+        public int TurnsDisabled { get; set; } = 0;
 
 
         public Player(Team team, string name = "Player")
@@ -19,6 +20,31 @@ namespace Rugby
 
         }
 
+        public TeamNumber GetTeamNumber()
+        {
+            return _team.TeamNumber;
+        }
+
+        public void PlayTurn(Stadium stadium)
+        {
+            if (TurnsDisabled > 0)
+            {
+                TurnsDisabled--;
+                return;
+            }
+            ExecuteTurn(stadium);
+        }
+
+        public override void ExecuteTurn(Stadium stadium)
+        {
+            if (HasBall(stadium))
+                ExecuteTurnWithBall(stadium);
+            else
+                ExecuteTurnWithoutBall(stadium);
+        }
+
+        protected abstract void ExecuteTurnWithBall(Stadium stadium);
+        protected abstract void ExecuteTurnWithoutBall(Stadium stadium);
 
         public bool HasBall(Stadium stadium)
         {
@@ -52,7 +78,14 @@ namespace Rugby
                 }
             });
             return result;
+        }
 
+        public int GetDistanceToGoal()
+        {
+            if (_team.TeamNumber == TeamNumber.TEAM1)
+                return 19 - x;
+            else
+                return x;
         }
 
         public List<Player> GetTeammatesOnDistance(Stadium stadium, int maxRange, int minRange = 0)
@@ -126,6 +159,19 @@ namespace Rugby
             MoveToStartingPosition(this);
         }
 
+        protected bool MoveTo(Position position, Stadium stadium)
+        {
+            int newX = position.x;
+            int newY = position.y;
+            if (stadium.GetCharacterAt(newX, newY) == null)
+            {
+                x = newX;
+                y = newY;
+                return true;
+            }
+            return false;
+        }
+
         protected bool MoveTo(int x, int y, Stadium stadium)
         {
             if (stadium.GetCharacterAt(x, y) == null)
@@ -147,7 +193,7 @@ namespace Rugby
             return false;
         }
 
-        public bool MoveToClosestEnemy(Stadium stadium)
+        public Player GetClosestEnemy(Stadium stadium)
         {
             List<Player> enemies = GetEnemies(this, stadium);
             var result = Utils.SortByDistance(enemies, (entity1, entity2) =>
@@ -156,9 +202,28 @@ namespace Rugby
                     return 1;
                 return -1;
             });
-            Position destiny = Utils.GetBestPosition(GetPosition(), result[0].GetPosition(), stadium);
+            return result[0];
+        }
+
+        public bool MoveToClosestEnemy(Stadium stadium)
+        {
+            var enemy = GetClosestEnemy(stadium);
+            Position destiny = Utils.GetBestPosition(GetPosition(), enemy.GetPosition(), stadium);
             return MoveTo(destiny.x, destiny.y, stadium);
 
+        }
+
+        public bool MoveForward(Stadium stadium)
+        {
+            Position destiny = new(x, 0);
+            if (_team.TeamNumber == TeamNumber.TEAM1)
+                destiny.y = 19;
+            else if (_team.TeamNumber == TeamNumber.TEAM2)
+            {
+                destiny.y = 0;
+            }
+            var moveToPosition = Utils.GetBestPosition(GetPosition(), new Position(x, 19), stadium);
+            return MoveTo(moveToPosition, stadium);
         }
 
         public static void MoveToStartingPosition(Player player)

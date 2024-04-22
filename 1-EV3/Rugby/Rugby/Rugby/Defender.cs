@@ -7,24 +7,18 @@
 
         }
 
-        public override void ExecuteTurn(Stadium stadium)
-        {
-            if (HasBall(stadium))
-                ExecuteTurnWithBall(stadium);
-            else
-                ExecuteTurnWithoutBall(stadium);
-        }
-
-        private void ExecuteTurnWithBall(Stadium stadium)
+        protected override void ExecuteTurnWithBall(Stadium stadium)
         {
             int random = Utils.GetRandomInt(0, 3);
             if (random < 3)
-                MoveToRandomPosition(stadium);
+            {
+                MoveForward(stadium);
+            }
             else
                 ThrowLongPass(stadium);
         }
 
-        private void ExecuteTurnWithoutBall(Stadium stadium)
+        protected override void ExecuteTurnWithoutBall(Stadium stadium)
         {
             Position ballPos = stadium.GetBallPosition();
             if (Utils.GetDistance(ballPos, GetPosition())  == 1)
@@ -48,7 +42,7 @@
         private void DecideAndMove(Stadium stadium)
         {
             if (Utils.GetRandomInt(0, 1) == 0)
-                MoveToBall(stadium);                                // Tries to move to Ball, if it can't, it moves to the closest enemy
+                MoveToBall(stadium);                         // Tries to move to Ball, if it can't, it moves to the closest enemy
             else
                 MoveToClosestEnemy(stadium);
         }
@@ -63,7 +57,11 @@
         }
         public override void ExecuteTurn(Stadium stadium) 
         {
-            throw new NotImplementedException();
+            var enemy = GetClosestEnemy(stadium);
+            if (Utils.GetDistance(enemy.GetPosition(), GetPosition()) < 2)
+                enemy.TurnsDisabled++;
+
+            base.ExecuteTurn(stadium);
         }
     }
 

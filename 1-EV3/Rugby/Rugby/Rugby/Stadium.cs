@@ -21,9 +21,9 @@
         public Stadium(Team team1, Team team2) 
         {
             if (team1 == null)
-                team1 = new Team("Team1");
+                team1 = new Team("Team1", TeamNumber.TEAM1);
             if (team2 == null)
-                team2 = new Team("Team2");
+                team2 = new Team("Team2", TeamNumber.TEAM2);
             _teams[0] = team1;
             _teams[1] = team2;
         }
