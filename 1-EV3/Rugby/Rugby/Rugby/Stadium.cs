@@ -1,6 +1,7 @@
 ﻿namespace Rugby
 {
     public delegate void VisitEntity(Entity entity);
+    public delegate int SortDelegate(Entity entity1, Entity entity2);
     public class Stadium
     {
         private List<Character> _chars = new();
@@ -10,14 +11,14 @@
 
         const int GAME_DURATION = 1000;
         const int MAX_DEMENTORS = 4;
-        const int WIDTH = 19;
-        const int HEIGHT = 9;
+        const int WIDTH = 9;
+        const int HEIGHT = 19;
         public int Width => WIDTH;
         public int Height => HEIGHT;
         public int CharCount => _chars.Count;
         public Team? FirstTeam => _teams.Length > 0 ? _teams[0] : null;
         public Team? SecondTeam => _teams.Length > 1 ? _teams[1] : null;
-        public Stadium(int width, int height, Team team1, Team team2) 
+        public Stadium(Team team1, Team team2) 
         {
             if (team1 == null)
                 team1 = new Team("Team1");
@@ -51,6 +52,11 @@
                 _ball.PlayerWithBall = null;
         }
 
+        public Position GetBallPosition()
+        {
+            return _ball.GetPosition();
+        }
+
         public Player? GetPlayerWithBall()
         {
             return _ball.PlayerWithBall;
@@ -66,6 +72,11 @@
             if (visit != null)
                 foreach (var c in _chars)
                     visit(c);
+        }
+
+        public bool IsPositionAvailable(int x, int y)
+        {
+            return GetCharacterAt(x, y) == null && !IsOutOfBounds(x, y);
         }
 
         public bool IsOutOfBounds(int x, int y)
@@ -90,13 +101,13 @@
         {
             int playerNum = 0;
             var team1Pos = Team.GetTeam1DefaultPositions();
-            var team2Pos = Team.GetTeam2DefaultPositions();
+            var team2Pos = Team.GetTeam2DefaultPositions(HEIGHT);
             FillSpecDefenders(team1Pos, team2Pos, ref playerNum);
             FillDefenders(team1Pos, team2Pos, ref playerNum);
             FillAttackers(team1Pos, team2Pos, ref playerNum);
         }
 
-        public void FillSpecDefenders((int x, int y)[] team1Pos, (int x, int y)[] team2Pos, ref int playerNum)
+        public void FillSpecDefenders(Position[] team1Pos, Position[] team2Pos, ref int playerNum)
         {
             for (int i = 0; i < 2; i++)
             {
@@ -106,7 +117,7 @@
 
         }
 
-        public void FillDefenders((int x, int y)[] team1Pos, (int x, int y)[] team2Pos, ref int playerNum)
+        public void FillDefenders(Position[] team1Pos, Position[] team2Pos, ref int playerNum)
         {
             for (int i = 2; i < 6; i++)
             {
@@ -115,7 +126,7 @@
             }
         }
 
-        public void FillAttackers((int x, int y)[] team1Pos, (int x, int y)[] team2Pos, ref int playerNum)
+        public void FillAttackers(Position[] team1Pos, Position[] team2Pos, ref int playerNum)
         {
             for (int i = 6; i < 10; i++)
             {

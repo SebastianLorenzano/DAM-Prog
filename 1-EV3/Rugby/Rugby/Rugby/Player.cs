@@ -1,11 +1,13 @@
-﻿namespace Rugby
+﻿using System.Runtime.CompilerServices;
+
+namespace Rugby
 {
     public abstract class Player : Character
     {
         public string Name { get; init; }
         protected Team _team;
         public Team Team => _team;
-        public (int, int) DefaultPosition { get; init; }
+        public Position DefaultPosition { get; init; }
 
 
         public Player(Team team, string name = "Player")
@@ -17,6 +19,13 @@
 
         }
 
+
+        public bool HasBall(Stadium stadium)
+        {
+            if (stadium != null)
+                return stadium.GetPlayerWithBall() == this;
+            return false;
+        }
         public bool IsTeammate(Player player)
         {
             return IsTeammate(this, player);
@@ -72,6 +81,19 @@
             return GetTeammatesOnPointLine(this, stadium);
         }
 
+        public static List<Player> GetEnemies(Player player, Stadium stadium)
+        {
+            List<Player> result = new();
+            stadium.VisitEntities((entity) =>
+            {
+                if (entity is Player p && !IsTeammate(p, player))
+                {
+                    result.Add(p);
+                }
+            });
+            return result;
+        }
+
         public static List<Player> GetTeammatesOnPointLine(Player player, Stadium stadium)
         {
             List<Player> result = new();
@@ -96,7 +118,7 @@
             int x = Utils.GetRandomInt(-1, 1);
             int y = Utils.GetRandomInt(-1, 1);
             if (!MoveTo(x, y, stadium))
-                ThrowLongPass(stadium);
+                ThrowShortPass(stadium);
         }
 
         public void MoveToStartingPostion()
@@ -104,26 +126,47 @@
             MoveToStartingPosition(this);
         }
 
-        private bool MoveTo(int x, int y, Stadium stadium)
+        protected bool MoveTo(int x, int y, Stadium stadium)
         {
-            int newX = this.x + x;
-            int newY = this.y + y;
-            if (stadium.GetCharacterAt(newX, newY) == null)
+            if (stadium.GetCharacterAt(x, y) == null)
             {
-                this.x = newX;
-                this.y = newY;
+                this.x = x;
+                this.y = y;
                 return true;
             }
             return false;
 
         }
 
+        public bool MoveToBall(Stadium stadium)
+        {
+            Position ballPos = stadium.GetBallPosition();
+            Position destiny = Utils.GetBestPosition(GetPosition(), ballPos, stadium);
+            if (destiny != null)
+                return MoveTo(destiny.x, destiny.y, stadium);
+            return false;
+        }
+
+        public bool MoveToClosestEnemy(Stadium stadium)
+        {
+            List<Player> enemies = GetEnemies(this, stadium);
+            var result = Utils.SortByDistance(enemies, (entity1, entity2) =>
+            {
+                if (Utils.GetDistance(this, entity1) > Utils.GetDistance(this, entity2))
+                    return 1;
+                return -1;
+            });
+            Position destiny = Utils.GetBestPosition(GetPosition(), result[0].GetPosition(), stadium);
+            return MoveTo(destiny.x, destiny.y, stadium);
+
+        }
+
         public static void MoveToStartingPosition(Player player)
         {
-            if (player.DefaultPosition == (0, 0))
+            if (player.DefaultPosition.x == 0 && player.DefaultPosition.y == 0)
                 throw new Exception("Default position is not set");
-            player.x = player.DefaultPosition.Item1;
-            player.y = player.DefaultPosition.Item2;
+            player.x = player.DefaultPosition.x;
+            player.y = player.DefaultPosition.y;
         }
 
         public void ThrowShortPass(Stadium stadium)

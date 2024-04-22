@@ -1,10 +1,17 @@
 ﻿namespace Rugby
 {
-    public class Ball
+    public class Ball : Entity
     {
-        public int x, y;
         private Player? _playerWithBall;
         public Player? PlayerWithBall { get => _playerWithBall; set => SetPlayerWithBall(value); }
+
+
+        public override Position GetPosition()
+        {
+            if (PlayerWithBall != null)
+                return new Position() { x = PlayerWithBall.x, y = PlayerWithBall.y };
+            return new Position() { x = x, y = y };
+        }
 
         public void SetPlayerWithBall(Player player)
         {
