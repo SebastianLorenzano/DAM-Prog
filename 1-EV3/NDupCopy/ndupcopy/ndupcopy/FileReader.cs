@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace ndupcopy
 {
@@ -12,14 +13,15 @@ namespace ndupcopy
                 return result.ToArray();
             for (int i = 0; i < paths.Length; i++) 
             {
-                var filePaths = Directory.GetFiles(paths[i]);
+                var containerPath = paths[i];
+                var filePaths = Directory.GetFiles(containerPath);
                 foreach (var filePath in filePaths)
-                    result.Add(GetFileInfo(filePath));
+                    result.Add(GetFileInfo(filePath, containerPath));
             }
             return result.ToArray();
         }
 
-        public static FileInfo? GetFileInfo(string path)
+        public static FileInfo? GetFileInfo(string path, string containerPath)
         {
             if (path == null)
                 return null;
@@ -27,6 +29,7 @@ namespace ndupcopy
             return new FileInfo()
             {
                 Path = path,
+                ContainerPath = containerPath,
                 Length = new System.IO.FileInfo(path).Length,
                 HashS = hashS,
                 HashL = hashS.GetHashCode(),
@@ -56,6 +59,34 @@ namespace ndupcopy
                 }
             }
             return true;
+        }
+
+
+        public static void CompareAndClassify(FileInfo[] array, ref List<FileInfo> duplicates, ref List<FileInfo> nonDuplicates)        // Compares the whole list and divides between duplicates and nonDuplicates,
+        {                                                                                                                                 // doesn't modify the original list.
+            if (array == null || duplicates == null || nonDuplicates == null)
+                return;
+
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                if (array[i].IsDisabled)
+                    continue;
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    var f1 = array[i];
+                    var f2 = array[j];
+                    if (f2.IsDisabled || !CompareTwoFiles(f1, f2))          // If is disabled or if they are not equals
+                        continue;
+                    f2.IsDisabled = true;
+                }
+            }
+            foreach (var f in array)
+            {
+                if (f.IsDisabled)
+                    duplicates.Add(f);
+                else
+                    nonDuplicates.Add(f);
+            }
         }
 
     }

@@ -46,6 +46,80 @@ namespace ndupcopy
         */
 
 
+        public void Run()
+        {
+            var appParams = ParamsReader.ReadParams(Environment.GetCommandLineArgs());
+            if (appParams == null)
+                return;
+
+            var inputFolders = appParams.Input_Folders;
+            var outputFolders = appParams.Output_Folders;
+            var options = appParams.Options;
+
+            if (inputFolders == null || outputFolders == null)
+                return;
+
+            var files = FileReader.ReadAllFiles(inputFolders);
+            if (files.Length == 0)
+                return;
+
+            _files.AddRange(files);
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (files[i].IsDisabled)
+                    continue;
+                for (int j = i + 1; j < files.Length; j++)
+                {
+                    if (files[j].IsDisabled)
+                        continue;
+                    if (FileReader.CompareTwoFiles(files[i], files[j]))
+                    {
+                        files[j].IsDisabled = true;
+                        _duplicates.Add(files[j]);
+                    }
+                }
+                _notDuplicates.Add(files[i]);
+            }
+
+            if (options != null)
+            {
+                if (options.Contains("copy"))
+                {
+                    foreach (var file in _notDuplicates)
+                    {
+                        foreach (var outputFolder in outputFolders)
+                        {
+                            FileCopy.CopyFile(inputFolders[0], file.Path, outputFolder);
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+        public void GetPosicionesADistancia((int x, int y) coordenadas, int distancia)
+        {
+            int x0 = coordenadas.x - distancia;
+            int y0 = coordenadas.y - distancia;
+            int x1 = coordenadas.x + distancia;
+            int y1 = coordenadas.y - distancia;
+            int x2 = coordenadas.x - distancia;
+            int y2 = coordenadas.y + distancia;
+            int x3 = coordenadas.x + distancia;
+            int y3 = coordenadas.y + distancia;
+            for (int i = 0; i < distancia * 2; i++, )
+            {
+
+            }
+        }
+
+
+
+
+
 
     }
 }

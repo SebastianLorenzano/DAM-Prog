@@ -9,10 +9,10 @@ namespace ndupcopy
         {
             public string[]? Input_Folders { get; set; }
             public string[]? Options { get; set; }
-            public string[]? Output_Folders { get; set; }
+            public string? Output_Folder { get; set; }
         }
 
-        public static void ReadParams(string[] args)
+        public static AppParams? ReadParams(string[] args)
         {
             if (args == null)
                 throw new ArgumentNullException("args");
@@ -20,12 +20,13 @@ namespace ndupcopy
             try
             {
                 string jsonContent = File.ReadAllText("C:\\Users\\seblor3\\Documents\\dam\\DAM-Prog");
-                var obj = JsonSerializer.Deserialize<AppParams>(jsonContent);
+                return JsonSerializer.Deserialize<AppParams>(jsonContent);
             }
 
             catch (Exception ex)
             {
                 Console.WriteLine("Algo ha salido mal: " + ex.Message);
+                return null;
             }
                 
         }
