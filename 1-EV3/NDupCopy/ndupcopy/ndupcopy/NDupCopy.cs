@@ -10,6 +10,8 @@ namespace ndupcopy
         private List<FileInfo> _nonDuplicates = new();
         private List<FileInfo> _duplicates = new();
         private List<string> _errorsPath = new();
+
+        private string OutputFolder => AppParams.Output_Folder;
         public AppParams AppParams { get; init; }
 
         private NDupCopy(AppParams appParams)
@@ -17,25 +19,46 @@ namespace ndupcopy
             AppParams = appParams;
         }
 
-        public static NDupCopy? Create(AppParams appParams)
+        public static NDupCopy? Create(string[] appParams)
         {
-            if (appParams == null || appParams.Input_Folders == null || appParams.Output_Folder == null)
-                return null;
-            return new NDupCopy(appParams);
-            
+            if (appParams != null)
+            {
+                var obj = ReadParams(appParams);
+                if (obj != null && obj.AreParamsValid())
+                    return new NDupCopy(obj);
+            }
+            return null;
         }
 
-        public void CreateLogs()
+        public bool CreateLogs()
         {
-            throw new NotImplementedException();
+            int result1 = Log.CreateLog("nunDuplicates.txt", OutputFolder, _nonDuplicates);
+            int result2 = Log.CreateLog("duplicates.txt", OutputFolder, _duplicates);
+            return result1 == 0 && result2 == 0;
         }
 
-        public void Run()
+        public int Run()
         {
-            _files = FileReader.ReadAllFiles(AppParams.Input_Folders);
-            FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates);
-            FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder, ref _errorsPath);
-            CreateLogs();
+
+            if (FileReader.ReadAllFiles(AppParams.Input_Folders) == null)
+                return -2;
+            if (!FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates))
+                return -3;
+            if (!FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder, ref _errorsPath))
+                return -4;
+            if (!CreateLogs())
+                return -5;
+            return 5;
+        }
+
+        public static int CreateAndRun(string[] appParams)
+        {
+            var obj = Create(appParams);
+            if (obj == null)
+                return -1;
+            return obj.Run();
+                
+
 
         }
 

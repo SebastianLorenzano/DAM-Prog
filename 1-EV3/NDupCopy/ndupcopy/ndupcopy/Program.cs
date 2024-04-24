@@ -3,11 +3,12 @@ using System.Text.Json.Nodes;
 
 namespace ndupcopy
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-
+            int nDupCopy = NDupCopy.CreateAndRun(args);
         }
+
     }
 }

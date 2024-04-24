@@ -1,0 +1,25 @@
+body {
+	background-color: gray;
+}
+
+.vacias {
+	height: 150px;
+}
+
+#cajaRoja { background-color: red; }
+
+#cajaAzul { background-color: blue; }
+
+#cajaAmarilla
+{
+	background-color: yellow;
+	font-size: 20px;
+	font-family: Arial;
+	text-align: justify;
+	
+	/*Añade aquí lo que haga falta para conseguir el caso C...*/
+	margin-right: 40px;
+	margin-bottom: 15px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}

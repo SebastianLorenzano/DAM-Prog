@@ -1,0 +1,27 @@
+body {
+	text-align: center;
+	background-color: #98eaf8; 
+}
+
+img {
+	height: 120px;
+	text-align: center;
+	border: 5px solid blue;
+}
+
+#banner {
+	width: 100%;
+	border: none;
+}
+
+#foto3 {
+	border-color: #008001;
+}
+
+#foto7 {
+	border-color: #7e8181;
+}
+
+#foto9 {
+	border: 5px dotted #e61113;
+}

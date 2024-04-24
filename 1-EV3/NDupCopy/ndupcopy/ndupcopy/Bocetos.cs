@@ -45,7 +45,7 @@ namespace ndupcopy
     }
         */
 
-
+        /*
         public void Run()
         {
             var appParams = ParamsReader.ReadParams(Environment.GetCommandLineArgs());
@@ -119,7 +119,7 @@ namespace ndupcopy
 
 
 
-
+        */
 
     }
 }

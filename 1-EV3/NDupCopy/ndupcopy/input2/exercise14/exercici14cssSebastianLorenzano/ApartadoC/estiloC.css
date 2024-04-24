@@ -1,0 +1,15 @@
+/* Esto es solo para que se vea claramente que Mew está en una caja */
+div {
+	height: 250px;
+	width: 250px;
+	background-color: pink;
+}
+
+/* ↓↓ AQUÍ HARÁS LO QUE SE TE PIDE... ↓↓ */
+
+
+#charifoto {
+	position: fixed;
+	left: 300px;
+	top: 300px;	
+}

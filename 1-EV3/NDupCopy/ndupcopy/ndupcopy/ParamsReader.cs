@@ -10,7 +10,14 @@ namespace ndupcopy
             public string[]? Input_Folders { get; set; }
             public string[]? Options { get; set; }
             public string? Output_Folder { get; set; }
+
+            public bool AreParamsValid()
+            {
+                return Input_Folders != null && Output_Folder != null;
+            }
         }
+
+
 
         public static AppParams? ReadParams(string[] args)
         {

@@ -20,7 +20,7 @@
             return trueDestination;
         }
 
-        public static void CopyFiles(List<FileInfo> files, string destination, ref List<string> _errorsPath)
+        public static bool CopyFiles(List<FileInfo> files, string destination, ref List<string> _errorsPath)
         {
             foreach (var f in files)
             {
@@ -28,6 +28,8 @@
                 if (f.NewPath == null)
                     _errorsPath.Add(f.Path);
             }
+            return true;
         }
     }
+
 }

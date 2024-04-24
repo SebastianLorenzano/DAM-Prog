@@ -6,19 +6,28 @@ namespace ndupcopy
 {
     public class FileReader
     {
-        public static FileInfo[] ReadAllFiles(string[] paths)
+        public static FileInfo[]? ReadAllFiles(string[] paths)
         {
-            var result = new List<FileInfo>();
             if (paths == null || paths.Length == 0)
-                return result.ToArray();
-            for (int i = 0; i < paths.Length; i++) 
+                return null;
+            List<FileInfo> result = new();
+            try
             {
-                var containerPath = paths[i];
-                var filePaths = Directory.GetFiles(containerPath);
-                foreach (var filePath in filePaths)
-                    result.Add(GetFileInfo(filePath, containerPath));
+                for (int i = 0; i < paths.Length; i++)
+                {
+                    var containerPath = paths[i];
+                    var filePaths = Directory.GetFiles(containerPath);
+                    foreach (var filePath in filePaths)
+                        result.Add(GetFileInfo(filePath, containerPath));
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
             }
             return result.ToArray();
+
         }
 
         public static FileInfo? GetFileInfo(string path, string containerPath)
@@ -62,18 +71,18 @@ namespace ndupcopy
         }
 
 
-        public static void CompareAndClassify(FileInfo[] array, ref List<FileInfo> duplicates, ref List<FileInfo> nonDuplicates)        // Compares the whole list and divides between duplicates and nonDuplicates,
+        public static bool CompareAndClassify(FileInfo[] array, ref List<FileInfo> duplicates, ref List<FileInfo> nonDuplicates)        // Compares the whole list and divides between duplicates and nonDuplicates,
         {                                                                                                                                 // doesn't modify the original list.
             if (array == null || duplicates == null || nonDuplicates == null)
-                return;
+                return false;
 
             for (int i = 0; i < array.Length - 1; i++)
             {
-                if (array[i].IsDisabled)
+                var f1 = array[i];
+                if (f1.IsDisabled)
                     continue;
                 for (int j = i + 1; j < array.Length; j++)
                 {
-                    var f1 = array[i];
                     var f2 = array[j];
                     if (f2.IsDisabled || !CompareTwoFiles(f1, f2))          // If is disabled or if they are not equals
                         continue;
@@ -87,6 +96,7 @@ namespace ndupcopy
                 else
                     nonDuplicates.Add(f);
             }
+            return true;
         }
 
     }
