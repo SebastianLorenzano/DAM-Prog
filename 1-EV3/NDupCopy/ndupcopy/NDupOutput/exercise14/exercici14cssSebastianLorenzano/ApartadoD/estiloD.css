@@ -1,0 +1,17 @@
+/* Esto es solo para que se vea claramente que Mew está en una caja */
+div {
+	height: 250px;
+	width: 250px;
+	background-color: pink;
+	position: relative;
+}
+
+/* ↓↓ AQUÍ HARÁS LO QUE SE TE PIDE... ↓↓ */
+
+#fotomew {
+	position: absolute;
+	left: 50px;
+	top: 50px;
+}
+
+
