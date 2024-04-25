@@ -17,6 +17,7 @@ namespace ndupcopy
         private NDupCopy(AppParams appParams)
         {
             AppParams = appParams;
+            appParams.Output_Folder = Path.Combine(appParams.Output_Folder, "output");
         }
 
         public static NDupCopy? Create(string[] appParams)
@@ -39,8 +40,8 @@ namespace ndupcopy
 
         public int Run()
         {
-
-            if (FileReader.ReadAllFiles(AppParams.Input_Folders) == null)
+            _files = FileReader.ReadAllFiles(AppParams.Input_Folders);
+            if (_files == null)
                 return -2;
             if (!FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates))
                 return -3;

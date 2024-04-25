@@ -7,7 +7,7 @@
             if (originContainerPath == null || absolutePath == null || destination == null)
                 return null;
             if (!Directory.Exists(destination))
-                throw new Exception("Directory does not exist or file does not exist");
+                Directory.CreateDirectory(destination);
             if (!File.Exists(absolutePath))
                 throw new Exception("File does not exist");
 

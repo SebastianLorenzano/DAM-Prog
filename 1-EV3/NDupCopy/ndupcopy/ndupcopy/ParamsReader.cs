@@ -26,7 +26,7 @@ namespace ndupcopy
 
             try
             {
-                string jsonContent = File.ReadAllText("C:\\Users\\seblor3\\Documents\\dam\\DAM-Prog");
+                string jsonContent = File.ReadAllText("../../../params.json");
                 return JsonSerializer.Deserialize<AppParams>(jsonContent);
             }
 
