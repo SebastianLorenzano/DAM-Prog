@@ -16,8 +16,8 @@ namespace ndupcopy
                 for (int i = 0; i < paths.Length; i++)
                 {
                     var containerPath = paths[i];
-                    var filePaths = Directory.GetFiles(containerPath);
-                    foreach (var filePath in filePaths)
+                    var filePaths = Directory.GetFiles(containerPath, "*.*", SearchOption.AllDirectories);      // *.* Looks for everything
+                    foreach (var filePath in filePaths)                                                         // SearchOption Enters into each folder and reads the subfolders
                         result.Add(GetFileInfo(filePath, containerPath));
                 }
             }

@@ -22,10 +22,17 @@ namespace ndupcopy
             if (fileName == null || outputFolder == null)
                 return - 1;
             var absOutputPath = Path.Combine(outputFolder, fileName);
-
-            var fs = new FileStream(absOutputPath, FileMode.CreateNew);
+            FileStream fs;
             try
             {
+                while (true)
+                {
+                    if (Directory.Exists(absOutputPath))
+                        absOutputPath = Path.Join(absOutputPath, "NDupOutput");
+                    else
+                        break;
+                }
+                fs = new FileStream(absOutputPath, FileMode.CreateNew);     // Make it so it creates a log or leaves it blank
                 using (StreamWriter writer = new StreamWriter(fs))
                 {
                     foreach (var item in list)

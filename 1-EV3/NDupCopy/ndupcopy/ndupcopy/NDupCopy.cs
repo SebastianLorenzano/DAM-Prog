@@ -17,7 +17,7 @@ namespace ndupcopy
         private NDupCopy(AppParams appParams)
         {
             AppParams = appParams;
-            appParams.Output_Folder = Path.Combine(appParams.Output_Folder, "output");
+            appParams.Output_Folder = Path.Combine(appParams.Output_Folder, "NDupOutput");
         }
 
         public static NDupCopy? Create(string[] appParams)
