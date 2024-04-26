@@ -31,11 +31,6 @@
 
         }
 
-        internal static void CreateOutputFolder()
-        {
-
-        }
-
         public static bool CopyFiles(List<FileInfo> files, string destination, ref List<string> _errorsPath)
         {
 
