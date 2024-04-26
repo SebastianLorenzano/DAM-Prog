@@ -31,15 +31,14 @@
 
         }
 
-        public static bool CopyFiles(List<FileInfo> files, string destination, ref List<string> _errorsPath)
+        public static string? CopyFiles(List<FileInfo> files, string destination, ref List<string> _errorsPath) // returns the complete output path
         {
 
             try
-            {
-                destination = Path.Join(destination, NDupCopy.FOLDERNAME);
+            { 
                 if (!Directory.Exists(destination))
                     Directory.CreateDirectory(destination);
-                destination = Path.Join(destination, NDupCopy.CreateOutputFolder(destination));
+                destination = NDupCopy.CreateOutputFolder(destination);
 
                 foreach (var f in files)
                 {
@@ -47,12 +46,12 @@
                     if (f.NewPath == null)
                         _errorsPath.Add(f.Path);
                 }
-                return true;
+                return destination;
             }
             catch (Exception ex) 
             {
                 Console.Error.WriteLine(ex.ToString());                 // If it fails, it will print the error and return false
-                return false;
+                return null;
             }
         }
     }

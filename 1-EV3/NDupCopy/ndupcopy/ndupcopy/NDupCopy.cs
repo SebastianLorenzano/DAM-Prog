@@ -36,9 +36,9 @@ namespace ndupcopy
         {
             try
             {
-                string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-                Directory.CreateDirectory(Path.Join(destination, "output" + date));
-                return date;
+                string name = Path.Join(destination, "output" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+                Directory.CreateDirectory(name);
+                return name;
             }
 
             catch (Exception ex) 
@@ -51,8 +51,8 @@ namespace ndupcopy
 
         public bool CreateLogs()
         {
-            int result1 = Log.CreateLog("nunDuplicates.txt", OutputFolder, _nonDuplicates);
-            int result2 = Log.CreateLog("duplicates.txt", OutputFolder, _duplicates);
+            int result1 = Log.CreateLog("ndupcopy_duplicates.txt", OutputFolder, _nonDuplicates);
+            int result2 = Log.CreateLog("ndupcopy_nunDuplicates.txt", OutputFolder, _duplicates);
             return result1 == 0 && result2 == 0;
         }
 
@@ -63,7 +63,8 @@ namespace ndupcopy
                 return -2;
             if (!FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates))
                 return -3;
-            if (!FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder, ref _errorsPath))
+            AppParams.Output_Folder = FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder, ref _errorsPath);
+            if (AppParams == null)
                 return -4;
             if (!CreateLogs())
                 return -5;
