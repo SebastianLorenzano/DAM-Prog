@@ -10,6 +10,7 @@ namespace ndupcopy
         private List<FileInfo> _nonDuplicates = new();
         private List<FileInfo> _duplicates = new();
         private List<string> _errorsPath = new();
+        public const string FOLDERNAME = "NDupOutput";
 
         private string OutputFolder => AppParams.Output_Folder;
         public AppParams AppParams { get; init; }
@@ -17,7 +18,7 @@ namespace ndupcopy
         private NDupCopy(AppParams appParams)
         {
             AppParams = appParams;
-            appParams.Output_Folder = Path.Combine(appParams.Output_Folder, "NDupOutput");
+            appParams.Output_Folder = Path.Combine(appParams.Output_Folder, FOLDERNAME);
         }
 
         public static NDupCopy? Create(string[] appParams)
