@@ -16,7 +16,6 @@ namespace ndupcopy
 
     public class Log
     {
-
         internal static int CreateLog(string fileName, string outputFolder, List<FileInfo> list)
         {
             if (fileName == null || outputFolder == null)
@@ -28,7 +27,7 @@ namespace ndupcopy
                 while (true)
                 {
                     if (Directory.Exists(absOutputPath))
-                        absOutputPath = Path.Join(absOutputPath, "NDupOutput");
+                        absOutputPath = Path.Join(absOutputPath, "NDupCopy");
                     else
                         break;
                 }
