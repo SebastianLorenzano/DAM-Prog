@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using static ndupcopy.ParamsReader;
 
+
 namespace ndupcopy
 {
     public class NDupCopy
@@ -88,7 +89,8 @@ namespace ndupcopy
         public static void CreateAndRun(string[] appParams)
         {
             var obj = Create(appParams);
-
+            
+            obj.Run();
             //var obj = Create(appParams);
             //if (obj == null)
             //    return -1;

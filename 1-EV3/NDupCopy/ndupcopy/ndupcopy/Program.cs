@@ -7,7 +7,8 @@ namespace ndupcopy
     {
         static void Main(string[] args)
         {
-            int nDupCopy = NDupCopy.CreateAndRun(args);
+
+            NDupCopy.CreateAndRun(args);
         }
 
     }

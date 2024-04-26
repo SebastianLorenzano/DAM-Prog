@@ -25,7 +25,7 @@
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.ToString());
+                Logs.Instance.Error(ex.ToString());
                 return null;
             }
 
@@ -50,7 +50,7 @@
             }
             catch (Exception ex) 
             {
-                Console.Error.WriteLine(ex.ToString());                 // If it fails, it will print the error and return false
+                Logs.Instance.Error(ex.ToString());                 // If it fails, it will print the error and return false
                 return null;
             }
         }

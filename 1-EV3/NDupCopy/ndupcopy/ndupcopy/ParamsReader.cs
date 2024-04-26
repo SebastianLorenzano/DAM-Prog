@@ -17,8 +17,6 @@ namespace ndupcopy
             }
         }
 
-
-
         public static AppParams? ReadParams(string[] args)
         {
             if (args == null)
