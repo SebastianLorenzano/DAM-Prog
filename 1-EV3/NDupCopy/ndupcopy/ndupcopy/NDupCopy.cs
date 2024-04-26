@@ -32,6 +32,23 @@ namespace ndupcopy
             return null;
         }
 
+        internal static string? CreateOutputFolder(string destination)
+        {
+            try
+            {
+                string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                Directory.CreateDirectory(Path.Join(destination, "output" + date));
+                return date;
+            }
+
+            catch (Exception ex) 
+            {
+                Console.Error.Write(ex.ToString());
+                return null;
+            } 
+            
+        }
+
         public bool CreateLogs()
         {
             int result1 = Log.CreateLog("nunDuplicates.txt", OutputFolder, _nonDuplicates);
