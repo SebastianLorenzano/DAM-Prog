@@ -4,7 +4,7 @@ namespace ConsoleApp1
 {
     public class Program
     {
-        
+        /*
         public static rgba_f64 GetMedia(EditableImageHighPrecission source, int x, int y)
         {
             rgba_f64 result = new rgba_f64();
@@ -44,12 +44,16 @@ namespace ConsoleApp1
             }
 
             destination.SaveToFile(toPath);
-        }
+        }*/
 
 
         static void Main(string[] args)
         {
-            Filter("C:\\Users\\seblor3\\Downloads\\ii3.png", "C:\\Users\\seblor3\\Downloads\\imagen3.3.png");
+            //Filter("C:\\Users\\seblor3\\Downloads\\ii3.png", "C:\\Users\\seblor3\\Downloads\\imagen3.3.png");
+
+            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+
+
         }
 
     }
