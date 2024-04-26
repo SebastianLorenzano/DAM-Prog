@@ -56,29 +56,43 @@ namespace ndupcopy
             return result1 == 0 && result2 == 0;
         }
 
-        public int Run()
+        public void Run()
         {
             _files = FileReader.ReadAllFiles(AppParams.Input_Folders);
             if (_files == null)
-                return -2;
+            {
+                Environment.Exit(-2);
+                //return -2;
+            }
+                
             if (!FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates))
-                return -3;
+            {
+                Environment.Exit(-3);
+                //return -3;
+            }
             AppParams.Output_Folder = FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder, ref _errorsPath);
             if (AppParams == null)
-                return -4;
+            {
+                Environment.Exit(-4);
+                //return -4;
+            }
+                
             if (!CreateLogs())
-                return -5;
-            return 5;
+            {
+                Environment.Exit(-5);
+                //return -5;
+            }
+            //return 0;
         }
 
-        public static int CreateAndRun(string[] appParams)
+        public static void CreateAndRun(string[] appParams)
         {
             var obj = Create(appParams);
-            if (obj == null)
-                return -1;
-            return obj.Run();
-                
 
+            //var obj = Create(appParams);
+            //if (obj == null)
+            //    return -1;
+            //return obj.Run();
 
         }
 
