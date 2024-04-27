@@ -1,21 +1,20 @@
 ﻿
 namespace ndupcopy
 {
-
     public class Logs
     {
-        public static Logs Instance => _log;
-        private static Logs _log = new Logs();
+        public static Logs Instance => _logs;
+        private static Logs _logs = new Logs();
 
-        private List<Log> _logs = new List<Log>();
-        public int Count => _logs.Count;
+        private List<Log> _list = new List<Log>();
+        public int Count => _list.Count;
 
         private Logs()
         {
 
         }
 
-        public Log? GetLogAt(int index) => (index >= 0 && index<_logs.Count)  ? _logs[index] : null;
+        public Log? GetLogAt(int index) => (index >= 0 && index < _list.Count)  ? _list[index] : null;
 
 
         public void Test()
@@ -50,6 +49,7 @@ namespace ndupcopy
 
     public class Log
     {
+
         internal static int CreateLog(string fileName, string outputFolder, List<FileInfo> list)
         {
             if (fileName == null || outputFolder == null)

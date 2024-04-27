@@ -19,12 +19,16 @@ namespace ndupcopy
 
         public static AppParams? ReadParams(string[] args)
         {
+            string jsonContent;
             if (args == null)
                 throw new ArgumentNullException("args");
-
             try
             {
-                string jsonContent = File.ReadAllText("../../../params.json");
+                if (args.Length == 0)
+                    jsonContent = File.ReadAllText(NDupCopy.DEFAULT_PARAMS);     // default params.json
+                else
+                    jsonContent = File.ReadAllText(args[0]);
+
                 return JsonSerializer.Deserialize<AppParams>(jsonContent);
             }
 

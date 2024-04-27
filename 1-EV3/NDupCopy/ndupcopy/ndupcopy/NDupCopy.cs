@@ -12,8 +12,9 @@ namespace ndupcopy
         private List<FileInfo> _duplicates = new();
         private List<string> _errorsPath = new();
         public const string FOLDERNAME = "NDupCopy";
+        public const string DEFAULT_PARAMS = "../../../params.json";
 
-        private string OutputFolder => AppParams.Output_Folder;
+        public string OutputFolder => AppParams.Output_Folder;
         public AppParams AppParams { get; init; }
 
         private NDupCopy(AppParams appParams)

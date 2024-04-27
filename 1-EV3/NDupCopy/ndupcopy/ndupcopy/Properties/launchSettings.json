@@ -1,8 +1,7 @@
 {
   "profiles": {
     "ndupcopy": {
-      "commandName": "Project",
-      "commandLineArgs": "params.json"
+      "commandName": "Project"
     }
   }
 }
