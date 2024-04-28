@@ -7,14 +7,15 @@ namespace ndupcopy
     public class NDupCopy
     {
 
-        private FileInfo[] _files = Array.Empty<FileInfo>();
+        private FileInfo[] _files = Array.Empty<FileInfo>();                
         private List<FileInfo> _nonDuplicates = new();
         private List<FileInfo> _duplicates = new();
         private List<string> _errorsPath = new();
         public const string FOLDERNAME = "NDupCopy";
         public const string DEFAULT_PARAMS = "../../../params.json";
 
-        public string OutputFolder => AppParams.Output_Folder;
+        public static NDupCopy Instance { get; set; }                   //Didn't feel like deleting all the stuff I did after learning Singletons but wanting to try 
+        public string OutputFolder => AppParams.Output_Folder;              //this out anyways so I adapted it to a Singleton but didn't really use it
         public AppParams AppParams { get; init; }
 
         private NDupCopy(AppParams appParams)
@@ -23,15 +24,14 @@ namespace ndupcopy
             appParams.Output_Folder = Path.Combine(appParams.Output_Folder, FOLDERNAME);
         }
 
-        public static NDupCopy? Create(string[] appParams)
+        public static void CreateSimpleton(string[] appParams)       // instead of giving back an instance of NDupCopy, it equals the Simpleton to the new obj
         {
             if (appParams != null)
             {
                 var obj = ReadParams(appParams);
                 if (obj != null && obj.AreParamsValid())
-                    return new NDupCopy(obj);
+                    Instance = new NDupCopy(obj);
             }
-            return null;
         }
 
         internal static string? CreateOutputFolder(string destination)
@@ -89,14 +89,10 @@ namespace ndupcopy
 
         public static void CreateAndRun(string[] appParams)
         {
-            var obj = Create(appParams);
-            
-            obj.Run();
-            //var obj = Create(appParams);
-            //if (obj == null)
-            //    return -1;
-            //return obj.Run();
-
+            CreateSimpleton(appParams);
+            var obj = Instance;
+            if (obj != null)
+                obj.Run();
         }
 
 

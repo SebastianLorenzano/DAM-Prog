@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Xml.Schema;
 
 namespace ndupcopy
@@ -21,34 +22,37 @@ namespace ndupcopy
             if (paths == null)
                 return result;
             foreach (var p in paths)
-                result.AddRange(ReadFiles(p, pattern));
+                result.AddRange(ReadFiles(p, p, pattern));
             return result;
         }
 
-        public static List<FileInfo> ReadFiles(string path, string pattern = "*.*")
+        public static List<FileInfo> ReadFiles(string path, string containerPath, string pattern = "*.*")
         {
             List<FileInfo> result = new();
             if (path == null || path.Length == 0)
                 return result;
+            var files = new List<string>();
+            var directories = Array.Empty<string>();
             try
             {
-                foreach (var file in Directory.GetFiles(path, pattern))             // This way, if one of the files fails to read, it continues to the next one.
-                {
-                    var fileInfo = GetFile(file, path);
-                    if (fileInfo != null)
-                        result.Add(fileInfo);
-                }
-                var directories = Directory.GetDirectories(path);
-                foreach (var directory in directories)
-                    result.AddRange(ReadFiles(directory, pattern));
-
+                files.AddRange(Directory.GetFiles(path, pattern, SearchOption.TopDirectoryOnly));
+                directories = Directory.GetDirectories(path);
+                foreach (var f in files)
+                    result.Add(GetFile(f, containerPath));
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 Logs.Instance.Error(ex.ToString());
-                return result;
             }
-
+            foreach (var directory in directories)
+                try
+                {
+                    result.AddRange(ReadFiles(directory, containerPath, pattern));
+                }
+                catch (Exception ex) 
+                {
+                    Logs.Instance.Error(ex.ToString());
+                }
             return result;
         }
 
