@@ -31,7 +31,7 @@
 
         }
 
-        public static string? CopyFiles(List<FileInfo> files, string destination, ref List<string> _errorsPath) // returns the complete output path
+        public static string? CopyFiles(List<FileInfo> files, string destination) // returns the complete output path
         {
 
             try
@@ -43,8 +43,6 @@
                 foreach (var f in files)
                 {
                     f.NewPath = CopyFile(f.ContainerPath, f.Path, destination);
-                    if (f.NewPath == null)
-                        _errorsPath.Add(f.Path);
                 }
                 return destination;
             }

@@ -65,7 +65,7 @@ namespace ndupcopy
                 Environment.Exit(-2); 
             if (!FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates))
                 Environment.Exit(-3);
-            AppParams.Output_Folder = FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder, ref _errorsPath);
+            AppParams.Output_Folder = FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder);
             if (AppParams == null)
                 Environment.Exit(-4); 
             if (!CreateLogs())
