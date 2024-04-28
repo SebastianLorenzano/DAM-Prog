@@ -11,10 +11,7 @@ namespace ndupcopy
             public string[]? Options { get; set; }
             public string? Output_Folder { get; set; }
 
-            public bool AreParamsValid()
-            {
-                return Input_Folders != null && Output_Folder != null;
-            }
+            public bool AreParamsValid() => Input_Folders != null && Output_Folder != null;
         }
 
         public static AppParams? ReadParams(string[] args)
@@ -31,13 +28,11 @@ namespace ndupcopy
 
                 return JsonSerializer.Deserialize<AppParams>(jsonContent);
             }
-
             catch (Exception ex)
             {
                 Console.WriteLine("Algo ha salido mal: " + ex.Message);
                 return null;
             }
-                
         }
     }
 }

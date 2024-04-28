@@ -3,8 +3,8 @@ namespace ndupcopy
 {
     public class Logs
     {
-        public static Logs Instance => _logs;
-        private static Logs _logs = new Logs();
+        public static Logs Instance => _logs;           // First time I used Simpletons, I'm not really using the potential of them but I had to modify all the code 
+        private static Logs _logs = new Logs();          // to implement it further, so I added it as long as I didn't have to modify the whole script.
 
         private List<Log> _list = new List<Log>();
         public int Count => _list.Count;
@@ -14,7 +14,7 @@ namespace ndupcopy
 
         }
 
-        public Log? GetLogAt(int index) => (index >= 0 && index < _list.Count)  ? _list[index] : null;
+        public Log? GetLogAt(int index) => (index >= 0 && index < _list.Count)  ? _list[index] : null;      // Will recycle this whole structure for another project
 
 
         public void Test()
@@ -23,8 +23,8 @@ namespace ndupcopy
             Info($"Este es mi error {code}");
         }
 
-        public void Info(string? message)
-        {
+        public void Info(string? message)                           // I know conceptually its wrong and it should be a static and there is no reason to do things like this, but I 
+        {                                                             // wanted to try out the Simpleton thing, nothing else
             Console.BackgroundColor = ConsoleColor.Green;
             Console.WriteLine(message);
             Console.BackgroundColor = ConsoleColor.Black;

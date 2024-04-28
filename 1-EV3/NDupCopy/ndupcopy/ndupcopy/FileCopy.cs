@@ -7,11 +7,11 @@
             try
             {
                 if (originContainerPath == null || absolutePath == null || destination == null)
-                    return null;                           // Even if this shouldn't really be inside the try, I put it inside
+                    throw new NullReferenceException();    // Even if this shouldn't really be inside the try, I put it inside
                                                            //  so I can use Console.Error.WriteLine so you can redirect the error
                                                            //  to a file
                 if (!Directory.Exists(destination))                 
-                    Directory.CreateDirectory(destination);         // This two lines are not needed for the original function
+                    Directory.CreateDirectory(destination);         // This two lines are not needed for the original script
                 if (!File.Exists(absolutePath))                     //  but they are if you want to use it outside of it
                     throw new Exception("File does not exist");
 

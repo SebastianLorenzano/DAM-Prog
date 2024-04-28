@@ -15,7 +15,7 @@ namespace ndupcopy
         public const string DEFAULT_PARAMS = "../../../params.json";
 
         public static NDupCopy Instance { get; set; }                   //Didn't feel like deleting all the stuff I did after learning Singletons but wanting to try 
-        public string OutputFolder => AppParams.Output_Folder;              //this out anyways so I adapted it to a Singleton but didn't really use it
+        public string OutputFolder => AppParams.Output_Folder;              // this out anyways so I adapted it to a Singleton but didn't really use it
         public AppParams AppParams { get; init; }
 
         private NDupCopy(AppParams appParams)
@@ -60,31 +60,16 @@ namespace ndupcopy
 
         public void Run()
         {
-            _files = FileReader.ReadAllFilesToArray(AppParams.Input_Folders, "*.*");
+            _files = FileReader.ReadAllFilesToArray(AppParams.Input_Folders);
             if (_files == null)
-            {
-                Environment.Exit(-2);
-                //return -2;
-            }
-                
+                Environment.Exit(-2); 
             if (!FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates))
-            {
                 Environment.Exit(-3);
-                //return -3;
-            }
             AppParams.Output_Folder = FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder, ref _errorsPath);
             if (AppParams == null)
-            {
-                Environment.Exit(-4);
-                //return -4;
-            }
-                
+                Environment.Exit(-4); 
             if (!CreateLogs())
-            {
                 Environment.Exit(-5);
-                //return -5;
-            }
-            //return 0;
         }
 
         public static void CreateAndRun(string[] appParams)

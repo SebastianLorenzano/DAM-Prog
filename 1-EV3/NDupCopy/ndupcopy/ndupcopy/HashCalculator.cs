@@ -9,7 +9,6 @@ namespace ndupcopy
         public static string? GetHash(string path)
         {
             const int BUFFER_SIZE = 2048;
-
             try
             {
                 using (FileStream stream = File.OpenRead(path))
@@ -26,8 +25,6 @@ namespace ndupcopy
                     return BitConverter.ToString(sha256.Hash).Replace("-", "").ToLowerInvariant();
                 }
             }
-
-
             catch (IOException ex)
             {
                 Console.WriteLine("Error reading the file: " + ex.Message);
@@ -40,7 +37,6 @@ namespace ndupcopy
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
-
             return null;
         }
     }

@@ -10,7 +10,7 @@ namespace ndupcopy
     public class FileReader
     {
 
-        public static FileInfo[] ReadAllFilesToArray(string[] paths, string pattern)
+        public static FileInfo[] ReadAllFilesToArray(string[] paths, string pattern = "*.*")        // By default it reads eveything
         {
             return ReadAllFiles(paths, pattern).ToArray();
 
@@ -69,10 +69,9 @@ namespace ndupcopy
             }
         }
 
-
         public static FileInfo? GetFileInfo(string path, string containerPath)
         {
-            if (path == null)
+            if (path == null || containerPath == null)
                 return null;
             var hashS = HashCalculator.GetHash(path);
             return new FileInfo()
@@ -109,7 +108,6 @@ namespace ndupcopy
             }
             return true;
         }
-
 
         public static bool CompareAndClassify(FileInfo[] array, ref List<FileInfo> duplicates, ref List<FileInfo> nonDuplicates)        // Compares the whole list and divides between duplicates and nonDuplicates,
         {                                                                                                                                 // doesn't modify the original list.
