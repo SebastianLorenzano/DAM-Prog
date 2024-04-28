@@ -1,34 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Xml.Schema;
 
 namespace ndupcopy
 {
     public class FileReader
     {
-        public static FileInfo[]? ReadAllFiles(string[] paths)
+
+        public static FileInfo[] ReadAllFilesToArray(string[] paths, string pattern)
         {
-            if (paths == null || paths.Length == 0)
-                return null;
-            List<FileInfo> result = new();
-            try
-            {
-                for (int i = 0; i < paths.Length; i++)
-                {
-                    var containerPath = paths[i];
-                    var filePaths = Directory.GetFiles(containerPath, "*.*", SearchOption.AllDirectories);      // *.* Looks for everything
-                    foreach (var filePath in filePaths)                                                         // SearchOption Enters into each folder and reads the subfolders
-                        result.Add(GetFileInfo(filePath, containerPath));
-                }
-            }
-            catch (Exception ex) 
-            {
-                Console.WriteLine(ex.ToString());
-                return null;
-            }
-            return result.ToArray();
+            return ReadAllFiles(paths, pattern).ToArray();
 
         }
+
+        public static List<FileInfo> ReadAllFiles(string[] paths, string pattern = "*.*")
+        {
+            var result = new List<FileInfo>();
+            if (paths == null)
+                return result;
+            foreach (var p in paths)
+                result.AddRange(ReadFiles(p, pattern));
+            return result;
+        }
+
+        public static List<FileInfo> ReadFiles(string path, string pattern = "*.*")
+        {
+            List<FileInfo> result = new();
+            if (path == null || path.Length == 0)
+                return result;
+            try
+            {
+                foreach (var file in Directory.GetFiles(path, pattern))             // This way, if one of the files fails to read, it continues to the next one.
+                {
+                    var fileInfo = GetFile(file, path);
+                    if (fileInfo != null)
+                        result.Add(fileInfo);
+                }
+                var directories = Directory.GetDirectories(path);
+                foreach (var directory in directories)
+                    result.AddRange(ReadFiles(directory, pattern));
+
+            }
+            catch (Exception ex)
+            {
+                Logs.Instance.Error(ex.ToString());
+                return result;
+            }
+
+            return result;
+        }
+
+        private static FileInfo? GetFile(string path, string containerPath)
+        {
+            try
+            {
+                return GetFileInfo(path, containerPath);
+            }
+            catch (Exception ex)
+            {
+                Logs.Instance.Error(ex.ToString());
+                return null;
+            }
+        }
+
 
         public static FileInfo? GetFileInfo(string path, string containerPath)
         {

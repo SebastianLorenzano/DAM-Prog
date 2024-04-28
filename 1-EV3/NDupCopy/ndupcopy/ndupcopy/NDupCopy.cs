@@ -60,7 +60,7 @@ namespace ndupcopy
 
         public void Run()
         {
-            _files = FileReader.ReadAllFiles(AppParams.Input_Folders);
+            _files = FileReader.ReadAllFilesToArray(AppParams.Input_Folders, "*.*");
             if (_files == null)
             {
                 Environment.Exit(-2);
