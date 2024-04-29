@@ -10,7 +10,6 @@ namespace ndupcopy
         private FileInfo[] _files = Array.Empty<FileInfo>();                
         private List<FileInfo> _nonDuplicates = new();
         private List<FileInfo> _duplicates = new();
-        private List<string> _errorsPath = new();
         public const string FOLDERNAME = "NDupCopy";
         public const string DEFAULT_PARAMS = "../../../params.json";
 

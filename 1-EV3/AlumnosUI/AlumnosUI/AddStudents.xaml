@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="AddStudents" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="descName" HorizontalAlignment="Left" Margin="425,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="boxDesc" HorizontalAlignment="Left" Margin="425,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="boxName" HorizontalAlignment="Left" Margin="425,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="ageName" HorizontalAlignment="Left" Margin="425,164,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="boxAge" HorizontalAlignment="Left" Margin="425,164,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Content="Nombre          " HorizontalAlignment="Left" Margin="334,129,0,0" VerticalAlignment="Top"/>
         <Label Content="Descripción          " HorizontalAlignment="Left" Margin="334,186,0,0" VerticalAlignment="Top"/>
         <Label Content="Edad          " HorizontalAlignment="Left" Margin="334,160,0,0" VerticalAlignment="Top"/>
