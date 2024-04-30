@@ -6,5 +6,29 @@
         xmlns:local="clr-namespace:AlumnosUI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <TextBox HorizontalAlignment="Left" Margin="420,256,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+
+    <Grid>
+        <Label Content="Name" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top"/>
+        <Label Content="Age" HorizontalAlignment="Center" Margin="0,158,0,0" VerticalAlignment="Top"/>
+        <Label Content="Description" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox x:Name="boxName" HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="boxAge" HorizontalAlignment="Center" Margin="0,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="boxDesc" HorizontalAlignment="Center" Margin="0,235,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="ButtonRemove" Content="-" HorizontalAlignment="Left" Margin="596,28,0,0" VerticalAlignment="Top" FontSize="30" Height="40" Width="26"/>
+        <Button x:Name="ButtonAdd" Content="+" HorizontalAlignment="Left" Margin="557,28,0,0" VerticalAlignment="Top" FontSize="30" Height="40" Click="ButtonAdd_Click"/>
+        <Button x:Name="ButtonAdd_Copiar" Content="←" HorizontalAlignment="Left" Margin="305,31,0,0" VerticalAlignment="Top" FontSize="30" Height="40" RenderTransformOrigin="0.5,0.5" Click="ButtonAdd_Copiar_Click">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-360.131"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button x:Name="ButtonAdd_Copiar1" Content="→" HorizontalAlignment="Left" Margin="471,31,0,0" VerticalAlignment="Top" FontSize="30" Height="40" Click="ButtonAdd_Copiar1_Click"/>
+        <TextBlock x:Name="blockId" HorizontalAlignment="Center" Margin="0,33,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" FontSize="30"/>
+        <Label Content="ID" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,258,0,0"/>
+        <TextBox x:Name="boxId" HorizontalAlignment="Center" Margin="0,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+    </Grid>
 </Window>

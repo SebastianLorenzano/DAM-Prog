@@ -13,6 +13,7 @@ namespace Model
         bool UpdateStudent(long id, Student student);
         long GetIdWithStudent(Student student);
         Student? GetStudentWithId(long id);
+        Student? GetStudentAt(int index);
 
 
     }

@@ -1,4 +1,6 @@
 
+using System.Security.Permissions;
+
 namespace Model
 {
     public class Student
@@ -8,9 +10,17 @@ namespace Model
         public int Age { get; set; }
         public string Description { get; set; } = string.Empty;
 
-        public static bool IsValid(Student student)
+        public static int IsValid(Student student)
         {
-            return student != null && student.Name != null && student.Name != string.Empty && 0 < student.Age && student.Age < 256 && student.Description != null;
+            if (student == null)
+                return 0;
+            if (student.Name == null || student.Name.Length == 0)
+                return -1;
+            if (student.Age < 0)
+                return -2;
+            if (student.Description == null)
+                return -3;
+            return 1;
         }
     }
 }

@@ -21,14 +21,15 @@ namespace Model
 
 
         public long AddStudent(Student student)
-        {                                               
-            if (Student.IsValid(student))               // I know nobody really uses it but I wanted to try it out because it appeared in my mind
+        {
+            long validNum = Student.IsValid(student);
+            if (validNum > 0)               // I know nobody really uses it but I wanted to try it out because it appeared in my mind
             {
                 student.Id = _studentId++;
                 _students.Add(student.Id, student);
                 return student.Id;
             }
-            return -1;
+            return validNum;
         }
 
         public void RemoveStudent(long id)
@@ -38,7 +39,7 @@ namespace Model
 
         public bool UpdateStudent(long id, Student student)
         {
-            if (Student.IsValid(student) && _students.ContainsKey(id))
+            if (Student.IsValid(student) > 0 && _students.ContainsKey(id))
             {
                 student.Id = id;
                 _students[id] = student;
@@ -47,6 +48,12 @@ namespace Model
             return false;
         }
 
+        public Student? GetStudentAt(int index)
+        {
+            if (0 <= index && index <  _students.Count)
+                return _students.ElementAt(index).Value;
+            return null;
+        }
         public long GetIdWithStudent(Student student)
         {
             foreach (var item in _students) 
