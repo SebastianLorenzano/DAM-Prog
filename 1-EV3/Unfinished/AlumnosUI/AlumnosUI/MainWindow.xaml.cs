@@ -15,11 +15,6 @@ namespace AlumnosUI
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddStudents newPage = new AddStudents();
@@ -61,5 +56,81 @@ namespace AlumnosUI
             boxId.Text = student.Id.ToString();
             blockId.Text = (_index + 1).ToString();
         }
+
+
+        private void TransformTextBlockToTextBox(TextBlock textBlock)
+        {
+            if (textBlock == null)
+                return;
+
+            // Create a new TextBox
+            TextBox textBox = new TextBox();
+            textBox.Text = textBlock.Text;
+            textBox.HorizontalAlignment = textBlock.HorizontalAlignment;
+            textBox.VerticalAlignment = textBlock.VerticalAlignment;
+            textBox.Margin = textBlock.Margin;
+
+            // Replace TextBlock with TextBox in the parent container
+            if (textBlock.Parent is Panel parentPanel)
+            {
+                int index = parentPanel.Children.IndexOf(textBlock);
+                parentPanel.Children.RemoveAt(index);
+                parentPanel.Children.Insert(index, textBox);
+            }
+        }
+
+        private void TransformTextBoxToTextBlock(TextBox textBox)
+        {
+            if (textBox == null)
+                return;
+
+            // Create a new TextBlock
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = textBox.Text;
+            textBlock.HorizontalAlignment = textBox.HorizontalAlignment;
+            textBlock.VerticalAlignment = textBox.VerticalAlignment;
+            textBlock.Margin = textBox.Margin;
+
+            // Replace TextBox with TextBlock in the parent container
+            if (textBox.Parent is Panel parentPanel)
+            {
+                int index = parentPanel.Children.IndexOf(textBox);
+                parentPanel.Children.RemoveAt(index);
+                parentPanel.Children.Insert(index, textBlock);
+            }
+        }
+
+        private void ToggleTextBlockTextBox(object sender)
+        {
+            if (sender is TextBlock block)
+            {
+                TransformTextBlockToTextBox(block);
+            }
+            else if (sender is TextBox box)
+            {
+                TransformTextBoxToTextBlock(box);
+            }
+        }
+
+        private void ToggleBoxes()
+        {
+            if (boxName.Parent is Panel parentPanel)
+            {
+                int indexName = parentPanel.Children.IndexOf(boxName);
+                ToggleTextBlockTextBox(parentPanel.Children[indexName]);
+                int indexAge = parentPanel.Children.IndexOf(boxAge);
+                ToggleTextBlockTextBox(parentPanel.Children[indexAge]);
+                int indexDesc = parentPanel.Children.IndexOf(boxDesc);
+                ToggleTextBlockTextBox(parentPanel.Children[indexDesc]);
+            }
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+                ToggleBoxes();
+        }
+
     }
-}
+
+
+ }
