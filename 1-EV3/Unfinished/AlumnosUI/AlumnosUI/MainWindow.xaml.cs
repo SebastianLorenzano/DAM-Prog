@@ -10,6 +10,8 @@ namespace AlumnosUI
     public partial class MainWindow : Window
     {
         private int _index = 0;
+        private bool _editButtonPressed = false;
+        private Student _SavedStudent {  get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -127,9 +129,20 @@ namespace AlumnosUI
 
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (!_editButtonPressed)
+            {
                 ToggleBoxes();
+                buttonCheck.Visibility = Visibility.Visible;
+
+                _SavedStudent = new Student() { Name = boxName.Text, Age = boxAge.Text, Description = boxDesc.Text };
+            }
+                
         }
 
+        private void buttonCheck_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 
