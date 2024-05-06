@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Prioridades CSS</title>
+		<meta charset="utf-8">
+
+		<link rel="stylesheet" type="text/css" href="estilo.css">
+		<style type="text/css">
+			body {
+				background-color: pink;
+			}
+
+			p {
+				color: green;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Orden de prioridad CSS</h1>
+		<p>Si recuerdas, vimos que hay tres formas de incluir CSS:</p>
+		<ul>
+			<li>En el HTML, dentro de las etiquetas (atributo style)</li>
+			<li>En el HTML, dentro de HEAD (etiqueta STYLE)</li>
+			<li>En un fichero aparte (.css), vinculado con LINK</li>
+		</ul>
+		<p style="color: purple;">Aquí comprobaremos, en el caso de que se usen varias a la vez, cuál tiene preferencia. Todo dependerá de los colores que salgan:</p>
+		<ul style="color: purple;">
+			<li>¿Gris?</li>
+			<li>¿Rosa?</li>
+			<li>¿Azul?</li>
+			<li>¿Verde?</li>
+			<li>¿Morado?</li>
+			<li>¿Rojo?</li>
+		</ul>
+	</body>
+</html>

@@ -1,0 +1,72 @@
+/*
+	¡¡NO TOQUES EL CSS!!
+	EN ESTE EJERCICIO SOLO HARÁS EL HTML,
+	PARA ENTENDER LAS ETIQUETAS SEMÁNTICAS DE HTML5 QUE
+	REPRESENTAN ZONAS, Y SABER EL SIGNIFICADO DE CADA UNA...
+	¡¡ESTE ARCHIVO SE DEJA TAL CUAL!!
+*/
+
+header {
+	float: left;
+	height: 100px;
+	width: 100%;
+	background-color: black;
+	color: white;
+}
+
+nav {
+	float: left;
+	height: 50px;
+	width: 100%;
+	background-color: gray;
+}
+
+aside {
+	float: left;
+	height: 300px;
+	width: 30%;
+	background-color: green;
+}
+
+main {
+	float: left;
+	height: 300px;
+	width: 70%;
+	background-color: orange;
+}
+
+section {
+	height: 70%;
+	width: 90%;
+	margin-left: 5%;
+	margin-bottom: 5%;
+	background-color: brown;
+}
+
+article {
+	height: 70%;
+	width: 90%;
+	margin-left: 5%;
+	margin-bottom: 5%;
+	background-color: white;
+}
+
+footer {
+	float: left;
+	height: 50px;
+	width: 100%;
+	background-color: pink;
+}
+
+body {
+	text-align: center;
+	font-family: "Arial";
+}
+
+/*
+	¡¡NO TOQUES EL CSS!!
+	EN ESTE EJERCICIO SOLO HARÁS EL HTML,
+	PARA ENTENDER LAS ETIQUETAS SEMÁNTICAS DE HTML5 QUE
+	REPRESENTAN ZONAS, Y SABER EL SIGNIFICADO DE CADA UNA...
+	¡¡ESTE ARCHIVO SE DEJA TAL CUAL!!
+*/

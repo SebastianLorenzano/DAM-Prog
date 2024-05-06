@@ -1,0 +1,42 @@
+a:link {
+
+    background-color: pink;
+    /*   Permite editar el css los links sin visitar */
+}
+
+a:visited {
+
+    background-color: green;
+    /* Permite editar el css de los links ya visitados */
+}
+
+a:active {
+
+    background-color: brown;
+    /* Permite editar el css del link cuando esta siendo clickeado */
+}
+
+a:hover {
+
+    background-color: black;
+    color: white;
+    /* Permite editar el css de los links de los cuales tenes el mouse por encima */
+}
+
+p::first-letter {
+
+    font-size: 30px;
+    /* Permite modificar el css de la primera letra de un p */
+}
+
+p:first-line {
+
+    color:blue;
+    /* Permite modificar el css de la primera linea de un p */
+}
+
+input:focus {
+
+    border: 3px dashed red;
+    /* Permite modificar el css del input el cual esta seleccionado */
+}

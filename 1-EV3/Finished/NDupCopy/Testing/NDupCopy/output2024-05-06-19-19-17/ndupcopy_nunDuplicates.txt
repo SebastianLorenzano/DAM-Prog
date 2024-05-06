@@ -1,0 +1,70 @@
+../../../../../Testing/input1\exercise19\exercici19css\Apartado C\estilo3.css is duplicated.
+../../../../../Testing/input1\exercise19\exercici19css\Apartado D\estilo4.css is duplicated.
+../../../../../Testing/input1\exercise19\exercici19css\Apartado E\estilo5.css is duplicated.
+../../../../../Testing/input1\exercise19\exercici19css\Apartado F\estilo6.css is duplicated.
+../../../../../Testing/input2\exercise01\ejercicio1SebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado A\ejercicio1cssA.html is duplicated.
+../../../../../Testing/input2\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado B\ejercicio1cssB.html is duplicated.
+../../../../../Testing/input2\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado C\ejercicio1cssC.html is duplicated.
+../../../../../Testing/input2\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado C\estilo.css is duplicated.
+../../../../../Testing/input2\exercise02\ejercicio2SebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise02\ejercicio2SebastianLorenzano\ejercicio2css\ejercicio2css.html is duplicated.
+../../../../../Testing/input2\exercise02\ejercicio2SebastianLorenzano\ejercicio2css\estilo.css is duplicated.
+../../../../../Testing/input2\exercise03\exercici3cssSebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise03\exercici3cssSebastianLorenzano\excercise3.html is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano\ejercicio4css.html is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano\style.css is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano\jugadores\duncan.jpg is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano\jugadores\jordan.jpg is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano\jugadores\karem.jpg is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano\jugadores\lebron.jpg is duplicated.
+../../../../../Testing/input2\exercise04\exercici4cssSebastianLorenzano\jugadores\magic.jpg is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\ejercicio5css.html is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\style.css is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\banner.jpg is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\banner.png is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito01.png is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito02.jpg is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito03.png is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito04.jpg is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito05.png is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito06.png is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito07.png is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito08.jpg is duplicated.
+../../../../../Testing/input2\exercise05\exercici5cssSebastianLorenzano\fotos\circuito09.png is duplicated.
+../../../../../Testing/input2\exercise06\exercici6cssSebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise06\exercici6cssSebastianLorenzano\ejercicio6css.html is duplicated.
+../../../../../Testing/input2\exercise06\exercici6cssSebastianLorenzano\style.css is duplicated.
+../../../../../Testing/input2\exercise07\exercici7css\exercici7cssLorenzanoSebastian.html is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\ejercicio9css.html is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\fotos\cabreo.png is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\fotos\cuñao.jpg is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\fotos\gota.png is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\fotos\jajaja.png is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\fotos\loco.png is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\fotos\risa.png is duplicated.
+../../../../../Testing/input2\exercise08\ejercicio9css\fotos\sonrisa.png is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\ejercicio10css.html is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\style.css is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\fondos\fondo_deporte.jpg is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_argentina.png is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_eeuu.png is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_españa.png is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\iconos\pelota_basket.png is duplicated.
+../../../../../Testing/input2\exercise10\ejercicio10cssSebastianLorenzano\iconos\pelota_futbol.png is duplicated.
+../../../../../Testing/input2\exercise11\exercici11cssSebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise11\exercici11cssSebastianLorenzano\pseudoselectores.html is duplicated.
+../../../../../Testing/input2\exercise11\exercici11cssSebastianLorenzano\style.css is duplicated.
+../../../../../Testing/input2\exercise12\exercici12cssSebastianLorenzano.zip is duplicated.
+../../../../../Testing/input2\exercise12\ejercicio12css\Apartado A\ejercicio12cssA.html is duplicated.
+../../../../../Testing/input2\exercise12\ejercicio12css\Apartado A\estiloA.css is duplicated.
+../../../../../Testing/input2\exercise12\ejercicio12css\Apartado B\ejercicio12cssB.html is duplicated.
+../../../../../Testing/input2\exercise12\ejercicio12css\Apartado B\estiloB.css is duplicated.
+../../../../../Testing/input2\exercise12\ejercicio12css\Apartado C\ejercicio12cssC.html is duplicated.
+../../../../../Testing/input2\exercise12\ejercicio12css\Apartado C\estiloC.css is duplicated.
+../../../../../Testing/input2\exercise13\prueba.html is duplicated.
+../../../../../Testing/input2\exercise13\style.css is duplicated.
+../../../../../Testing/input2\exercise18\exercici18cssSebastianLorenzano.zip is duplicated.

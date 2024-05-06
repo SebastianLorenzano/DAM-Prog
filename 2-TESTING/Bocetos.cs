@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace ndupcopy
 {
-    class Bocetos       
+    class Bocetos
     {
 
+        // Log? GetLogAt(int index) => (index >= 0 && index < _list.Count) ? _list[index] : null;      // Will recycle this whole structure for another project
+        /*
         private static void CreateStructure(string originFolder, string absolutePath)   //        No esta chequeada, la deje de hacer ya que me di cuenta que
         {                                                                               //        Directory.CreateDirectory() ya crea la estructura de carpetas
             var folderPath = Path.GetDirectoryName(absolutePath);
@@ -19,6 +22,7 @@ namespace ndupcopy
                 folderPath = Path.GetDirectoryName(folderPath);
             }
         }
+        */
 
         /*
     public static bool CompareByteByByteInt64(FileInfo f1, FileInfo f2) 

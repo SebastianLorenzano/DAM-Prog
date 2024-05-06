@@ -1,0 +1,120 @@
+../../../../../Testing/input1\estilo.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\estilo.css
+../../../../../Testing/input1\exercici16cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercici16cssSebastianLorenzano.zip
+../../../../../Testing/input1\pagina.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\pagina.html
+../../../../../Testing/input1\apartado1\estilo1.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado1\estilo1.css
+../../../../../Testing/input1\apartado1\pagina1.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado1\pagina1.html
+../../../../../Testing/input1\apartado2\estilo2.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado2\estilo2.css
+../../../../../Testing/input1\apartado2\pagina2.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado2\pagina2.html
+../../../../../Testing/input1\apartado3\estilo3.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado3\estilo3.css
+../../../../../Testing/input1\apartado3\pagina3.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado3\pagina3.html
+../../../../../Testing/input1\apartado4\estilo4.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado4\estilo4.css
+../../../../../Testing/input1\apartado4\pagina4.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado4\pagina4.html
+../../../../../Testing/input1\apartado5\estilo5.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado5\estilo5.css
+../../../../../Testing/input1\apartado5\pagina5.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\apartado5\pagina5.html
+../../../../../Testing/input1\ejercicio16css\molinos.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\ejercicio16css\molinos.jpg
+../../../../../Testing/input1\ejercicio16css\quijote.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\ejercicio16css\quijote.html
+../../../../../Testing/input1\ejercicio16css\quijote.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\ejercicio16css\quijote.jpg
+../../../../../Testing/input1\ejercicio16css\style.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\ejercicio16css\style.css
+../../../../../Testing/input1\exercise01\ejercicio1SebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise01\ejercicio1SebastianLorenzano.zip
+../../../../../Testing/input1\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado A\ejercicio1cssA.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado A\ejercicio1cssA.html
+../../../../../Testing/input1\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado B\ejercicio1cssB.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado B\ejercicio1cssB.html
+../../../../../Testing/input1\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado C\ejercicio1cssC.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado C\ejercicio1cssC.html
+../../../../../Testing/input1\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado C\estilo.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise01\ejercicio1SebastianLorenzano\ejercicio1css\Apartado C\estilo.css
+../../../../../Testing/input1\exercise02\ejercicio2SebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise02\ejercicio2SebastianLorenzano.zip
+../../../../../Testing/input1\exercise02\ejercicio2SebastianLorenzano\ejercicio2css\ejercicio2css.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise02\ejercicio2SebastianLorenzano\ejercicio2css\ejercicio2css.html
+../../../../../Testing/input1\exercise02\ejercicio2SebastianLorenzano\ejercicio2css\estilo.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise02\ejercicio2SebastianLorenzano\ejercicio2css\estilo.css
+../../../../../Testing/input1\exercise03\exercici3cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise03\exercici3cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise03\exercici3cssSebastianLorenzano\excercise3.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise03\exercici3cssSebastianLorenzano\excercise3.html
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano\ejercicio4css.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano\ejercicio4css.html
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano\style.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano\style.css
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano\jugadores\duncan.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano\jugadores\duncan.jpg
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano\jugadores\jordan.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano\jugadores\jordan.jpg
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano\jugadores\karem.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano\jugadores\karem.jpg
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano\jugadores\lebron.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano\jugadores\lebron.jpg
+../../../../../Testing/input1\exercise04\exercici4cssSebastianLorenzano\jugadores\magic.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise04\exercici4cssSebastianLorenzano\jugadores\magic.jpg
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\ejercicio5css.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\ejercicio5css.html
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\style.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\style.css
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\banner.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\banner.jpg
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\banner.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\banner.png
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito01.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito01.png
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito02.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito02.jpg
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito03.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito03.png
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito04.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito04.jpg
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito05.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito05.png
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito06.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito06.png
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito07.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito07.png
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito08.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito08.jpg
+../../../../../Testing/input1\exercise05\exercici5cssSebastianLorenzano\fotos\circuito09.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise05\exercici5cssSebastianLorenzano\fotos\circuito09.png
+../../../../../Testing/input1\exercise06\exercici6cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise06\exercici6cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise06\exercici6cssSebastianLorenzano\ejercicio6css.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise06\exercici6cssSebastianLorenzano\ejercicio6css.html
+../../../../../Testing/input1\exercise06\exercici6cssSebastianLorenzano\style.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise06\exercici6cssSebastianLorenzano\style.css
+../../../../../Testing/input1\exercise07\exercici7css\exercici7cssLorenzanoSebastian.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise07\exercici7css\exercici7cssLorenzanoSebastian.html
+../../../../../Testing/input1\exercise08\ejercicio9css\ejercicio9css.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\ejercicio9css.html
+../../../../../Testing/input1\exercise08\ejercicio9css\fotos\cabreo.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\fotos\cabreo.png
+../../../../../Testing/input1\exercise08\ejercicio9css\fotos\cuñao.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\fotos\cuñao.jpg
+../../../../../Testing/input1\exercise08\ejercicio9css\fotos\gota.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\fotos\gota.png
+../../../../../Testing/input1\exercise08\ejercicio9css\fotos\jajaja.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\fotos\jajaja.png
+../../../../../Testing/input1\exercise08\ejercicio9css\fotos\loco.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\fotos\loco.png
+../../../../../Testing/input1\exercise08\ejercicio9css\fotos\risa.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\fotos\risa.png
+../../../../../Testing/input1\exercise08\ejercicio9css\fotos\sonrisa.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise08\ejercicio9css\fotos\sonrisa.png
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\ejercicio10css.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\ejercicio10css.html
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\style.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\style.css
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\fondos\fondo_deporte.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\fondos\fondo_deporte.jpg
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_argentina.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_argentina.png
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_eeuu.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_eeuu.png
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_españa.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\iconos\bandera_españa.png
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\iconos\pelota_basket.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\iconos\pelota_basket.png
+../../../../../Testing/input1\exercise10\ejercicio10cssSebastianLorenzano\iconos\pelota_futbol.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise10\ejercicio10cssSebastianLorenzano\iconos\pelota_futbol.png
+../../../../../Testing/input1\exercise11\exercici11cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise11\exercici11cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise11\exercici11cssSebastianLorenzano\pseudoselectores.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise11\exercici11cssSebastianLorenzano\pseudoselectores.html
+../../../../../Testing/input1\exercise11\exercici11cssSebastianLorenzano\style.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise11\exercici11cssSebastianLorenzano\style.css
+../../../../../Testing/input1\exercise12\exercici12cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise12\exercici12cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise12\ejercicio12css\Apartado A\ejercicio12cssA.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise12\ejercicio12css\Apartado A\ejercicio12cssA.html
+../../../../../Testing/input1\exercise12\ejercicio12css\Apartado A\estiloA.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise12\ejercicio12css\Apartado A\estiloA.css
+../../../../../Testing/input1\exercise12\ejercicio12css\Apartado B\ejercicio12cssB.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise12\ejercicio12css\Apartado B\ejercicio12cssB.html
+../../../../../Testing/input1\exercise12\ejercicio12css\Apartado B\estiloB.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise12\ejercicio12css\Apartado B\estiloB.css
+../../../../../Testing/input1\exercise12\ejercicio12css\Apartado C\ejercicio12cssC.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise12\ejercicio12css\Apartado C\ejercicio12cssC.html
+../../../../../Testing/input1\exercise12\ejercicio12css\Apartado C\estiloC.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise12\ejercicio12css\Apartado C\estiloC.css
+../../../../../Testing/input1\exercise13\prueba.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise13\prueba.html
+../../../../../Testing/input1\exercise13\style.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise13\style.css
+../../../../../Testing/input1\exercise18\exercici18cssSebastianLorenzano.zip  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise18\exercici18cssSebastianLorenzano.zip
+../../../../../Testing/input1\exercise19\exercici19css\Apartado A\estilo1.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado A\estilo1.css
+../../../../../Testing/input1\exercise19\exercici19css\Apartado A\flex1.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado A\flex1.html
+../../../../../Testing/input1\exercise19\exercici19css\Apartado B\estilo2.css  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado B\estilo2.css
+../../../../../Testing/input1\exercise19\exercici19css\Apartado B\flex2.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado B\flex2.html
+../../../../../Testing/input1\exercise19\exercici19css\Apartado C\flex3.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado C\flex3.html
+../../../../../Testing/input1\exercise19\exercici19css\Apartado D\flex4.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado D\flex4.html
+../../../../../Testing/input1\exercise19\exercici19css\Apartado E\flex5.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado E\flex5.html
+../../../../../Testing/input1\exercise19\exercici19css\Apartado F\flex6.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\exercise19\exercici19css\Apartado F\flex6.html
+../../../../../Testing/input2\about.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\about.html
+../../../../../Testing/input2\album.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\album.html
+../../../../../Testing/input2\blog.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\blog.html
+../../../../../Testing/input2\contact.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\contact.html
+../../../../../Testing/input2\index.html  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\index.html
+../../../../../Testing/input2\images\1.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\1.jpg
+../../../../../Testing/input2\images\2.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\2.jpg
+../../../../../Testing/input2\images\3.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\3.jpg
+../../../../../Testing/input2\images\5.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\5.png
+../../../../../Testing/input2\images\album1.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\album1.jpg
+../../../../../Testing/input2\images\album2.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\album2.jpg
+../../../../../Testing/input2\images\banner2.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\banner2.jpg
+../../../../../Testing/input2\images\loading.gif  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\loading.gif
+../../../../../Testing/input2\images\logo.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\logo.jpg
+../../../../../Testing/input2\images\music1.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\music1.jpg
+../../../../../Testing/input2\images\music2.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\music2.jpg
+../../../../../Testing/input2\images\music3.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\music3.jpg
+../../../../../Testing/input2\images\music4.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\music4.jpg
+../../../../../Testing/input2\images\musicbg.jpg  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\musicbg.jpg
+../../../../../Testing/input2\images\search.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\search.png
+../../../../../Testing/input2\images\search_icon.png  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\images\search_icon.png
+../../../../../Testing/input2\js\bootstrap.bundle.min.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\bootstrap.bundle.min.js
+../../../../../Testing/input2\js\custom.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\custom.js
+../../../../../Testing/input2\js\jquery-3.0.0.min.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\jquery-3.0.0.min.js
+../../../../../Testing/input2\js\jquery.mCustomScrollbar.concat.min.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\jquery.mCustomScrollbar.concat.min.js
+../../../../../Testing/input2\js\jquery.min.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\jquery.min.js
+../../../../../Testing/input2\js\jquery.validate.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\jquery.validate.js
+../../../../../Testing/input2\js\plugin.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\plugin.js
+../../../../../Testing/input2\js\popper.min.js  ==>  ../../../../../Testing\NDupCopy\output2024-05-06-19-23-44\js\popper.min.js

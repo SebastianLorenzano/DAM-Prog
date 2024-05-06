@@ -1,0 +1,38 @@
+body {
+    font-family: Arial;
+    background-image: url("fondos/fondo_deporte.jpg");
+    color: blue;
+    font-weight: bold;
+}
+
+ol {
+    list-style-type: upper-roman;
+}
+.spain {
+    list-style-image: url("iconos/bandera_españa.png");
+}
+
+.usa {
+    list-style-image: url("iconos/bandera_eeuu.png");
+}
+
+.arg {
+    list-style-image: url("iconos/bandera_argentina.png");
+}
+
+#basket {
+    list-style-image: url("iconos/pelota_basket.png");
+}
+
+#futbol {
+    list-style-image: url("iconos/pelota_futbol.png");
+}
+
+h1 {
+    color: #760379;
+}
+
+h2 {
+    color: #760379;
+
+}

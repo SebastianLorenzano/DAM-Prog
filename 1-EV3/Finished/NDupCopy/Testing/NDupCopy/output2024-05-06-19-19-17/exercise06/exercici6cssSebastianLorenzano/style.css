@@ -1,0 +1,20 @@
+body {
+	background-color: #e6d2bb;
+	font-size: 10px;
+	font-family: "Comic Sans MS";
+}
+
+.bluePs {
+	border: 1px solid blue;
+	color: blue;
+}
+
+.greenPs {
+	border: 3px dotted green;
+
+}
+
+#ultimop {
+	font-size: 16px;
+	font-family: "Consolas";
+}

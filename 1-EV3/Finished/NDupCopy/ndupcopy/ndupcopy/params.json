@@ -1,7 +1,7 @@
 {
   "Input_Folders": [
-    "C:\\Users\\seblor3\\Desktop\\asd",
-    "C:\\Users\\seblor3\\Desktop\\rock"
+    "../../../../../Testing/input1",
+    "../../../../../Testing/input2"
   ],
-  "Output_Folder": "C:\\TEsting"
+  "Output_Folder": "../../../../../Testing"
 }

@@ -14,34 +14,23 @@ namespace ndupcopy
 
         }
 
-        public Log? GetLogAt(int index) => (index >= 0 && index < _list.Count)  ? _list[index] : null;      // Will recycle this whole structure for another project
-
-
-        public void Test()
-        {
-            int code = 0;
-            Info($"Este es mi error {code}");
-        }
-
         public void Info(string? message)                           // I know conceptually its wrong and it should be a static and there is no reason to do things like this, but I 
         {                                                             // wanted to try out the Simpleton thing, nothing else
-            Console.BackgroundColor = ConsoleColor.Green;
             Console.WriteLine(message);
-            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         public void Warning(string? message)
         {
-            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Error.WriteLine(message);
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Black;
         }
 
         public void Error(string? message) 
         {
-            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Error.WriteLine(message);
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Black;
         }
 
     }
@@ -49,7 +38,6 @@ namespace ndupcopy
 
     public class Log
     {
-
         internal static int CreateLog(string fileName, string outputFolder, List<FileInfo> list)
         {
             if (fileName == null || outputFolder == null)
