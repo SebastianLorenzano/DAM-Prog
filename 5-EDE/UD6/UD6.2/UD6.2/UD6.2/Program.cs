@@ -5,7 +5,7 @@
         public static void Main(string[] args)
         {
             //Quitar el comentario al metodo que se quiera ejecutar
-            //MetodoUno();
+            MetodoUno();
             //MetodoDos();
         }
 
