@@ -134,7 +134,7 @@ namespace AlumnosUI
                 ToggleBoxes();
                 buttonCheck.Visibility = Visibility.Visible;
 
-                _SavedStudent = new Student() { Name = boxName.Text, Age = boxAge.Text, Description = boxDesc.Text };
+              //  _SavedStudent = new Student() { Name = boxName.Text, Age = boxAge.Text, Description = boxDesc.Text };
             }
                 
         }
