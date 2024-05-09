@@ -25,6 +25,7 @@ namespace AlumnosUI
 
         private void ButtonAdd_Copiar1_Click(object sender, RoutedEventArgs e)
         {
+            
             var db = AppModel.Instance.Database;
             int studentCount = db.StudentCount;
             if (studentCount == 0)
@@ -37,6 +38,7 @@ namespace AlumnosUI
 
         private void ButtonAdd_Copiar_Click(object sender, RoutedEventArgs e)
         {
+            
             var db = AppModel.Instance.Database;
             int studentCount = db.StudentCount;
             if (studentCount == 0)
@@ -44,6 +46,7 @@ namespace AlumnosUI
             if (--_index <= -1)
                 _index = studentCount - 1;
             ChangeStudent(db.GetStudentAt(_index));
+            
 
         }
 

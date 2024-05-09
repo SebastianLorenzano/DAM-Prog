@@ -3,6 +3,10 @@ namespace Model
 {
     public class SqlDatabase : IDatabase
     {
+        private static SqlDatabase _database = new();
+
+        public static SqlDatabase Instance => _database;
+        //public int StudentCount => _students.Count;
 
         public long AddStudent(Student student)
         {
