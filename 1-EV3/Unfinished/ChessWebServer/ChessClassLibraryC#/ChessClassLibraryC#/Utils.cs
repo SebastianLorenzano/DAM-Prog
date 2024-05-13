@@ -4,12 +4,21 @@ namespace ChessClassLibraryC_
 
     public class Position
     {
-        public int x;
-        public int y;
+        private int _x;
+        private int _y;
+
+        public int x => _x;
+        public int y => _y;
+
+        public Position(int x, int y)
+        {
+            _x = x;
+            _y = y;
+        }
 
         public bool isValid()
         {
-            return x > 0 && x <= 7 && y > 0 && y <= 7;
+            return _x > 0 && _x <= Board.WIDTH && _y > 0 && _y <= Board.HEIGHT;
 
         }
     }

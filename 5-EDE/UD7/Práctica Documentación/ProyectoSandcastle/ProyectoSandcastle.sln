@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "ProyectoSandcastle", "ProyectoSandcastle.shfbproj", "{1D9BBD60-7E36-4683-B3B3-29F2A94E6F20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D9BBD60-7E36-4683-B3B3-29F2A94E6F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D9BBD60-7E36-4683-B3B3-29F2A94E6F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D9BBD60-7E36-4683-B3B3-29F2A94E6F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D9BBD60-7E36-4683-B3B3-29F2A94E6F20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72ECBC1C-ABE5-4372-A91D-2D432DFFA0AA}
+	EndGlobalSection
+EndGlobal

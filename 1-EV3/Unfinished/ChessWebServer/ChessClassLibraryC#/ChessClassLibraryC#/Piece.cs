@@ -1,45 +1,43 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ChessClassLibraryC_
 {
 
     public enum PieceType
     {
-        PAWN,
-        ROOK,
-        KNIGHT,
-        BISHOP,
-        QUEEN,
-        KING
+        PAWN = 0,
+        ROOK = 1,
+        KNIGHT = 2,
+        BISHOP = 3,
+        QUEEN = 4,
+        KING = 5
     }
 
     public enum ColorType
     {
-        WHITE,
-        BLACK
+        WHITE = -1,
+        BLACK = 1
     }
 
-
-    public class Piece
+    public abstract class Piece
     {
-        private Position _position; 
-        public PieceType Type { get; init; }
+        protected Position _position;
+        public virtual PieceType Type { get; }
         public ColorType Color { get; init; }
         public Position StartingPosition { get; init; }
         public Position Position { get => _position; set => SetPosition(value); }
 
-        private Piece(PieceType type, Position startingPosition, ColorType color)
+        protected Piece(Position startingPosition, PieceType type, ColorType color)
         {
             Type = type;
             StartingPosition = startingPosition;
             Color = color;
         }
 
-        public static Piece? CreatePiece(PieceType type, Position startingPosition, ColorType color)
+        public static bool CanCreatePiece(Position startingPosition)
         {
-            if (startingPosition != null && startingPosition.isValid())
-                return new Piece(type, startingPosition, color);
-            return null;
+            return startingPosition != null && startingPosition.isValid();
         }
 
 
@@ -49,6 +47,7 @@ namespace ChessClassLibraryC_
                 _position = position;
         }
 
-
+        public abstract List<Position> GetPosiblePositions();    // It returns a list of all positions that are both within the board's width and height and 
+                                                                   // 
     }
 }
