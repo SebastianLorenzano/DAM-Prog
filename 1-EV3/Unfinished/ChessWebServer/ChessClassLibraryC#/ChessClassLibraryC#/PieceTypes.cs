@@ -50,14 +50,13 @@ namespace ChessClassLibraryC_
 
         public override List<Position> GetPosiblePositions()
         {
+            return GetPosiblePositions(Position);
+        }
+
+        public static List<Position> GetPosiblePositions(Position position)
+        {
             var result = new List<Position>();
-            for (int x = -1; x <= 1; x++)
-            {
-                var position = new Position(x, Position.x * (int)Color);
-                if (position.isValid())
-                    result.Add(position);
-            }
-            return result;
+            throw new NotImplementedException();
         }
     }
 
