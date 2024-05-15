@@ -27,6 +27,8 @@ namespace ChessClassLibraryC_
         public ColorType Color { get; init; }
         public Position StartingPosition { get; init; }
         public Position Position { get => _position; set => SetPosition(value); }
+        public int X => _position.X;
+        public int Y => _position.Y;
 
         protected Piece(Position startingPosition, PieceType type, ColorType color)
         {
@@ -40,7 +42,6 @@ namespace ChessClassLibraryC_
             return startingPosition != null && startingPosition.isValid();
         }
 
-
         public void SetPosition(Position position)
         {
             if (position != null && position.isValid())
@@ -48,6 +49,31 @@ namespace ChessClassLibraryC_
         }
 
         public abstract List<Position> GetPosiblePositions();    // It returns a list of all positions that are both within the board's width and height and 
-                                                                   // 
+
+        public static Position[] GetKnightMoves()
+        {
+            return new Position[]
+            {
+                new Position(2, 1),
+                new Position(1, 2),
+                new Position(-1, 2),
+                new Position(-2, 1),
+                new Position(-2, -1),
+                new Position(-1, -2),
+                new Position(1, -2),
+                new Position(2, -1)
+            };
+        }
+
+        public static Position[] GetBishopMoves()
+        {
+            return new Position[]
+            {
+                new Position(1, 1),
+                new Position(-1, 1),
+                new Position(1, -1),
+                new Position(-1, -1),
+            };
+        }
     }
 }

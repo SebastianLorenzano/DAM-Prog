@@ -1,29 +1,40 @@
 ﻿
+using System;
+
 namespace ChessClassLibraryC_
 {
 
     public class Position
     {
-        private int _x;
-        private int _y;
-
-        public int x => _x;
-        public int y => _y;
+        public int x;
+        public int y;
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
 
         public Position(int x, int y)
         {
-            _x = x;
-            _y = y;
+            this.x = x;
+            this.y = y;
+        }
+        public static bool operator ==(Position p1, Position p2)
+        {
+            return p1.x == p2.x && p1.y == p2.y;
+        }
+
+        public static bool operator !=(Position p1, Position p2)
+        {
+            return !(p1 == p2);
         }
 
         public bool isValid()
         {
-            return _x > 0 && _x <= Board.WIDTH && _y > 0 && _y <= Board.HEIGHT;
-
+            return x > 0 && x <= Board.WIDTH && y > 0 && y <= Board.HEIGHT;
         }
     }
+}
 
     public class Utils
     {
+
     }
 }
