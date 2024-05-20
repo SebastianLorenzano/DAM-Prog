@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "AvionSandCastle", "DocumentacionTrabajador\AvionSandCastle.shfbproj", "{FAD98290-A603-4C17-8A39-37FD1429B846}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAD98290-A603-4C17-8A39-37FD1429B846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAD98290-A603-4C17-8A39-37FD1429B846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAD98290-A603-4C17-8A39-37FD1429B846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD98290-A603-4C17-8A39-37FD1429B846}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4CC3EF41-E19D-4FF0-922C-496176CB5950}
+	EndGlobalSection
+EndGlobal

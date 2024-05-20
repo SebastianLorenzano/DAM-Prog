@@ -13,9 +13,9 @@ namespace ConsoleApp1
 
         public string Nif
         {
-            get 
-            { 
-                return nif; 
+            get
+            {
+                return nif;
             }
             set
             {
@@ -35,5 +35,19 @@ namespace ConsoleApp1
                 numPlazas = value;
             }
         }
+        //public bool NifValido =>      //TODO
+        //public bool NumPlazasValido =>
+
+        /*/public bool EsNifValido
+        {
+        }
+
+        */
+        /*
+        public bool numPlazasValido
+        {
+
+        }
+        */
     }
 }
