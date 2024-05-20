@@ -211,7 +211,7 @@
 
         public bool IsInCheck()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

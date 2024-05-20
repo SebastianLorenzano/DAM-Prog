@@ -30,11 +30,18 @@ namespace ChessClassLibraryC_
         {
             return x > 0 && x <= Board.WIDTH && y > 0 && y <= Board.HEIGHT;
         }
+
+        public override bool Equals(object obj)
+        {
+            return ReferenceEquals(this, obj);
+        }
     }
-}
+
 
     public class Utils
     {
 
     }
 }
+
+
