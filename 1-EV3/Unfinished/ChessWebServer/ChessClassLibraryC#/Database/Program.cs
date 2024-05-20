@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Data.SQLite;
-using System.Security.Cryptography.X509Certificates;
 
-namespace WebChessInitializer
+namespace Database
 {
-    class Program
+    class Initializer
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string path = Path.GetFullPath("../../../../mywebchess.db");
             string connectionString = "Data Source=" + path;
@@ -57,25 +56,36 @@ namespace WebChessInitializer
 
                 Console.WriteLine("Tablas creadas correctamente.");
 
-                // Insertar datos de ejemplo
-                string insertUsuarios = @"
+                // Example Insert
+                /*
+                string insertUsers = @"
                 INSERT INTO USERS (name, email, password) VALUES
                 ('Juan Pérez', 'juan@example.com', 'password1'),
                 ('Ana Gómez', 'ana@example.com', 'password2');";
+               
 
-                using (var command = new SQLiteCommand(insertUsuarios, connection))
+                using (var command = new SQLiteCommand(insertUsers, connection))
                 {
                     command.ExecuteNonQuery();
                 }
+                 */
+                // Example Finish
 
                 Console.WriteLine("Datos iniciales insertados correctamente.");
+
+                // Example Select
+                string selectUsers = @"SELECT * FROM USERS";
+
+                using (var command = new SQLiteCommand(selectUsers, connection))
+                {
+                    var reader = command.ExecuteReader();
+                    Console.WriteLine(reader.ToString());
+                }
+
+                // Example Finish   
             }
 
-           
+
         }
     }
-
 }
-
-
-
