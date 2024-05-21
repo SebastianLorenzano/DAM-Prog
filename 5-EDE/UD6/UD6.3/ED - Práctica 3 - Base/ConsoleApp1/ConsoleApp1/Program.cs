@@ -31,6 +31,8 @@
 
             } while (continuar);
 
+            misAlumnos.Imprimir();
+
         }
     }
 }

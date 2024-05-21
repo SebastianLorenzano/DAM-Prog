@@ -158,6 +158,49 @@ namespace Test
             Assert.AreEqual(esperado, alums.Media);
         }
 
+        [Test]
+
+        public void TestImpimir1()
+        {
+            Alumnos alums = new Alumnos();
+            var alumno1 = new Alumno { Nombre = "Juan", Nota = 8, };
+            var alumno2 = new Alumno { Nombre = "Maria", Nota = 4 };
+            alums.Agregar(alumno1);
+            alums.Agregar(alumno2);
+            var outputEsperado = "Nombre: Juan\r\nNota: 8\r\nAprobado: Si\r\n\r\n" +
+                     "Nombre: Maria\r\nNota: 4\r\nAprobado: No\r\n\r\n";
+
+            using (var sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+                alums.Imprimir();
+                var result = sw.ToString();
+                Assert.AreEqual(outputEsperado, result);
+            }
+
+        }
+
+        [Test]
+        public void TestImpimir2()
+        {
+            Alumnos alums = new Alumnos();
+            var alumno1 = new Alumno { Nombre = "Juan", Nota = 9, };
+            var alumno2 = new Alumno { Nombre = "Maria", Nota = 10 };
+            alums.Agregar(alumno1);
+            alums.Agregar(alumno2);
+            var outputEsperado = "Nombre: Juan\r\nNota: 9\r\nAprobado: Si\r\n\r\n" +
+                     "Nombre: Maria\r\nNota: 10\r\nAprobado: Si\r\n\r\n";
+
+            using (var sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+                alums.Imprimir();
+                var result = sw.ToString();
+                Assert.AreEqual(outputEsperado, result);
+            }
+
+        }
+
 
 
 

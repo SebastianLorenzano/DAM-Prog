@@ -11,57 +11,40 @@ namespace ConsoleApp1
     {
         private string nombre;
         private int nota;
-        public string Nombre
-        {
-            get { return nombre; }
-            set { nombre = value; }
-        }
+
+        public string Nombre { get => nombre; set { nombre = value; } }
         public int Nota
         {
-            get { return nota; }
+            get => nota;
             set
             {
                 if (value >= 0 && value <= 10)
                     nota = value;
             }
         }
-        public Boolean Aprobado
-        {
-            get
-            {
-                if (nota >= 5)
-                    return true;
-                else
-                    return false;
-            }
-        }
+        public Boolean Aprobado => nota >= 5;
     }
 
     public class Alumnos
     {
         private ArrayList listaAlumnos = new ArrayList();
 
+        public int Count => listaAlumnos.Count;
         // Agrega un nuevo alumno a la lista
         //        
         public void Agregar(Alumno alu)
         {
             listaAlumnos.Add(alu);
         }
-
         // Devuelve el alumno que está en la posición num
         //
         public Alumno Obtener(int num)
         {
             //modificación código
             if (listaAlumnos.Count == 0)
-            {
                 return null;
-            }
-            else //hasta aquí
             if (num >= 0 && num < listaAlumnos.Count) // modificación código, se modifico num <= listaAlumnos.Count por num < listaAlumnos.Count
-            { 
                 return ((Alumno)listaAlumnos[num]);
-            }
             return null;
         }
 
@@ -82,6 +65,21 @@ namespace ConsoleApp1
                     }
                     return (media / listaAlumnos.Count);
                 }
+            }
+        }
+
+        public void Imprimir()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                var alum = (Alumno)listaAlumnos[i];
+                var aprobado = "No";
+                if (alum.Aprobado)
+                    aprobado = "Si";
+                Console.WriteLine("Nombre: " + alum.Nombre);
+                Console.WriteLine("Nota: " + alum.Nota);
+                Console.WriteLine("Aprobado: " + aprobado);
+                Console.WriteLine();
             }
         }
     }
