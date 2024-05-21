@@ -49,14 +49,12 @@
     <Preliminary>False</Preliminary>
     <HeaderText>SebastianLorenzano</HeaderText>
     <SdkLinkTarget>Blank</SdkLinkTarget>
-    <VisibleItems>InheritedMembers, Privates, PrivateFields, Protected, ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
+    <VisibleItems>InheritedMembers, Privates, PrivateFields, Protected, SealedProtected, ProtectedInternalAsProtected, NoPIATypes, PublicCompilerGenerated, NonBrowsable</VisibleItems>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\..\..\ConsoleApp1\ConsoleApp1\ConsoleApp1.csproj" />
+      <DocumentationSource sourceFile="..\..\..\Avion\ConsoleApp1\ConsoleApp1.csproj" />
     </DocumentationSources>
     <ApiFilter>
-      <Filter entryType="Namespace" fullName="" isExposed="False" xmlns="">
-        <Filter entryType="Class" fullName="Plane" isExposed="True" />
-      </Filter>
     </ApiFilter>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform

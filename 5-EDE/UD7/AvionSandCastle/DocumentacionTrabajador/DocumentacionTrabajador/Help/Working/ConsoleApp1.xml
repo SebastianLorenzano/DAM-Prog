@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ConsoleApp1</name>
+  </assembly>
+  <members>
+    <member name="T:ConsoleApp1.Plane">
+      <summary>
+            This class allows the creation of a plane object, which has the ability
+            to do basic vertical movements, turn and consume fuel
+            </summary>
+    </member>
+    <member name="P:ConsoleApp1.Plane.Height">
+      <summary>
+            Gets the height of the plane
+            <value>Height of the plane</value><remarks>Points to _height</remarks></summary>
+    </member>
+    <member name="P:ConsoleApp1.Plane.Speed">
+      <summary>
+            Gets the speed of the plane
+            <value>Speed of the plane</value><remarks>Points to _speed</remarks></summary>
+    </member>
+    <member name="P:ConsoleApp1.Plane.Orientation">
+      <summary>
+            Gets the orientation of the plane in grades
+            <value>Height of the plane</value><remarks>Points to _orientation</remarks></summary>
+    </member>
+    <member name="P:ConsoleApp1.Plane.Fuel">
+      <summary>
+            Gets the fuel of the plane
+            <value>Fuel of the plane</value><remarks>Points to _fuel</remarks></summary>
+    </member>
+    <member name="M:ConsoleApp1.Plane.#ctor(System.Double,System.Double,System.Double,System.Double)">
+      <summary>
+            Constructor of the object
+            </summary>
+      <param name="height">
+      </param>
+      <param name="velocity">
+      </param>
+      <param name="fuel">
+      </param>
+      <param name="orientation">
+      </param>
+    </member>
+    <member name="M:ConsoleApp1.Plane.Turn(System.Double)">
+      <summary>
+            It allows the plane to turn horizontally.
+            </summary>
+      <param name="degrees">
+      </param>
+    </member>
+    <member name="M:ConsoleApp1.Plane.Ascend(System.Double)">
+      <summary>
+            It allows the plane to ascend.
+            </summary>
+      <param name="meters">
+      </param>
+    </member>
+    <member name="M:ConsoleApp1.Plane.Descend(System.Double)">
+      <summary>
+            It allows the plane to descend.
+            </summary>
+      <param name="metros">
+      </param>
+    </member>
+    <member name="M:ConsoleApp1.Plane.ConsumeFuel(System.Double)">
+      <summary>
+            It allows the plane to consume fuel. It can be negative, so you can also use it to add fuel.
+            </summary>
+      <param name="litros">
+      </param>
+    </member>
+    <member name="N:ConsoleApp1">
+      <summary />
+    </member>
+  </members>
+</doc>
