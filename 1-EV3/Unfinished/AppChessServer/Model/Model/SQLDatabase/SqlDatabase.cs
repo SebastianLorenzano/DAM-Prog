@@ -4,38 +4,53 @@ namespace Model
     public class SqlDatabase : IDatabase
     {
         private static SqlDatabase _database = new();
-
         public static SqlDatabase Instance => _database;
-        //public int StudentCount => _students.Count;
 
-        public long AddStudent(Student student)
+        private SqlDatabase()
+        {
+
+        }
+        public long AddGame(GameDB game)
+        {
+            if (game != null && game.Board != null)
+                throw new NotImplementedException();
+            return -1;
+        }
+
+        public long AddUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public long GetIdWithStudent(Student student)
+        public GameDB? GetGame(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Student? GetStudentAt(int index)
+        public User? GetUserWithId(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Student? GetStudentWithId(long id)
+        public void RemoveGame(long id)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveStudent(long id)
+        public void RemoveUser(long id)
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateStudent(long id, Student student)
+        public bool UpdateGame(long id, GameDB game)
         {
             throw new NotImplementedException();
         }
+
+        public bool UpdateUser(long id, User user)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

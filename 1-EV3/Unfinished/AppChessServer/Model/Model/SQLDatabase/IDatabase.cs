@@ -13,10 +13,10 @@ namespace Model
         bool UpdateUser(long id, User user);
         User? GetUserWithId(long id);
 
-        long AddGame(Game game);
+        long AddGame(GameDB game);
         void RemoveGame(long id);
-        bool UpdateGame(long id, Game game);
-        Game? GetGame(long id);
+        bool UpdateGame(long id, GameDB game);
+        GameDB? GetGame(long id);
 
 
     }

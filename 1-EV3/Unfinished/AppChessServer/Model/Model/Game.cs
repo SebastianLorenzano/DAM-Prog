@@ -2,12 +2,11 @@
 
 namespace Model
 {
-    public class Game
+    public class GameDB
     {
         public int Id { get; set; }
         public int PlayerWhiteId { get; set; }
         public int PlayerBlackId { get; set; }
-        public DateTime FechaInicio { get; set; } = DateTime.UtcNow;
-        public string Resultado { get; set; }
+        public string Board {  get; set; } = string.Empty;
     }
 }

@@ -6,14 +6,14 @@ namespace ndupcopy
 {
     public class NDupCopy
     {
-
+        private static NDupCopy _app;
         private FileInfo[] _files = Array.Empty<FileInfo>();                
         private List<FileInfo> _nonDuplicates = new();
         private List<FileInfo> _duplicates = new();
         public const string FOLDERNAME = "NDupCopy";
         public const string DEFAULT_PARAMS = "../../../params.json";
 
-        public static NDupCopy Instance { get; set; }                   //Didn't feel like deleting all the stuff I did after learning Singletons but wanting to try 
+        public static NDupCopy Instance => _app;                //Didn't feel like deleting all the stuff I did after learning Singletons but wanting to try 
         public string OutputFolder => AppParams.Output_Folder;              // this out anyways so I adapted it to a Singleton but didn't really use it
         public AppParams AppParams { get; init; }
 
@@ -29,7 +29,7 @@ namespace ndupcopy
             {
                 var obj = ReadParams(appParams);
                 if (obj != null && obj.AreParamsValid())
-                    Instance = new NDupCopy(obj);
+                    _app = new NDupCopy(obj);
             }
         }
 
