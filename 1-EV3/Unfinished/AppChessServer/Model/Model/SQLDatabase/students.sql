@@ -37,7 +37,8 @@ CREATE TABLE GAMES (
 --------------------------
 GO
 
-CREATE OR ALTER PROCEDURE AddUser(@email VARCHAR(100), @password VARCHAR(100),  @id INT OUT)
+CREATE OR ALTER PROCEDURE AddUser(@email VARCHAR(100), @password VARCHAR(100),  @codUser
+ INT OUT)
 AS
 BEGIN
     IF @email IS NULL OR EXISTS (SELECT 1 FROM USERS WHERE email = @email)
@@ -46,20 +47,23 @@ BEGIN
     IF @password IS NULL
         RETURN -2
 
-    SET @id = NULL
+    SET @codUser
+     = NULL
     INSERT INTO USERS (email, password)
 			VALUES (@email, @password)
 
-    SET @id = SCOPE_IDENTITY()
+    SET @codUser
+     = SCOPE_IDENTITY()
 END
 
 -------------------------
 GO
 
-CREATE OR ALTER PROCEDURE RemoveUser(@id INT)
+CREATE OR ALTER PROCEDURE RemoveUser(@codUser INT)
 AS
 BEGIN
-    IF @id <= 0
+    IF @codUser
+     <= 0
     RETURN -1
 
     BEGIN TRY
@@ -67,14 +71,17 @@ BEGIN
 
             UPDATE GAMES
                SET codUserWhites = NULL
-             WHERE codUserWhites = @id
+             WHERE codUserWhites = @codUser
+
 
             UPDATE GAMES
               SET codUserBlacks = NULL
-            WHERE codUserBlacks = @id
+            WHERE codUserBlacks = @codUser
+
 
             DELETE FROM USERS
-             WHERE codUser = @id
+             WHERE codUser = @codUser
+
         COMMIT
     END TRY
     BEGIN CATCH
@@ -89,25 +96,100 @@ END
 
 GO
 ----------
-CREATE OR ALTER PROCEDURE UpdateUserPassword(@id INT, @password VARCHAR(100))
+CREATE OR ALTER PROCEDURE UpdateUserPassword(@codUser INT, @password VARCHAR(100))
 AS
 BEGIN
-    IF @id <= 0
+    IF @codUser <= 0
         RETURN -1
+    IF @password IS NULL
+        RETURN -2
 
     UPDATE USERS
     SET password = @password
-    WHERE codUser = @id
+    WHERE codUser = @codUser
+
 END
 
+-------------
 GO
-CREATE OR ALTER FUNCTION GetUserWithId(@id INT)
-RETURNS JSON
+CREATE OR ALTER FUNCTION GetUserWithId(@codUser INT)
+RETURNS VARCHAR
 AS
 BEGIN
-    IF @id <= 0
+    IF @codUser
+     <= 0
         RETURN NULL
-    RETURN (SELECT * FROM USERS WHERE codUser = @id FOR JSON AUTO)
+    RETURN (SELECT * FROM USERS WHERE codUser = @codUser
+     FOR JSON AUTO)
 END
 
 GO
+
+
+
+--------------------------
+GO
+
+CREATE OR ALTER PROCEDURE AddGame(@codUserWhites INT, @codUserBlacks INT,  @gameJson VARCHAR(MAX), @codGame INT OUT)
+AS
+BEGIN
+    IF @codUserWhites IS NULL OR NOT EXISTS (SELECT 1 FROM USERS WHERE codUser = @codUserWhites)
+	    RETURN -1
+
+    IF @codUserBlacks IS NULL OR NOT EXISTS (SELECT 1 FROM USERS WHERE codUser = @codUserBlacks)
+        RETURN -2
+    
+    IF @gameJson IS NULL
+        RETURN -3
+
+    SET @codGame = NULL
+    INSERT INTO GAMES (codUserWhites, codUserBlacks, gameJson)
+			VALUES (@codUserWhites, @codUserBlacks, @gameJson)
+
+    SET @codGame = SCOPE_IDENTITY()
+END
+
+-------------------------
+GO
+
+CREATE OR ALTER PROCEDURE RemoveGame(@codGame INT)
+AS
+BEGIN
+    IF @codGame <= 0
+        RETURN -1
+
+    DELETE FROM GAMES
+    WHERE codGame = @codGame
+END
+
+
+GO
+----------
+CREATE OR ALTER PROCEDURE UpdateGameJson(@codGame INT, @gameJson VARCHAR(MAX))
+AS
+BEGIN
+    IF @codGame <= 0
+        RETURN -1
+
+    IF @gameJson IS NULL
+        RETURN -2
+
+    UPDATE GAMES
+    SET gameJson = @gameJson
+    WHERE codGame = @codGame
+
+END
+
+-------------
+GO
+CREATE OR ALTER FUNCTION GetGameWithId(@codGame INT)
+RETURNS VARCHAR
+AS
+BEGIN
+    IF @codGame <= 0
+        RETURN NULL
+    RETURN (SELECT * FROM GAMES WHERE codGame = @codGame FOR JSON AUTO)
+END
+
+GO
+
