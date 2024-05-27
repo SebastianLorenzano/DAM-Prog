@@ -6,7 +6,7 @@ namespace Test
 {
     internal class Program
     {
-        public const string ConnectionString = "Server=190.168.56.101,1433;Database=STUDENTS;User Id=sa;Password=SqlServer123;";
+        public const string ConnectionString = "Server=192.168.56.101,1433;Database=STUDENTS;User Id=sa;Password=SqlServer123;";
         static void Main(string[] args)
         {
 
@@ -20,7 +20,7 @@ namespace Test
 
                 try
                 {
-                    connection.Open ();
+                    connection.Open();
                 }
                 catch (Exception ex) 
                 {

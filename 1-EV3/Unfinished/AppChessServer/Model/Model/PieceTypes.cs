@@ -133,8 +133,8 @@ namespace Model
             var bishopDirections = GetBishopMoves();         // is stored in Piece for organization purposes
             foreach (var d in bishopDirections)
             {
-                int dx = d.x;
-                int dy = d.y;
+                int dx = d.X;
+                int dy = d.Y;
 
                 d.X += p.X;
                 d.Y += p.Y;
@@ -200,8 +200,8 @@ namespace Model
         {
             var result = new List<Position>();
             var p = piece.Position;
-            for (int x = p.X - 1; x < p.x + 1; x++)
-                for (int y = p.Y - 1; y < p.y + 1; y++)
+            for (int x = p.X - 1; x < p.X + 1; x++)
+                for (int y = p.Y - 1; y < p.Y + 1; y++)
                 {
                     var newPos = new Position(x, y);
                     if (newPos.isValid() || newPos != p)

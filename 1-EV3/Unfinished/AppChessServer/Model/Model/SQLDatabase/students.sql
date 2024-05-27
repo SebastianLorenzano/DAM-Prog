@@ -1,23 +1,13 @@
-USE JARDINERIA
-SELECT * FROM EMPLEADOS
-
-DECLARE @index INT = 3
-SELECT *
-FROM EMPLEADOS
-ORDER BY (SELECT NULL) -- Use ORDER BY (SELECT NULL) to avoid sorting if no specific order is needed
-OFFSET @index - 1 ROWS      -- -1 so it starts counting index and doesn't jump it
-FETCH NEXT 3 ROWS ONLY;
+USE master
 
 
-
-
-
---CREATE DATABASE CHESS
+CREATE DATABASE CHESS
 USE CHESS
 GO
 
 CREATE TABLE USERS (
     codUser          INT IDENTITY,
+    userName            VARCHAR(50) NOT NULL,
     email           VARCHAR(100) NOT NULL,
     password        VARCHAR(100) NOT NULL,
     registerDate    DATE
@@ -34,27 +24,35 @@ CREATE TABLE GAMES (
     CONSTRAINT PK_GAMES PRIMARY KEY (codGame)
 )
 
+SELECT * FROM USERS
 --------------------------
 GO
 
-CREATE OR ALTER PROCEDURE AddUser(@email VARCHAR(100), @password VARCHAR(100),  @codUser
- INT OUT)
+CREATE OR ALTER PROCEDURE AddUser(@name VARCHAR(50), @email VARCHAR(100), @password VARCHAR(100),  @codUser INT OUT)
 AS
 BEGIN
     IF @email IS NULL OR EXISTS (SELECT 1 FROM USERS WHERE email = @email)
 	    RETURN -1
 
-    IF @password IS NULL
+    IF @name IS NULL
         RETURN -2
 
-    SET @codUser
-     = NULL
-    INSERT INTO USERS (email, password)
-			VALUES (@email, @password)
+    IF @password IS NULL
+        RETURN -3
 
-    SET @codUser
-     = SCOPE_IDENTITY()
+    SET @codUser = NULL
+    INSERT INTO USERS (userName, email, password, registerDate)
+			VALUES (@name, @email, @password, GETDATE())
+
+    SET @codUser = SCOPE_IDENTITY()
 END
+
+/*
+GO
+DECLARE @codUser INT, @result INT, @userName VARCHAR(50) = 'Pepe', @email VARCHAR(100) = 'testManual1@gmail.com', @password VARCHAR(100) = '1234'
+EXEC @result = AddUser @userName, @email, @password, @codUser OUT
+*/
+
 
 -------------------------
 GO
@@ -62,8 +60,7 @@ GO
 CREATE OR ALTER PROCEDURE RemoveUser(@codUser INT)
 AS
 BEGIN
-    IF @codUser
-     <= 0
+    IF @codUser <= 0
     RETURN -1
 
     BEGIN TRY
@@ -112,21 +109,18 @@ END
 
 -------------
 GO
-CREATE OR ALTER FUNCTION GetUserWithId(@codUser INT)
-RETURNS VARCHAR
+CREATE OR ALTER PROCEDURE GetUserWithId(@codUser INT, @jsonUser VARCHAR(MAX) OUT)
 AS
 BEGIN
-    IF @codUser
-     <= 0
-        RETURN NULL
-    RETURN (SELECT * FROM USERS WHERE codUser = @codUser
-     FOR JSON AUTO)
-END
+    IF @codUser <= 0
+        RETURN -1
+    SET @jsonUser = NULL
+    SELECT @jsonUser = (SELECT * FROM USERS WHERE codUser = @codUser FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER)
+END 
+
+
 
 GO
-
-
-
 --------------------------
 GO
 
