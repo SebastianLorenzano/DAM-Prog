@@ -4,9 +4,9 @@ namespace Model
 {
     public class GameDB
     {
-        public int Id { get; set; }
-        public int PlayerWhiteId { get; set; }
-        public int PlayerBlackId { get; set; }
-        public string Board {  get; set; } = string.Empty;
+        public int codGame { get; set; }
+        public int codUserWhites { get; set; }
+        public int codUserBlacks { get; set; }
+        public string gameJson {  get; set; } = string.Empty;
     }
 }

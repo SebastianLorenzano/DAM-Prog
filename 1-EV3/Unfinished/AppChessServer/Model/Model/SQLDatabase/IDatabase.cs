@@ -16,7 +16,7 @@ namespace Model
         long AddGame(GameDB game);
         void RemoveGame(long id);
         bool UpdateGame(long id, GameDB game);
-        GameDB? GetGame(long id);
+        GameDB? GetGameWithId(long id);
 
 
     }

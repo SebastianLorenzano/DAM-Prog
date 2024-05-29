@@ -1,6 +1,6 @@
 USE master
 
-
+DROP DATABASE CHESS
 CREATE DATABASE CHESS
 USE CHESS
 GO
@@ -24,7 +24,7 @@ CREATE TABLE GAMES (
     CONSTRAINT PK_GAMES PRIMARY KEY (codGame)
 )
 
-SELECT * FROM USERS
+
 --------------------------
 GO
 
@@ -112,7 +112,7 @@ GO
 CREATE OR ALTER PROCEDURE GetUserWithId(@codUser INT, @jsonUser VARCHAR(MAX) OUT)
 AS
 BEGIN
-    IF @codUser <= 0
+    IF @codUser IS NULL OR @codUser <= 0
         RETURN -1
     SET @jsonUser = NULL
     SELECT @jsonUser = (SELECT * FROM USERS WHERE codUser = @codUser FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER)
@@ -176,13 +176,13 @@ END
 
 -------------
 GO
-CREATE OR ALTER FUNCTION GetGameWithId(@codGame INT)
-RETURNS VARCHAR
+CREATE OR ALTER PROCEDURE GetGameWithId(@codGame INT, @jsonGame VARCHAR(MAX) OUT)
 AS
 BEGIN
-    IF @codGame <= 0
-        RETURN NULL
-    RETURN (SELECT * FROM GAMES WHERE codGame = @codGame FOR JSON AUTO)
+    IF @codGame IS NULL OR @codGame <= 0
+        RETURN -1
+    SET @jsonGame = NULL
+    SELECT @jsonGame = (SELECT * FROM GAMES WHERE codGame = @codGame FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER)
 END
 
 GO

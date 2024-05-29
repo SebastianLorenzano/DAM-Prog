@@ -3,8 +3,6 @@ using System.Data.Entity.Core.Common.CommandTrees;
 
 namespace Model
 {
-
-    public delegate void Visit(Piece piece);
     public class Board
     {
         public const int WIDTH = 7;

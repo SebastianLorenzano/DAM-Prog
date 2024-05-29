@@ -5,10 +5,10 @@ namespace Model
     public class User
     {
         public long codUser { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public DateTime DateRegister { get; set; } = DateTime.Now;
+        public string userName { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public DateTime dateRegister { get; set; } = DateTime.Now;
     }
 
     public class PieceDB

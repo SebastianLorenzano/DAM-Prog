@@ -26,55 +26,71 @@ namespace Model
 
         public void TestConnection()
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                try
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+
                     connection.Open();
                     Console.WriteLine("Connection opened successfully.");
                 }
-                catch (SqlException ex)
-                {
-                    Console.WriteLine("Connection opening was unsuccessful:  " + ex.Message);
-                }
-                    
+
+
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Connection opening was unsuccessful:  " + ex.Message);
             }
         }
 
         public long AddGame(GameDB game)
         {
-            if (game != null && game.Board != null)
+            if (game != null && game.gameJson != null)
                 throw new NotImplementedException();
             return -1;
         }
 
         public long AddUser(User user)
         {
-            if (user == null || user.Email == null || user.Name == null || user.Password == null)
-                return -1;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                using (SqlCommand command = new SqlCommand("AddUser", connection))
+                if (user == null || user.email == null || user.userName == null || user.password == null)
+                    return -1;
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@name", user.Name);
-                    command.Parameters.AddWithValue("@email", user.Email);
-                    command.Parameters.AddWithValue("@password", user.Password);
-                    SqlParameter outputParam = new SqlParameter("@codUser", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                    command.Parameters.Add(outputParam);
+                    using (SqlCommand command = new SqlCommand("AddUser", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@name", user.userName);
+                        command.Parameters.AddWithValue("@email", user.email);
+                        command.Parameters.AddWithValue("@password", user.password);
+                        SqlParameter outputParam = new SqlParameter("@codUser", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                        command.Parameters.Add(outputParam);
 
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    if (outputParam.Value == DBNull.Value)
-                        user.codUser = -1;
-                    else
-                        user.codUser = Convert.ToInt64(outputParam.Value);
-                    return user.codUser;
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        if (outputParam.Value == DBNull.Value)
+                            user.codUser = -1;
+                        else
+                            user.codUser = Convert.ToInt64(outputParam.Value);
+                        return user.codUser;
+                    }
                 }
             }
-
+            catch (SqlException sqlEx)
+            {
+                // Handle SQL exceptions (e.g., connection issues, command execution errors)
+                Console.WriteLine($"SQL Error: {sqlEx.Message}");
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                // Handle any other exceptions
+                Console.WriteLine($"Error: {ex.Message}");
+                return -1;
+            }
         }    
-        public GameDB? GetGame(long id)
+        public GameDB? GetGameWithId(long id)
         {
             throw new NotImplementedException();
         }
@@ -83,17 +99,20 @@ namespace Model
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("SELECT dbo.GetUserWithId(@codUser)", connection))
+                using (SqlCommand command = new SqlCommand("GetUserWithId", connection))
                 {
-                    command.CommandType = CommandType.Text;
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@codUser", id);
+                    SqlParameter outputParam = new SqlParameter("@jsonUser", SqlDbType.NVarChar, -1) { Direction = ParameterDirection.Output };
+                    command.Parameters.Add(outputParam);
+
 
                     connection.Open();
-                    var result = command.ExecuteScalar();
+                    command.ExecuteNonQuery();
 
-                    if (result == null || result == DBNull.Value)
+                    if (outputParam.Value == null || outputParam.Value == DBNull.Value)
                         return null;
-                    string jsonString = result.ToString();
+                    string jsonString = outputParam.Value.ToString();
                     return JsonSerializer.Deserialize<User>(jsonString);
                 }
             }
