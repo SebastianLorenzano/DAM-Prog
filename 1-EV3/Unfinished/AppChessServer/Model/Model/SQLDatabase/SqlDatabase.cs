@@ -36,8 +36,6 @@ namespace Model
                     connection.Open();
                     Console.WriteLine("Connection opened successfully.");
                 }
-
-
             }
             catch (SqlException ex)
             {
@@ -72,9 +70,9 @@ namespace Model
                     }
                 }
             }
-            catch (SqlException sqlEx)
+            catch (SqlException ex)
             {
-                Console.WriteLine($"SQL Error: {sqlEx.Message}");
+                Console.WriteLine($"SQL Error: {ex.Message}");
                 return -1;
             }
             catch (Exception ex)
@@ -111,9 +109,9 @@ namespace Model
                     }
                 }
             }
-            catch (SqlException sqlEx)
+            catch (SqlException ex)
             {
-                Console.WriteLine($"SQL Error: {sqlEx.Message}");
+                Console.WriteLine($"SQL Error: {ex.Message}");
                 return -1;
             }
             catch (Exception ex)
@@ -145,9 +143,9 @@ namespace Model
                     }
                 }
             }
-            catch (SqlException sqlEx)
+            catch (SqlException ex)
             {
-                Console.WriteLine($"SQL Error: {sqlEx.Message}");
+                Console.WriteLine($"SQL Error: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -167,7 +165,7 @@ namespace Model
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@codUser", id);
-                        SqlParameter outputParam = new SqlParameter("@jsonUser", SqlDbType.NVarChar, -1) { Direction = ParameterDirection.Output };
+                        var outputParam = new SqlParameter("@jsonUser", SqlDbType.NVarChar, -1) { Direction = ParameterDirection.Output };
                         command.Parameters.Add(outputParam);
 
                         connection.Open();
@@ -180,10 +178,10 @@ namespace Model
                     }
                 }
             }
-            catch (SqlException sqlEx)
+            catch (SqlException ex)
             {
                 // Handle SQL exceptions (e.g., connection issues, command execution errors)
-                Console.WriteLine($"SQL Error: {sqlEx.Message}");
+                Console.WriteLine($"SQL Error: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -244,9 +242,9 @@ namespace Model
                     }
                 }
             }
-            catch (SqlException sqlEx)
+            catch (SqlException ex)
             {
-                Console.WriteLine($"SQL Error: {sqlEx.Message}");
+                Console.WriteLine($"SQL Error: {ex.Message}");
                 return;
             }
             catch (Exception ex)
@@ -257,14 +255,41 @@ namespace Model
             Debug.WriteLine($"Se ha borrado el usuario {id} correctamente");
         }
 
-        public bool UpdateGame(long id, GameDB game)
+        public bool UpdateGameJson(long id, GameDB game)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("UpdateGameJson", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
 
-        public bool UpdateUser(long id, User user)
-        {
-            throw new NotImplementedException();
+                        command.Parameters.AddWithValue("@codGame", id);
+                        command.Parameters.AddWithValue("@gameJson", game.gameJson);
+
+                        SqlParameter returnValue = new SqlParameter();
+                        returnValue.Direction = ParameterDirection.ReturnValue;
+                        command.Parameters.Add(returnValue);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        Debug.WriteLine($"Se ha updateado el game {id} correctamente");
+                        return (int)returnValue.Value == 0; // 0 = Everything went right
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Console.WriteLine($"SQL Error: {sqlEx.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"General Error: {ex.Message}");
+                return false;
+            }
+            
         }
 
     }

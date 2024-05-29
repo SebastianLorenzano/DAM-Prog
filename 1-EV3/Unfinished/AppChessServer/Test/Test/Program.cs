@@ -21,7 +21,7 @@ namespace Test
         public static void TestUserDB()
         {
             var db = SqlDatabase.Instance;
-            var user1 = new User() { userName = "Pepe", email = "test4@example.com", password = "password123" };
+            var user1 = new User() { userName = "Pepe", email = "test1@example.com", password = "password123" };
             long result = db.AddUser(user1);
             Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user1.codUser}");
             Console.WriteLine("pepe");
@@ -42,8 +42,8 @@ namespace Test
         public static void TestGameDB()
         {
             var db = SqlDatabase.Instance;
-            var user1 = new User() { userName = "Pepe", email = "gameTest13@example.com", password = "password123" };
-            var user2 = new User() { userName = "Pepa", email = "gameTest14@example.com", password = "password456" };
+            var user1 = new User() { userName = "Pepe", email = "gameTest1@example.com", password = "password123" };
+            var user2 = new User() { userName = "Pepa", email = "gameTest2@example.com", password = "password456" };
             db.AddUser(user1);
             db.AddUser(user2);
             string gameJson = "Esto es un jsonDeGame";
@@ -55,12 +55,19 @@ namespace Test
                 Console.WriteLine("No se pudo encontrar un game");
             else
                 Console.WriteLine($"codGame: {game2.codGame} codUserWhites: {game2.codUserWhites} codUserBlacks: {game2.codUserBlacks} gameJson: {game2.gameJson}");
+            var resultUpdateGameJson = db.UpdateGameJson(game1.codGame, new GameDB() { gameJson = "Este es el nuevo gameJson"});
+            if (resultUpdateGameJson)
+                Console.WriteLine($"Resultado de UpdateGameJson: Satisfactorio");
+            else
+                Console.WriteLine($"Resultado de UpdateGameJson: Insatisfactorio");
+
             db.RemoveGame(game1.codGame);
             var game3 = db.GetGameWithId(game1.codGame);
             if (game3 == null)
                 Console.WriteLine("No se pudo encontrar un game");
             else
                 Console.WriteLine($"codGame: {game3.codGame} codUserWhites: {game3.codUserWhites} codUserBlacks: {game3.codUserBlacks} gameJson: {game3.gameJson}");
+
 
         }
     }

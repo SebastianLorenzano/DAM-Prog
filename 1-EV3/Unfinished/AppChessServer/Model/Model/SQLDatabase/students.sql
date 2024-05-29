@@ -190,6 +190,7 @@ BEGIN
 END
 
 -------------
+
 GO
 CREATE OR ALTER PROCEDURE GetGameWithId(@codGame BIGINT, @jsonGame VARCHAR(MAX) OUT)
 AS
