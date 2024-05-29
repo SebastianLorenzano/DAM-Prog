@@ -109,7 +109,7 @@ namespace ndupcopy
             return true;
         }
 
-        public static bool CompareAndClassify(FileInfo[] array, ref List<FileInfo> duplicates, ref List<FileInfo> nonDuplicates)        // Compares the whole list and divides between duplicates and nonDuplicates,
+        public static bool CompareAndClassify(FileInfo[] array, List<FileInfo> duplicates, List<FileInfo> nonDuplicates)        // Compares the whole list and divides between duplicates and nonDuplicates,
         {                                                                                                                                 // doesn't modify the original list.
             if (array == null || duplicates == null || nonDuplicates == null)
                 return false;

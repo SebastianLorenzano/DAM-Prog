@@ -30,7 +30,7 @@ namespace ndupcopy
                 var obj = ReadParams(appParams);
                 if (obj != null && obj.AreParamsValid())
                     _app = new NDupCopy(obj);
-            }
+            } 
         }
 
         internal static string? CreateOutputFolder(string destination)
@@ -62,7 +62,7 @@ namespace ndupcopy
             _files = FileReader.ReadAllFilesToArray(AppParams.Input_Folders);
             if (_files == null)
                 Environment.Exit(-2); 
-            if (!FileReader.CompareAndClassify(_files, ref _duplicates, ref _nonDuplicates))
+            if (!FileReader.CompareAndClassify(_files, _duplicates, _nonDuplicates))
                 Environment.Exit(-3);
             AppParams.Output_Folder = FileCopy.CopyFiles(_nonDuplicates, AppParams.Output_Folder);
             if (AppParams == null)
