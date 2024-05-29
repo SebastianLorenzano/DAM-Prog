@@ -6,8 +6,8 @@ USE CHESS
 GO
 
 CREATE TABLE USERS (
-    codUser          INT IDENTITY,
-    userName            VARCHAR(50) NOT NULL,
+    codUser         BIGINT IDENTITY,
+    userName        VARCHAR(50) NOT NULL,
     email           VARCHAR(100) NOT NULL,
     password        VARCHAR(100) NOT NULL,
     registerDate    DATE
@@ -16,9 +16,9 @@ CREATE TABLE USERS (
 )
 
 CREATE TABLE GAMES (
-    codGame         INT IDENTITY,
-    codUserWhites   INT,
-    codUserBlacks   INT,
+    codGame         BIGINT IDENTITY,
+    codUserWhites   BIGINT,
+    codUserBlacks   BIGINT,
     gameJson        VARCHAR(MAX)
 
     CONSTRAINT PK_GAMES PRIMARY KEY (codGame)
@@ -28,7 +28,7 @@ CREATE TABLE GAMES (
 --------------------------
 GO
 
-CREATE OR ALTER PROCEDURE AddUser(@name VARCHAR(50), @email VARCHAR(100), @password VARCHAR(100),  @codUser INT OUT)
+CREATE OR ALTER PROCEDURE AddUser(@name VARCHAR(50), @email VARCHAR(100), @password VARCHAR(100),  @codUser BIGINT OUT)
 AS
 BEGIN
     IF @email IS NULL OR EXISTS (SELECT 1 FROM USERS WHERE email = @email)
@@ -57,7 +57,7 @@ EXEC @result = AddUser @userName, @email, @password, @codUser OUT
 -------------------------
 GO
 
-CREATE OR ALTER PROCEDURE RemoveUser(@codUser INT)
+CREATE OR ALTER PROCEDURE RemoveUser(@codUser BIGINT)
 AS
 BEGIN
     IF @codUser <= 0
@@ -93,7 +93,7 @@ END
 
 GO
 ----------
-CREATE OR ALTER PROCEDURE UpdateUserPassword(@codUser INT, @password VARCHAR(100))
+CREATE OR ALTER PROCEDURE UpdateUserPassword(@codUser BIGINT, @password VARCHAR(100))
 AS
 BEGIN
     IF @codUser <= 0
@@ -109,7 +109,7 @@ END
 
 -------------
 GO
-CREATE OR ALTER PROCEDURE GetUserWithId(@codUser INT, @jsonUser VARCHAR(MAX) OUT)
+CREATE OR ALTER PROCEDURE GetUserWithId(@codUser BIGINT, @jsonUser VARCHAR(MAX) OUT)
 AS
 BEGIN
     IF @codUser IS NULL OR @codUser <= 0
@@ -124,7 +124,7 @@ GO
 --------------------------
 GO
 
-CREATE OR ALTER PROCEDURE AddGame(@codUserWhites INT, @codUserBlacks INT,  @gameJson VARCHAR(MAX), @codGame INT OUT)
+CREATE OR ALTER PROCEDURE AddGame(@codUserWhites BIGINT, @codUserBlacks BIGINT,  @gameJson VARCHAR(MAX), @codGame BIGINT OUT)
 AS
 BEGIN
     IF @codUserWhites IS NULL OR NOT EXISTS (SELECT 1 FROM USERS WHERE codUser = @codUserWhites)
@@ -146,20 +146,35 @@ END
 -------------------------
 GO
 
-CREATE OR ALTER PROCEDURE RemoveGame(@codGame INT)
+CREATE OR ALTER PROCEDURE RemoveGame(@codGame BIGINT)
 AS
 BEGIN
-    IF @codGame <= 0
-        RETURN -1
+    BEGIN TRY
+        IF @codGame <= 0
+            RETURN -1
 
-    DELETE FROM GAMES
-    WHERE codGame = @codGame
+        BEGIN TRAN
+            UPDATE GAMES
+            SET codUserWhites = NULL, codUserBlacks = NULL
+            WHERE codGame = @codGame
+
+            DELETE FROM GAMES
+            WHERE codGame = @codGame
+        COMMIT
+    END TRY
+    BEGIN CATCH
+        PRINT CONCAT ('ERROR: ', ERROR_NUMBER(), CHAR(10), 
+                      'LINE: ', ERROR_MESSAGE(), CHAR(10), 
+                      'MESSAGE: ', ERROR_LINE())
+        ROLLBACK
+    END CATCH
+    
 END
 
 
 GO
 ----------
-CREATE OR ALTER PROCEDURE UpdateGameJson(@codGame INT, @gameJson VARCHAR(MAX))
+CREATE OR ALTER PROCEDURE UpdateGameJson(@codGame BIGINT, @gameJson VARCHAR(MAX))
 AS
 BEGIN
     IF @codGame <= 0
@@ -176,7 +191,7 @@ END
 
 -------------
 GO
-CREATE OR ALTER PROCEDURE GetGameWithId(@codGame INT, @jsonGame VARCHAR(MAX) OUT)
+CREATE OR ALTER PROCEDURE GetGameWithId(@codGame BIGINT, @jsonGame VARCHAR(MAX) OUT)
 AS
 BEGIN
     IF @codGame IS NULL OR @codGame <= 0
