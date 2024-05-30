@@ -118,11 +118,26 @@ BEGIN
     SELECT @jsonUser = (SELECT * FROM USERS WHERE codUser = @codUser FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER)
 END 
 
-
+GO
+--------------------------
+GO
+CREATE OR ALTER PROCEDURE GetUserWithEmailAndPassword(@email VARCHAR(100), @password VARCHAR(100), @jsonUser VARCHAR(MAX) OUT)
+AS
+BEGIN
+    SET @jsonUser = NULL
+    IF @password IS NULL
+        RETURN -1
+    IF NOT EXISTS(SELECT 1 FROM USERS WHERE email = @email)
+        RETURN -2
+    SELECT @jsonUser = (SELECT * FROM USERS WHERE email = @email AND [password] = @password FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER)
+    IF @jsonUser IS NULL
+        RETURN -3
+END
 
 GO
 --------------------------
 GO
+
 
 CREATE OR ALTER PROCEDURE AddGame(@codUserWhites BIGINT, @codUserBlacks BIGINT,  @gameJson VARCHAR(MAX), @codGame BIGINT OUT)
 AS
@@ -143,6 +158,20 @@ BEGIN
     SET @codGame = SCOPE_IDENTITY()
 END
 
+GO
+DECLARE @result BIGINT, @codGame BIGINT
+
+EXEC @result = AddGame 1, 2, 'Este es mi json', @codGame OUT
+IF @result <> 0
+BEGIN
+    PRINT 'El procedimiento no se ha realizado correctamente'
+    RETURN
+END
+PRINT 'El procedimiento se ha realizado correctamente'
+
+
+
+GO
 -------------------------
 GO
 
@@ -155,7 +184,7 @@ BEGIN
 
         BEGIN TRAN
             UPDATE GAMES
-            SET codUserWhites = NULL, codUserBlacks = NULL
+              SET codUserWhites = NULL, codUserBlacks = NULL
             WHERE codGame = @codGame
 
             DELETE FROM GAMES
@@ -184,8 +213,8 @@ BEGIN
         RETURN -2
 
     UPDATE GAMES
-    SET gameJson = @gameJson
-    WHERE codGame = @codGame
+       SET gameJson = @gameJson
+     WHERE codGame = @codGame
 
 END
 
@@ -202,4 +231,47 @@ BEGIN
 END
 
 GO
+
+------------
+GO
+CREATE OR ALTER PROCEDURE GetGamesWithCodUser(@codUser BIGINT, @offset INT, @max INT, @jsonGames VARCHAR(MAX) OUT)
+AS
+BEGIN
+    IF @codUser IS NULL OR @codUser <= 0
+        RETURN -1
+    IF @offset IS NULL OR @offset < 0
+        RETURN -2
+    IF @max IS NULL OR @max <= 0
+        RETURN -3
+    SET @jsonGames = NULL
+    SELECT @jsonGames = (SELECT * 
+                           FROM GAMES 
+                          WHERE codUserWhites = @codUser 
+                             OR codUserBlacks = @codUser
+                          ORDER BY codGame
+                         OFFSET @offset ROW
+                          FETCH NEXT @max ROWS ONLY
+                            FOR JSON AUTO)
+END
+
+
+
+
+------------
+
+
+GO
+
+CREATE OR ALTER PROCEDURE UpdateUserName(@codUser BIGINT, @userName VARCHAR(50))
+AS
+BEGIN
+    IF @codUser <= 0 OR NOT EXISTS(SELECT 1 FROM USERS WHERE codUser = @codUser)
+        RETURN -1
+    IF @userName IS NULL
+        RETURN -2
+    
+    UPDATE USERS
+       SET userName = @userName
+     WHERE codUser = @codUser
+END
 

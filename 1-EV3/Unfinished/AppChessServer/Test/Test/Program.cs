@@ -21,7 +21,7 @@ namespace Test
         public static void TestUserDB()
         {
             var db = SqlDatabase.Instance;
-            var user1 = new User() { userName = "Pepe", email = "test1@example.com", password = "password123" };
+            var user1 = new User() { userName = "Pepe", email = "test10@example.com", password = "password123" };
             long result = db.AddUser(user1);
             Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user1.codUser}");
             Console.WriteLine("pepe");
@@ -29,13 +29,19 @@ namespace Test
             if (user2 == null)
                 Console.WriteLine("No se pudo encontrar un usuario");
             else
-                Console.WriteLine(user2.userName + user2.email + user2.codUser + user2.password);
-            db.RemoveUser(user2.codUser);
-            var user3 = db.GetUserWithId(user2.codUser);
+                Console.WriteLine("Resultado de GetUserWithId: " + user2.codUser + user2.userName + user2.email  + user2.password);
+            var user3 = db.GetUserWithEmailAndPassword(user1.email, user1.password);
             if (user3 == null)
                 Console.WriteLine("No se pudo encontrar un usuario");
             else
-                Console.WriteLine(user3.userName + user3.email + user3.codUser + user3.password);
+                Console.WriteLine("Resultado de GetUserWithEmailAndPassword: " + user3.codUser + user3.userName + user3.email + user3.password);
+         
+            db.RemoveUser(user2.codUser);
+            var user4 = db.GetUserWithId(user2.codUser);
+            if (user4 == null)
+                Console.WriteLine("No se pudo encontrar un usuario");
+            else
+                Console.WriteLine(user4.userName + user4.email + user4.codUser + user4.password);
 
         }
 
@@ -67,6 +73,19 @@ namespace Test
                 Console.WriteLine("No se pudo encontrar un game");
             else
                 Console.WriteLine($"codGame: {game3.codGame} codUserWhites: {game3.codUserWhites} codUserBlacks: {game3.codUserBlacks} gameJson: {game3.gameJson}");
+            var user3 = new User() { userName = "Pepe", email = "gameTestGetGamesWithUserId21@example.com", password = "password123" };
+            var user4 = new User() { userName = "Pepa", email = "gameTestGetGamesWithUserId22@example.com", password = "password456" };
+            result = db.AddUser(user3);
+            Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user3.codUser}");
+            result = db.AddUser(user4);
+            Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user4.codUser}");
+            var game4 = new GameDB() { codUserWhites = user3.codUser, codUserBlacks = user4.codUser, gameJson = gameJson };
+            result = db.AddGame(game4);
+            Console.WriteLine($"Resultado de AddGame: {result}, codGame: {game4.codGame}");
+            var resultGetGamesWithUserId1 = db.GetGamesWithUserId(user3.codUser, 0, 5);
+            var resultGetGamesWithUserId2 = db.GetGamesWithUserId(user4.codUser, 0, 5);
+            Console.WriteLine(resultGetGamesWithUserId1.ToString());
+            Console.WriteLine(resultGetGamesWithUserId2.ToString());
 
 
         }
