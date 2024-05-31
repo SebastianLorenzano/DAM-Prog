@@ -25,7 +25,7 @@ namespace Model
             return !(p1 == p2);
         }
 
-        public bool isValid()
+        public bool isInBoard()
         {
             return X > 0 && X <= Board.WIDTH && Y > 0 && Y <= Board.HEIGHT;
         }

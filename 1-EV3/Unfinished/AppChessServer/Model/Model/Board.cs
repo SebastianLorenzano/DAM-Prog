@@ -1,5 +1,6 @@
 ﻿
 using System.Data.Entity.Core.Common.CommandTrees;
+using System.Text.Json.Serialization;
 
 namespace Model
 {
@@ -7,34 +8,36 @@ namespace Model
     {
         public const int WIDTH = 7;
         public const int HEIGHT = 7;
-        private List<Piece> _pieces = new();
 
+        [JsonInclude]
+        private List<Piece> _pieces = new List<Piece>();
+        public int Width => WIDTH;
+        public int Height => HEIGHT;
         public int Count => _pieces.Count;
-        public int Turn {  get; set; }
-
-        public Piece? GetPieceAt(int index)
-        {
-            if (index >= 0 && index < _pieces.Count)
-                return _pieces[index]; 
-            return null;
-        }
+        public int Turn { get; set; }
 
         public void AddPiece(Piece piece)
         {
-            if (piece != null && isPositionValid(new Position(piece.X, piece.Y)))
+            if (piece != null && piece.Position.isInBoard())
                 _pieces.Add(piece);
         }
 
-        public int IndexOf(Piece p)
+        public Piece? GetPieceWithIndex(int index)
         {
-            if (p == null)
-                return -1;
-            for (int i = 0; i < _pieces.Count; i++) 
-            {
-                if (_pieces[i] == p) 
-                    return i;
-            }
-            return -1;
+            if (index >= 0 && index < _pieces.Count)
+                return _pieces[index];
+            return null;
+        }
+
+        public Piece? GetPieceWithPosition(Position position)
+        {
+            if (position != null)
+                foreach (var p in _pieces)
+                {
+                    if (p.Position == position) 
+                        return p;
+                }
+            return null;
         }
 
         private bool ContainsPiece(Piece piece)
@@ -42,6 +45,17 @@ namespace Model
             return IndexOf(piece) >= 0;
         }
 
+        public int IndexOf(Piece p)
+        {
+            if (p == null)
+                return -1;
+            for (int i = 0; i < _pieces.Count; i++)
+            {
+                if (_pieces[i] == p)
+                    return i;
+            }
+            return -1;
+        }
         public void RemovePiece(Piece piece)
         {
             int index = IndexOf(piece);
@@ -50,9 +64,14 @@ namespace Model
 
         }
 
-        public bool isPositionValid(Position pos)
+        public bool CanPieceMoveTo(Piece piece, Position destinePos)
         {
-            return pos.isValid();
+           if (piece.Position.isInBoard() || piece.Position != destinePos)
+            {
+                Piece? other = GetPieceWithPosition(destinePos);
+                return other == null || piece.Color != other.Color;
+            }
+            return false;
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Data;
 using System.Text.Json;
-using System;
 using System.Diagnostics;
 
 namespace Model
@@ -45,10 +44,10 @@ namespace Model
 
         public long AddUser(User user)
         {
+            if (user == null || user.email == null || user.userName == null || user.password == null)
+                return -1;
             try
             {
-                if (user == null || user.email == null || user.userName == null || user.password == null)
-                    return -1;
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     using (SqlCommand command = new SqlCommand("AddUser", connection))
@@ -229,10 +228,10 @@ namespace Model
 
         public long AddGame(GameDB game)
         {
+            if (game == null || game.codUserWhites == null || game.codUserBlacks == null || game.gameJson == null)
+                return -1;
             try
             {
-                if (game == null || game.codUserWhites == null || game.codUserBlacks == null || game.gameJson == null)
-                    return -1;
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     using (SqlCommand command = new SqlCommand("AddGame", connection))

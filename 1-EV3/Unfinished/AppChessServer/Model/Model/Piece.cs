@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 
 namespace Model
 {
@@ -22,33 +23,46 @@ namespace Model
 
     public abstract class Piece
     {
-        protected Position _position;
+        private Position _position;
+        public Position Position { get => _position; set => SetPosition(value); }
+        [JsonIgnore]public int X => _position.X;
+        [JsonIgnore] public int Y => _position.Y;
+
         public virtual PieceType Type { get; }
         public ColorType Color { get; init; }
-        public Position StartingPosition { get; init; }
-        public Position Position { get => _position; set => SetPosition(value); }
-        public int X => _position.X;
-        public int Y => _position.Y;
 
-        protected Piece(Position startingPosition, PieceType type, ColorType color)
+        protected Piece(Position position, PieceType type, ColorType color)
         {
+            _position = position;
             Type = type;
-            StartingPosition = startingPosition;
             Color = color;
         }
 
         public static bool CanCreatePiece(Position startingPosition)
         {
-            return startingPosition != null && startingPosition.isValid();
+            return startingPosition != null && startingPosition.isInBoard();
         }
 
         public void SetPosition(Position position)
         {
-            if (position != null && position.isValid())
+            if (position != null && position.isInBoard())
                 _position = position;
         }
 
-        public abstract List<Position> GetPosiblePositions();    // It returns a list of all positions that are both within the board's width and height and 
+        public abstract List<Position> GetPosiblePositions(Board board);    // It returns a list of all positions that are both within the board's width and height and 
+
+        public bool CanAttackPosition(Position objetivePosition, Board board)
+        {
+            if (objetivePosition == null || board == null)
+                return false;
+            var posiblePositions = GetPosiblePositions(board);
+            foreach (var p in posiblePositions)
+            {
+                if (p == objetivePosition)
+                    return true;
+            }
+            return false;
+        }
 
         public static Position[] GetKnightMoves()
         {
