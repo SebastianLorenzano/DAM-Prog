@@ -5,14 +5,14 @@ namespace Model
     public class Pawn : Piece
     {
         public override PieceType Type => PieceType.PAWN;
-        private Pawn(Position startingPosition, PieceType type, ColorType color) : base(startingPosition, type, color)
+        private Pawn(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
-        public static Pawn? Create(Position startingPosition, PieceType type, ColorType color)
+        public static Pawn? Create(Position startingPosition, ColorType color)
         {
             if (CanCreatePiece(startingPosition))
-                return new Pawn(startingPosition, type, color);
+                return new Pawn(startingPosition, color);
             return null;
         }
 
@@ -40,14 +40,14 @@ namespace Model
     public class Rook : Piece
     {
         public override PieceType Type => PieceType.ROOK;
-        private Rook(Position startingPosition, PieceType type, ColorType color) : base(startingPosition, type, color)
+        private Rook(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
-        public static Rook? Create(Position startingPosition, PieceType type, ColorType color)
+        public static Rook? Create(Position startingPosition, ColorType color)
         {
             if (CanCreatePiece(startingPosition))
-                return new Rook(startingPosition, type, color);
+                return new Rook(startingPosition, color);
             return null;
         }
 
@@ -100,14 +100,14 @@ namespace Model
     public class Knight : Piece
     {
         public override PieceType Type => PieceType.KNIGHT;
-        private Knight(Position startingPosition, PieceType type, ColorType color) : base(startingPosition, type, color)
+        private Knight(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
-        public static Knight? Create(Position startingPosition, PieceType type, ColorType color)
+        public static Knight? Create(Position startingPosition, ColorType color)
         {
             if (CanCreatePiece(startingPosition))
-                return new Knight(startingPosition, type, color);
+                return new Knight(startingPosition, color);
             return null;
         }
 
@@ -135,14 +135,14 @@ namespace Model
     public class Bishop : Piece
     {
         public override PieceType Type => PieceType.BISHOP;
-        private Bishop(Position startingPosition, PieceType type, ColorType color) : base(startingPosition, type, color)
+        private Bishop(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
-        public static Bishop? Create(Position startingPosition, PieceType type, ColorType color)
+        public static Bishop? Create(Position startingPosition, ColorType color)
         {
             if (CanCreatePiece(startingPosition))
-                return new Bishop(startingPosition, type, color);
+                return new Bishop(startingPosition, color);
             return null;
         }
 
@@ -176,14 +176,14 @@ namespace Model
     public class Queen : Piece
     {
         public override PieceType Type => PieceType.QUEEN;
-        private Queen(Position startingPosition, PieceType type, ColorType color) : base(startingPosition, type, color)
+        private Queen(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
-        public static Queen? Create(Position startingPosition, PieceType type, ColorType color)
+        public static Queen? Create(Position startingPosition, ColorType color)
         {
             if (CanCreatePiece(startingPosition))
-                return new Queen(startingPosition, type, color);
+                return new Queen(startingPosition, color);
             return null;
         }
 
@@ -204,14 +204,14 @@ namespace Model
     {
         public override PieceType Type => PieceType.KING;
 
-        private King(Position startingPosition, PieceType type, ColorType color) : base(startingPosition, type, color)
+        private King(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
-        public static King? Create(Position startingPosition, PieceType type, ColorType color)
+        public static King? Create(Position startingPosition, ColorType color)
         {
             if (CanCreatePiece(startingPosition))
-                return new King(startingPosition, type, color);
+                return new King(startingPosition, color);
             return null;
         }
 

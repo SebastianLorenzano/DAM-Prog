@@ -11,14 +11,12 @@ namespace Model
 
         [JsonInclude]
         private List<Piece> _pieces = new List<Piece>();
-        public int Width => WIDTH;
-        public int Height => HEIGHT;
         public int Count => _pieces.Count;
         public int Turn { get; set; }
 
         public void AddPiece(Piece piece)
         {
-            if (piece != null && piece.Position.isInBoard())
+            if (piece != null && piece.Position.isInBoard() && IsPositionEmpty(piece.Position))
                 _pieces.Add(piece);
         }
 
@@ -64,6 +62,11 @@ namespace Model
 
         }
 
+        public bool IsPositionEmpty(Position position)
+        {
+            return GetPieceWithPosition(position) == null;
+        }
+
         public bool CanPieceMoveTo(Piece piece, Position destinePos)
         {
            if (piece.Position.isInBoard() || piece.Position != destinePos)
@@ -72,6 +75,30 @@ namespace Model
                 return other == null || piece.Color != other.Color;
             }
             return false;
+        }
+
+        public void Fill()
+        {
+            AddPiece(Rook.Create(new Position(0, 0), ColorType.BLACK));
+            AddPiece(Knight.Create(new Position(1, 0), ColorType.BLACK));
+            AddPiece(Bishop.Create(new Position(2, 0), ColorType.BLACK));
+            AddPiece(Queen.Create(new Position(3, 0), ColorType.BLACK));
+            AddPiece(King.Create(new Position(4, 0), ColorType.BLACK));
+            AddPiece(Bishop.Create(new Position(5, 0), ColorType.BLACK));
+            AddPiece(Knight.Create(new Position(6, 0), ColorType.BLACK));
+            AddPiece(Rook.Create(new Position(7, 0), ColorType.BLACK));
+            for (int i = 0; i <= WIDTH; i++)
+                AddPiece(Pawn.Create(new Position(i, 1), ColorType.BLACK));
+            for (int i = 0; i <= WIDTH; i++)
+                AddPiece(Pawn.Create(new Position(i, 6), ColorType.WHITE));
+            AddPiece(Rook.Create(new Position(0, 7), ColorType.WHITE));
+            AddPiece(Knight.Create(new Position(1, 7), ColorType.WHITE));
+            AddPiece(Bishop.Create(new Position(2, 7), ColorType.WHITE));
+            AddPiece(Queen.Create(new Position(3, 7), ColorType.WHITE));
+            AddPiece(King.Create(new Position(4, 7), ColorType.WHITE));
+            AddPiece(Bishop.Create(new Position(5, 7), ColorType.WHITE));
+            AddPiece(Knight.Create(new Position(6, 7), ColorType.WHITE));
+            AddPiece(Rook.Create(new Position(7, 7), ColorType.WHITE));
         }
     }
 }

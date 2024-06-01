@@ -31,10 +31,9 @@ namespace Model
         public virtual PieceType Type { get; }
         public ColorType Color { get; init; }
 
-        protected Piece(Position position, PieceType type, ColorType color)
+        protected Piece(Position position, ColorType color)
         {
             _position = position;
-            Type = type;
             Color = color;
         }
 
