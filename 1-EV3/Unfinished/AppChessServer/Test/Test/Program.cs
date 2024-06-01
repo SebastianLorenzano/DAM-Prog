@@ -1,5 +1,7 @@
 ﻿using Model;
 using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace Test
 {
@@ -8,9 +10,10 @@ namespace Test
         static void Main(string[] args)
         {
             SqlDatabase.CreateSimpleton("Server=192.168.56.101,1433;Database=CHESS;User Id=sa;Password=SqlServer123;");
-            TestConnection();
+            //TestConnection();
             //TestUserDB();
-            TestGameDB();
+            //TestGameDB();
+            TestBoard();
 
         }
         public static void TestConnection()
@@ -53,7 +56,7 @@ namespace Test
             db.AddUser(user1);
             db.AddUser(user2);
             string gameJson = "Esto es un jsonDeGame";
-            var game1 = new GameDB() { codUserWhites = user1.codUser, codUserBlacks = user2.codUser, gameJson =  gameJson };
+            var game1 = new GameDB() { codUserWhites = user1.codUser, codUserBlacks = user2.codUser, Board =  new Board().Fill()};
             var result = db.AddGame(game1);
             Console.WriteLine($"Resultado de AddGame: {result}, codGame: {game1.codGame}");
             var game2 = db.GetGameWithId(game1.codGame);
@@ -61,7 +64,7 @@ namespace Test
                 Console.WriteLine("No se pudo encontrar un game");
             else
                 Console.WriteLine($"codGame: {game2.codGame} codUserWhites: {game2.codUserWhites} codUserBlacks: {game2.codUserBlacks} gameJson: {game2.gameJson}");
-            var resultUpdateGameJson = db.UpdateGameJson(game1.codGame, new GameDB() { gameJson = "Este es el nuevo gameJson"});
+            var resultUpdateGameJson = db.UpdateGameJson(game1.codGame, new GameDB() {Board = new Board().Fill() });
             if (resultUpdateGameJson)
                 Console.WriteLine($"Resultado de UpdateGameJson: Satisfactorio");
             else
@@ -79,15 +82,35 @@ namespace Test
             Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user3.codUser}");
             result = db.AddUser(user4);
             Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user4.codUser}");
-            var game4 = new GameDB() { codUserWhites = user3.codUser, codUserBlacks = user4.codUser, gameJson = gameJson };
+            var game4 = new GameDB() { codUserWhites = user3.codUser, codUserBlacks = user4.codUser, Board = new Board().Fill() };
             result = db.AddGame(game4);
             Console.WriteLine($"Resultado de AddGame: {result}, codGame: {game4.codGame}");
             var resultGetGamesWithUserId1 = db.GetGamesWithUserId(user3.codUser, 0, 5);
             var resultGetGamesWithUserId2 = db.GetGamesWithUserId(user4.codUser, 0, 5);
             Console.WriteLine(resultGetGamesWithUserId1.ToString());
             Console.WriteLine(resultGetGamesWithUserId2.ToString());
-
-
         }
+
+        public static void TestBoard()
+        {
+            Board board = new Board();
+            BoardToString(board);
+            board.Fill();
+            BoardToString(board);
+        }
+
+        private static void BoardToString(Board board)
+        {
+            Console.WriteLine("Empezando WriteLine");
+            for (int i = 0; i <= Board.WIDTH; i++)
+            {
+                for (int j = 0; j <= Board.HEIGHT; j++)
+                {
+                    var p = board.GetPieceWithPosition(new Position(i, j));
+                    if (p != null)
+                        Console.WriteLine($"Position: {p.X}, ¨{p.Y}; Type: {p.Type}; Color: {p.Color}; PossiblePositions: {JsonSerializer.Serialize(p.GetPosiblePositions(board))}");
+                }
+            }
+        }   
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Model
 {
@@ -7,6 +9,7 @@ namespace Model
         public long codGame { get; set; }
         public long codUserWhites { get; set; }
         public long codUserBlacks { get; set; }
-        public string gameJson {  get; set; } = string.Empty;
+        public string gameJson => JsonSerializer.Serialize(Board);
+        [JsonIgnore] public Board Board { get; set; }
     }
 }

@@ -5,26 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="806">
+        Title="Chess" Width="850" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <!-- Columna pequeña para los controles de la interfaz -->
-            <ColumnDefinition Width="200" />
-            <!-- Borde para separar las dos columnas -->
-            <ColumnDefinition Width="Auto" />
-            <!-- Columna más grande para el tablero -->
-            <ColumnDefinition Width="600" />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <!-- Por ejemplo, un botón -->
-            <Button Content="Botón" Width="200" Height="30"/>
-            <!-- Otros controles aquí -->
-        </StackPanel>
-        <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1"/>
-        <Grid Grid.Column="2">
-            <Grid.Background>
-                <ImageBrush ImageSource="Assets/Board.png"/>
-            </Grid.Background>
-        </Grid>
+
+        <Viewbox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="620"/>
+                    <ColumnDefinition Width="3"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Column="0">
+                    <!-- Menu -->
+                    <Button Content="Botón" Width="150" Height="50"/>
+                </StackPanel>
+                <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1"/>
+                <!-- Board -->
+                <Grid x:Name="BoardGrid" 
+                      Grid.Column="2" 
+                      Height="600" Width="600" Margin="5"
+                      MouseDown="BoardGrid_MouseDown"
+                      >
+                    
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Assets/Board.png"/>
+                    </Grid.Background>
+
+                    <UniformGrid x:Name="HighlightsGrid" Rows="8" Columns="8">
+                        
+                    </UniformGrid>
+
+                    <UniformGrid x:Name="TilesGrid" Rows="8" Columns="8">
+
+                        
+                    </UniformGrid>
+                    
+                </Grid>
+                <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1"/>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Window>
+

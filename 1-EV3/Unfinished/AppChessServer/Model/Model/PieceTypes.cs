@@ -5,6 +5,7 @@ namespace Model
     public class Pawn : Piece
     {
         public override PieceType Type => PieceType.PAWN;
+        public bool FirstMove { get; set; } = true;
         private Pawn(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
@@ -26,9 +27,24 @@ namespace Model
             var result = new List<Position>();
             for (int x = -1; x <= 1; x++)
             {
-                var position = new Position(x, p.X * (int)p.Color);
-                if (board.CanPieceMoveTo(p, position))
+                var position = new Position(p.X + x, p.Y + 1 * (int)p.Color);
+                if (x == 0)
+                {
+                    if (board.CanPieceMoveTo(p, position))
+                        result.Add(position);
+                    continue;
+                }
+                var piece = board.GetPieceWithPosition(position);
+                if (position.isInBoard() && piece != null && piece.Color != p.Color)
                     result.Add(position);
+            }
+            if (p is Pawn pawn)
+            {
+                if (pawn.FirstMove)
+                {
+                    result.Add(new Position(p.X, p.Y + 2 * (int)p.Color));
+                    pawn.FirstMove = false;
+                }
             }
             return result;
         }
@@ -154,19 +170,22 @@ namespace Model
         public static List<Position> GetPosiblePositions(Piece p, Board board)
         {
             var result = new List<Position>();
-            var bishopDirections = GetBishopMoves();         // is stored in Piece for organization purposes
+            var bishopDirections = GetBishopMoves();        
             foreach (var d in bishopDirections)
             {
                 int dx = d.X;
                 int dy = d.Y;
 
-                d.X += p.X;
-                d.Y += p.Y;
-                while (board.CanPieceMoveTo(p, d))
+                int x = p.X;
+                int y = p.Y;
+                while (true) 
                 {
-                    result.Add(new Position(d.X, d.Y));
-                    d.X += dx;
-                    d.Y += dy;
+                    x += dx; 
+                    y += dy;
+                    var newPos = new Position(x, y); 
+                    if (!board.CanPieceMoveTo(p, newPos))
+                        break; 
+                    result.Add(newPos); 
                 }
             }
             return result;
@@ -234,10 +253,12 @@ namespace Model
             return result;
         }
 
+        /*
         public bool IsInCheck(Board board)
         {
             if (board == null)
                 return false;
+
             for (int i = 0; i < board.Count; i++)
             {
                 var piece = board.GetPieceWithIndex(i);
@@ -247,5 +268,6 @@ namespace Model
             }
             return false;
         }
+        */
     }
 }

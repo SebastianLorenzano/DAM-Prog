@@ -1,5 +1,8 @@
 ﻿
 using System.Data.Entity.Core.Common.CommandTrees;
+using System.Diagnostics;
+using System.Media;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
 namespace Model
@@ -10,56 +13,57 @@ namespace Model
         public const int HEIGHT = 7;
 
         [JsonInclude]
-        private List<Piece> _pieces = new List<Piece>();
-        public int Count => _pieces.Count;
+        private Piece[,] _pieces = new Piece[8,8];
+        public int Count => _pieces.Length;
         public int Turn { get; set; }
 
-        public void AddPiece(Piece piece)
+        public Piece? this[int x, int y]
         {
-            if (piece != null && piece.Position.isInBoard() && IsPositionEmpty(piece.Position))
-                _pieces.Add(piece);
+            get 
+            {
+                if (Position.isInBoard(x, y))
+                    return _pieces[x, y];
+                return null;
+            }
+            set
+            {
+                if (Position.isInBoard(x, y))
+                {
+                    _pieces[x, y] = value;
+                }
+            }
         }
 
-        public Piece? GetPieceWithIndex(int index)
+        public void AddPiece(Piece p)
         {
-            if (index >= 0 && index < _pieces.Count)
-                return _pieces[index];
+            if (p != null)
+                _pieces[p.X, p.Y] = p;
+        }
+
+        public Piece? GetPieceWithPosition(int x, int y)
+        {
+            if (Position.isInBoard(x, y))
+                return _pieces[x, y];
             return null;
         }
 
         public Piece? GetPieceWithPosition(Position position)
         {
-            if (position != null)
-                foreach (var p in _pieces)
-                {
-                    if (p.Position == position) 
-                        return p;
-                }
-            return null;
+            return GetPieceWithPosition(position.X, position.Y);
         }
 
-        private bool ContainsPiece(Piece piece)
+        public List<Position> GetPossibleMovesForPieceWithPosition(Position position)
         {
-            return IndexOf(piece) >= 0;
+            var piece = GetPieceWithPosition(position);
+            if (piece != null)
+                return piece.GetPosiblePositions(this);
+            return new List<Position>();
         }
 
-        public int IndexOf(Piece p)
-        {
-            if (p == null)
-                return -1;
-            for (int i = 0; i < _pieces.Count; i++)
-            {
-                if (_pieces[i] == p)
-                    return i;
-            }
-            return -1;
-        }
         public void RemovePiece(Piece piece)
         {
-            int index = IndexOf(piece);
-            if (index >= 0)
-                _pieces.RemoveAt(index);
-
+            if (piece == _pieces[piece.X, piece.Y])
+                _pieces[piece.X, piece.Y] = null;
         }
 
         public bool IsPositionEmpty(Position position)
@@ -69,7 +73,7 @@ namespace Model
 
         public bool CanPieceMoveTo(Piece piece, Position destinePos)
         {
-           if (piece.Position.isInBoard() || piece.Position != destinePos)
+           if (destinePos.isInBoard() && piece.Position != destinePos)
             {
                 Piece? other = GetPieceWithPosition(destinePos);
                 return other == null || piece.Color != other.Color;
@@ -77,8 +81,55 @@ namespace Model
             return false;
         }
 
-        public void Fill()
+        public ColorType GetCurrentPlayer()
         {
+            if (Turn % 2 == 0)
+                return ColorType.WHITE;
+            return ColorType.BLACK;
+        }
+        public Piece? GetKing(ColorType color)
+        {
+            for (int x = 0; x < WIDTH; x++)
+            {
+                for (int y = 0; y < HEIGHT; y++)
+                {
+                    var piece = GetPieceWithPosition(x, y);
+                    if (piece != null && piece.Type == PieceType.KING && piece.Color == color)
+                        return piece;
+                }
+            }
+            return null;
+        }
+
+        public bool IsKingInCheck(ColorType color)
+        {
+            var king = GetKing(color);
+            if (king != null)
+            {
+                for (int x = 0; x < WIDTH; x++)
+                {
+                    for (int y = 0; y < HEIGHT; y++)
+                    {
+                        var piece = GetPieceWithPosition(x, y);
+                        if (piece != null && piece.Color != color && piece.CanAttackPosition(king.Position, this))
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public void MakeMove(Position? selectedPosition, Position position)
+        {
+            GetPieceWithPosition(selectedPosition)?.SetPosition(position);
+        }
+
+
+
+
+        public Board Fill()
+        {
+            #nullable disable
             AddPiece(Rook.Create(new Position(0, 0), ColorType.BLACK));
             AddPiece(Knight.Create(new Position(1, 0), ColorType.BLACK));
             AddPiece(Bishop.Create(new Position(2, 0), ColorType.BLACK));
@@ -99,6 +150,10 @@ namespace Model
             AddPiece(Bishop.Create(new Position(5, 7), ColorType.WHITE));
             AddPiece(Knight.Create(new Position(6, 7), ColorType.WHITE));
             AddPiece(Rook.Create(new Position(7, 7), ColorType.WHITE));
+            return this;
+            #nullable restore
         }
+
+
     }
 }

@@ -17,6 +17,12 @@ namespace Model
         }
         public static bool operator ==(Position p1, Position p2)
         {
+            if (p1 is null || p2 is null)
+            {
+                if (p1 is null && p2 is null)
+                    return true;
+                return false;
+            }
             return p1.X == p2.X && p1.Y == p2.Y;
         }
 
@@ -27,7 +33,12 @@ namespace Model
 
         public bool isInBoard()
         {
-            return X > 0 && X <= Board.WIDTH && Y > 0 && Y <= Board.HEIGHT;
+            return isInBoard(X, Y);
+        }
+
+        public static bool isInBoard(int x, int y)
+        {
+            return x >= 0 && x <= Board.WIDTH && y >= 0 && y <= Board.HEIGHT;
         }
 
         public override bool Equals(object obj)
