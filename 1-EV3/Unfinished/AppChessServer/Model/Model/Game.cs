@@ -10,6 +10,6 @@ namespace Model
         public long codUserWhites { get; set; }
         public long codUserBlacks { get; set; }
         public string gameJson => Board.ToJson();
-        [JsonIgnore] public Board Board { get; set; }
+        [JsonIgnore] public Board Board { get; set; } = new Board();
     }
 }

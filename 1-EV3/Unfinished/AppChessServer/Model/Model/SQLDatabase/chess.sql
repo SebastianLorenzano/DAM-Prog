@@ -134,11 +134,29 @@ BEGIN
         RETURN -3
 END
 
+
 GO
 --------------------------
 GO
 
+CREATE OR ALTER PROCEDURE GetCodUserWithEmail(@email VARCHAR(100), @codUser BIGINT OUT)
+AS
+BEGIN
+    SET @codUser = NULL
+    IF @email IS NULL
+        RETURN -1
+    SELECT @codUser = codUser FROM USERS WHERE email = @email
+    IF @codUser IS NULL
+        RETURN -2
+END
 
+
+GO
+--------------------------
+GO
+
+SELECT * FROM GAMES
+GO
 CREATE OR ALTER PROCEDURE AddGame(@codUserWhites BIGINT, @codUserBlacks BIGINT,  @gameJson VARCHAR(MAX), @codGame BIGINT OUT)
 AS
 BEGIN
@@ -160,7 +178,7 @@ END
 
 GO
 DECLARE @result BIGINT, @codGame BIGINT
-
+/*
 EXEC @result = AddGame 1, 2, 'Este es mi json', @codGame OUT
 IF @result <> 0
 BEGIN
@@ -168,8 +186,9 @@ BEGIN
     RETURN
 END
 PRINT 'El procedimiento se ha realizado correctamente'
+*/
 
-
+SELECT * FROM USERS
 
 GO
 -------------------------

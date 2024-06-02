@@ -10,10 +10,10 @@ namespace Test
         static void Main(string[] args)
         {
             SqlDatabase.CreateSimpleton("Server=192.168.56.101,1433;Database=CHESS;User Id=sa;Password=SqlServer123;");
-            //TestConnection();
+            TestConnection();
             //TestUserDB();
-            //TestGameDB();
-            TestBoard();
+            TestGameDB();
+            //TestBoard();
 
         }
         public static void TestConnection()
@@ -51,8 +51,8 @@ namespace Test
         public static void TestGameDB()
         {
             var db = SqlDatabase.Instance;
-            var user1 = new User() { userName = "Pepe", email = "gameTest1@example.com", password = "password123" };
-            var user2 = new User() { userName = "Pepa", email = "gameTest2@example.com", password = "password456" };
+            var user1 = new User() { userName = "Pepe", email = "gameTest3@example.com", password = "password123" };
+            var user2 = new User() { userName = "Pepa", email = "gameTest4@example.com", password = "password456" };
             db.AddUser(user1);
             db.AddUser(user2);
             string gameJson = "Esto es un jsonDeGame";
@@ -76,8 +76,8 @@ namespace Test
                 Console.WriteLine("No se pudo encontrar un game");
             else
                 Console.WriteLine($"codGame: {game3.codGame} codUserWhites: {game3.codUserWhites} codUserBlacks: {game3.codUserBlacks} gameJson: {game3.gameJson}");
-            var user3 = new User() { userName = "Pepe", email = "gameTestGetGamesWithUserId21@example.com", password = "password123" };
-            var user4 = new User() { userName = "Pepa", email = "gameTestGetGamesWithUserId22@example.com", password = "password456" };
+            var user3 = new User() { userName = "Pepe", email = "gameTestGetGamesWithUserId23@example.com", password = "password123" };
+            var user4 = new User() { userName = "Pepa", email = "gameTestGetGamesWithUserId24@example.com", password = "password456" };
             result = db.AddUser(user3);
             Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user3.codUser}");
             result = db.AddUser(user4);

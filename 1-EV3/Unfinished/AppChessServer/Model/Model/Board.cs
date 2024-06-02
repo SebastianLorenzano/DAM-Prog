@@ -9,9 +9,9 @@ namespace Model
     {
         public const int WIDTH = 7;
         public const int HEIGHT = 7;
-
-        [JsonInclude]
-        private Piece[,] _pieces = new Piece[8,8];
+        public bool wasSaved = false;
+        public List<Piece> PiecesList { get; private set; } = new List<Piece>();
+        private Piece[,] _pieces {  get; set; } = new Piece[8, 8];
         public int Count => _pieces.Length;
         public int Turn { get; set; }
 
@@ -160,8 +160,10 @@ namespace Model
 
         }
 
-        public void MakeMove(Position? initialPos, Position destinePos)
+        public void MakeMove(Position initialPos, Position destinePos)
         {
+            if (initialPos == null || destinePos == null || !initialPos.IsInBoard() || !destinePos.IsInBoard())
+                return;
             var p = GetPieceWithPosition(initialPos);
             if (p != null)
             {
@@ -169,6 +171,7 @@ namespace Model
                 p.SetPosition(destinePos);
                 _pieces[p.X, p.Y] = p;
                 Turn++;
+                wasSaved = false;
             }
 
         }
@@ -215,9 +218,19 @@ namespace Model
 
         public string ToJson()
         {
+            foreach (var piece in _pieces)
+            {
+                   if (piece != null)
+                    PiecesList.Add(piece);
+            }
             return JsonSerializer.Serialize(this);
         }
 
-
+        public void Deserialize()
+        {
+            foreach (var piece in PiecesList)
+               _pieces[piece.X, piece.Y] = piece;
+            PiecesList.Clear();
+        }
     }
 }

@@ -223,6 +223,42 @@ namespace Model
                 Console.WriteLine($"Error: {ex.Message}");
                 return null;
             }
+        }
+
+        public long GetCodUserWithEmail(string email)
+        {
+            if (email == null)
+                return -1;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("GetCodUserWithEmail", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@email", email);
+                        var outputParam = new SqlParameter("@codUser", SqlDbType.BigInt) { Direction = ParameterDirection.Output };
+                        command.Parameters.Add(outputParam);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+
+                        if (outputParam.Value == null || outputParam.Value == DBNull.Value)
+                            return -2;
+                        return Convert.ToInt64(outputParam.Value);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"SQL Error: {ex.Message}");
+                return -3;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return -4;
+            }
 
         }
 

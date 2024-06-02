@@ -23,18 +23,17 @@
                 </Grid.RowDefinitions>
 
 
-                <StackPanel Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Height="580">
                     <!-- New Game Button -->
-                    <Button Name="buttonNewGame" Content="New Game" Width="150" Height="50" Margin="0,5"/>
+                    <Button Name="buttonNewGame" Content="New Game" Width="150" Height="50" Margin="0,5" Click="buttonNewGame_Click"/>
 
                     <!-- Load Game Button -->
-                    <Button Name="buttonLoadGame" Content="Load Game" Width="150" Height="50" Margin="0,5"/>
+                    <Button Name="buttonLoadGame" Content="Load Game" Width="150" Height="50" Margin="0,5" Click="buttonLoadGame_Click"/>
 
                     <!-- Create User Button -->
-                    <Button Name="buttonNewUser" Content="Create User" Width="150" Height="50" Margin="0,5"/>
+                    <Button Name="buttonNewUser" Content="Create User" Width="150" Height="50" Margin="0,5" Click="buttonNewUser_Click"/>
 
                     <!-- Log In Button -->
-                    <Button Name="buttonLoadUser" Content="Log In" Width="150" Height="50" Margin="0,5"/>
 
                     <!-- Turn TextBlock -->
                     <TextBlock Name="textTurnNum" Text="Turn:" FontSize="16" Margin="0,10" HorizontalAlignment="Right"/>
@@ -42,7 +41,9 @@
                     <!-- Goes TextBlock -->
                     <TextBlock Name="textTurnName" Text="Goes:" FontSize="16" Margin="0,5" HorizontalAlignment="Right"/>
 
-                    <Button Content="Save Game" Width="100" Height="50" Margin="0,5" HorizontalAlignment="Right"/>
+                    <Button Content="Save Game" Width="150" Height="50" Margin="0,5" HorizontalAlignment="Right" Click="SaveGameButton_Click"/>
+
+                    <Button x:Name="buttonLoadUser" Content="Login" Width="100" Height="30" Margin="0,120,0,0" Click="buttonLoadUser_Click"/>
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1"/>
                 <!-- Board -->
@@ -50,21 +51,24 @@
                       Grid.Column="2" 
                       Height="600" Width="600" Margin="5"
                       MouseDown="BoardGrid_MouseDown">
-                    
+
                     <Grid.Background>
                         <ImageBrush ImageSource="Assets/Board.png"/>
                     </Grid.Background>
 
                     <UniformGrid x:Name="HighlightsGrid" Rows="8" Columns="8">
-                        
+
                     </UniformGrid>
 
                     <UniformGrid x:Name="TilesGrid" Rows="8" Columns="8"
                                  RenderOptions.BitmapScalingMode="HighQuality">
                     </UniformGrid>
-                    
+                    <TextBox Name="textPassword"  HorizontalAlignment="Left" Margin="-185,401,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="120"/>
+                    <Label Name="textWelcome" Content="" HorizontalAlignment="Left" Margin="-185,509,0,0" VerticalAlignment="Top" Height="50" Width="157"  Visibility="Visible" HorizontalContentAlignment="Right"/>
+
                 </Grid>
                 <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1"/>
+                <TextBox Name="textEmail" HorizontalAlignment="Center" Margin="0,364,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="120"/>
             </Grid>
         </Viewbox>
     </Grid>

@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System.ComponentModel;
+using System.Configuration;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,8 +17,9 @@ namespace ChessApp
 {
     public partial class MainWindow : Window
     {
+        private User? _userLogged; 
         private const string connectionString = "Server=192.168.56.101,1433;Database=CHESS;User Id=sa;Password=SqlServer123;";
-        public SqlDatabase db = SqlDatabase.Instance;
+        public static SqlDatabase db = SqlDatabase.Instance;
         private readonly Image[,] _images = new Image[8, 8];
         private Rectangle[,] _highlights = new Rectangle[8,8];
 
@@ -25,6 +28,7 @@ namespace ChessApp
         private List<Position> _possibleMoves = new List<Position>();   // Possible moves for the selected piece
         private Board Board => game.Board;
 
+        internal static GameDB SharedGame { get; set;}
 
         public MainWindow()
         {
@@ -32,10 +36,16 @@ namespace ChessApp
             SqlDatabase.CreateSimpleton(connectionString);
             InitializeComponent();
             InitializeBoard();
+            DrawUI();
             game.Board = new Board().Fill();
             DrawBoard();
         }
 
+        public void DrawUI()
+        {
+            textTurnNum.Text = "Turn: " + game.Board.Turn;
+            textTurnName.Text = "Goes: " + Board.GetCurrentPlayer();
+        }
         public void InitializeBoard()
         {
             for (int x = 0; x < 8; x++)
@@ -63,8 +73,14 @@ namespace ChessApp
                     _images[y, x].Source = Images.GetImage(piece);
                 }
             }
+            DrawUI();
         }
 
+        internal void SetGame(GameDB game)
+        {
+           this.game = game;
+            DrawBoard();
+        }
         private void SavePossibleMoves(List<Position> positions) // Sets _possibleMoves to the positions given, as long as they are valid
         {
             _possibleMoves.Clear();
@@ -144,6 +160,175 @@ namespace ChessApp
             Board.MakeMove(selectedPos, goToposition);
             DrawBoard();
         }
+
+        private void buttonNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            AddUsers addUsers = new AddUsers();
+            addUsers.ShowDialog();
+        }
+
+        private void buttonNewGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (_userLogged == null || _userLogged.codUser <= 0)
+            {
+                MessageBox.Show("You must be logged in to create a game");
+                return;
+            }
+            MessageBoxResult result = MessageBox.Show("Do you want to save the game?", "Save game", MessageBoxButton.YesNoCancel);
+            if (result == MessageBoxResult.Yes)
+                SaveGameButton_Click(null, null);       // Uploads the game to the DB
+            else if (result == MessageBoxResult.Cancel)
+                return;
+            AddGames addGamesWindow = new AddGames();
+            addGamesWindow.Closed += addGamesWindow_Closed; // Subscribe to Closed event
+            addGamesWindow.Show();
+        }
+        private void addGamesWindow_Closed(object sender, EventArgs e)
+        {
+            if (SharedGame != null)
+            {
+                game = SharedGame;
+                DrawBoard();
+                MessageBox.Show("Game was loaded successfully");
+            }
+            else
+            {
+                MessageBox.Show("No game was loaded.");
+            } 
+        }
+
+        private void buttonLoadUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (_userLogged == null)
+                UserLogin();
+            else
+                UserLogout();
+
+        }
+
+        private void UserLogin()
+        {
+            string email = textEmail.Text;
+            string password = textPassword.Text;
+
+            if (email == "" || password == "")
+            {
+                MessageBox.Show("Incorrect data. Try again");
+                return;
+            }
+
+            if (email == "Email" || password == "Password")
+            {
+                MessageBox.Show("Fill the boxes with your data.");
+                return;
+            }
+
+            var user = db.GetUserWithEmailAndPassword(email, password);
+            if (user == null)
+            {
+                MessageBox.Show("User not found");
+                return;
+            }
+            _userLogged = new User() { codUser = user.codUser, userName = user.userName, email = user.email };
+            MessageBox.Show("Login Successful!");
+            DrawUserLogin();
+        }
+
+        private void UserLogout()
+        {
+            if (!Board.wasSaved)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to save the game before logging out?", "Save game", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                    SaveGameButton_Click(null, null);       // Uploads the game to the DB
+                else if (result == MessageBoxResult.Cancel)
+                    return;
+            }
+
+        }
+
+        private void DrawUserLogin()
+        {
+            textWelcome.Content = $"Welcome back {_userLogged.userName}!";
+            textWelcome.Visibility = Visibility.Visible;
+            textEmail.Text = "";
+            textPassword.Text = "";
+            textEmail.Visibility = Visibility.Hidden;
+            textPassword.Visibility = Visibility.Hidden;
+            buttonLoadUser.Content = "Logout";
+        }
+
+        private void DrawUserLogout()
+        {
+            _userLogged = null;
+            textWelcome.Content = "";
+            textWelcome.Visibility = Visibility.Hidden;
+            textEmail.Text = "Email";
+            textPassword.Text = "Password";
+            textEmail.Visibility = Visibility.Visible;
+            textPassword.Visibility = Visibility.Visible;
+            buttonLoadUser.Content = "Login";
+        }
+
+        private void SaveGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_userLogged == null || _userLogged.codUser <= 0)
+            {
+                MessageBox.Show("You must be logged in to save a game");
+                return;
+            }
+            if (game.codGame == -1)
+                AddGameToDB();
+            else
+                UpdateGameToDB();
+        }
+
+        private void AddGameToDB()
+        {
+            game.codUserWhites = _userLogged.codUser;
+            game.codUserBlacks = _userLogged.codUser;
+            long result = db.AddGame(game);
+            game.codGame = result;
+            if (result > 0)
+            {
+                MessageBox.Show("Game saved successfully");
+                Board.wasSaved = true;
+                return;
+            }
+            MessageBox.Show("Error saving game");
+            return;
+        }
+
+        private void UpdateGameToDB()
+        {
+            if (game.codUserWhites <= 0 || game.codUserBlacks <= 0)
+            {
+                MessageBox.Show("Error saving game");
+                return;
+            }
+            bool result = db.UpdateGameJson(game.codGame, game);
+            if (result)
+            {
+                MessageBox.Show("Game saved successfully");
+                Board.wasSaved = true;
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Error saving game");
+                return;
+            }
+        }
+
+        private void buttonLoadGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (_userLogged == null || _userLogged.codUser <= 0)
+            {
+                MessageBox.Show("You must be logged in to load a game");
+                return;
+            }
+        }
+
 
     }
 
