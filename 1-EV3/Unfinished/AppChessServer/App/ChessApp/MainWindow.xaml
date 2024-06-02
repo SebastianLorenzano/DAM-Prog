@@ -24,15 +24,13 @@
                 
                 <StackPanel Grid.Column="0">
                     <!-- Menu -->
-                    <Button Content="Botón" Width="150" Height="50"/>
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1"/>
                 <!-- Board -->
                 <Grid x:Name="BoardGrid" 
                       Grid.Column="2" 
                       Height="600" Width="600" Margin="5"
-                      MouseDown="BoardGrid_MouseDown"
-                      >
+                      MouseDown="BoardGrid_MouseDown">
                     
                     <Grid.Background>
                         <ImageBrush ImageSource="Assets/Board.png"/>
@@ -42,9 +40,8 @@
                         
                     </UniformGrid>
 
-                    <UniformGrid x:Name="TilesGrid" Rows="8" Columns="8">
-
-                        
+                    <UniformGrid x:Name="TilesGrid" Rows="8" Columns="8"
+                                 RenderOptions.BitmapScalingMode="HighQuality">
                     </UniformGrid>
                     
                 </Grid>

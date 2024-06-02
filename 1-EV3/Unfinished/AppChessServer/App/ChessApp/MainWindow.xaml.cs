@@ -18,7 +18,7 @@ namespace ChessApp
         private const string connectionString = "Server=192.168.56.101,1433;Database=CHESS;User Id=sa;Password=SqlServer123;";
         public SqlDatabase db = SqlDatabase.Instance;
         private readonly Image[,] _images = new Image[8, 8];
-        private Ellipse[,] _highlights = new Ellipse[8, 8];
+        private Rectangle[,] _highlights = new Rectangle[8,8];
 
         private GameDB game;    // Instance for DB
         private Position _selectedPosition;
@@ -46,17 +46,8 @@ namespace ChessApp
                     _images[x, y] = image;
                     TilesGrid.Children.Add(image);
 
-                    var highlight = new Ellipse()   // Initializes highlight
-                    {
-                        Width = 30,
-                        Height = 30,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        Fill = Brushes.Gray,
-                        Visibility = Visibility.Hidden
-                    };
-
-                    _highlights[x, y] = highlight;
+                    var highlight = new Rectangle();   // Initializes highlight
+                    _highlights[y, x] = highlight;
                     HighlightsGrid.Children.Add(highlight);
                 }
             }
@@ -79,26 +70,27 @@ namespace ChessApp
             _possibleMoves.Clear();
             foreach (var p in positions)
             {
-                if (p != null && p.isInBoard())
+                if (p != null && p.IsInBoard())
                     _possibleMoves.Add(p);
             }
         }
 
         private void ShowHighlights()
         {
+            Color color = Colors.LightGreen;
             foreach (var p in _possibleMoves)
-                _highlights[p.X, p.Y].Visibility = Visibility.Visible;
+                _highlights[p.X, p.Y].Fill = new SolidColorBrush(color);
         }
 
         private void HideHighlights()
         {
             foreach (var p in _possibleMoves)
-                _highlights[p.X, p.Y].Visibility = Visibility.Hidden;
+                _highlights[p.X, p.Y].Fill = Brushes.Transparent;
         }
 
         private Position ToSquarePosition(Point point)
         {
-            double tileWidth = BoardGrid.ActualWidth / 8;
+            double tileWidth = BoardGrid.Width / 8;
             int x = (int)(point.X / tileWidth);       // Chess is 8 x 8 tiles, width = height
             int y = (int)(point.Y / tileWidth);
             return new Position(x, y);
@@ -117,8 +109,13 @@ namespace ChessApp
 
         private void SelectPieceInPosition(Position position)
         {
-            var possibleMoves = game.Board.GetPossibleMovesForPieceWithPosition(position);
-            if (possibleMoves.Any())
+            _possibleMoves.Clear();
+            var piece = Board.GetPieceWithPosition(position);
+            if (piece == null)
+                return;
+            var possibleMoves = piece.GetPosiblePositions(Board);
+            var legalMoves = Board.GetLegalMovements(piece, possibleMoves);
+            if (possibleMoves.Count > 0)
             {
                 _selectedPosition = position;
                 SavePossibleMoves(possibleMoves);
@@ -128,13 +125,18 @@ namespace ChessApp
 
         private void MovePieceToPosition(Position position)
         {
-            _selectedPosition = null;
+            
             HideHighlights();
-            if (_possibleMoves.Contains(position))
+            foreach (var p in _possibleMoves)
             {
-                HandleMove(_selectedPosition, position);
-                DrawBoard();
+                if (p == position)
+                {
+                    HandleMove(_selectedPosition, position);
+                    _selectedPosition = null;
+                    return;
+                }
             }
+            _selectedPosition = null;
         }
 
         private void HandleMove(Position selectedPos, Position goToposition)

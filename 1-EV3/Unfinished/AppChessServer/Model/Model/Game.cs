@@ -9,7 +9,7 @@ namespace Model
         public long codGame { get; set; }
         public long codUserWhites { get; set; }
         public long codUserBlacks { get; set; }
-        public string gameJson => JsonSerializer.Serialize(Board);
+        public string gameJson => Board.ToJson();
         [JsonIgnore] public Board Board { get; set; }
     }
 }

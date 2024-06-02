@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 using System.Text.Json.Serialization;
 
 namespace Model
@@ -18,14 +19,14 @@ namespace Model
     public enum ColorType
     {
         WHITE = -1,
-        BLACK = 1
+        BLACK = 1         
     }
 
     public abstract class Piece
     {
         private Position _position;
         public Position Position { get => _position; set => SetPosition(value); }
-        [JsonIgnore]public int X => _position.X;
+        [JsonIgnore] public int X => _position.X;
         [JsonIgnore] public int Y => _position.Y;
 
         public virtual PieceType Type { get; }
@@ -39,27 +40,26 @@ namespace Model
 
         public static bool CanCreatePiece(Position startingPosition)
         {
-            return startingPosition != null && startingPosition.isInBoard();
+            return startingPosition != null && startingPosition.IsInBoard();
         }
 
         public void SetPosition(Position position)
         {
-            if (position != null && position.isInBoard())
+            if (position != null)
                 _position = position;
         }
 
-        public abstract List<Position> GetPosiblePositions(Board board);    // It returns a list of all positions that are both within the board's width and height and 
-
-        public bool CanAttackPosition(Position objetivePosition, Board board)
+        public abstract List<Position> GetPosiblePositions(Board board); 
+        public abstract Piece Clone();                                    
+        public virtual bool CanAttackOpponentKing(Board board)
         {
-            if (objetivePosition == null || board == null)
-                return false;
-            var posiblePositions = GetPosiblePositions(board);
-            foreach (var p in posiblePositions)
+            var moves = GetPosiblePositions(board);
+            foreach (var move in moves)
             {
-                if (p == objetivePosition)
+                var piece = board.GetPieceWithPosition(move);
+                if (piece != null && piece.Type == PieceType.KING)
                     return true;
-            }
+            }   
             return false;
         }
 
@@ -86,6 +86,32 @@ namespace Model
                 new Position(-1, 1),
                 new Position(1, -1),
                 new Position(-1, -1),
+            };
+        }
+
+        public static Position[] GetRookMoves()
+        {
+            return new Position[]
+            {
+                new Position(1, 0),
+                new Position(-1, 0),
+                new Position(0, 1),
+                new Position(0, -1),
+            };
+        }
+
+        public static Position[] GetKingMoves()
+        {
+            return new Position[]
+                {
+                new Position(1, 0),     //South
+                new Position(-1, 0),    //North
+                new Position(0, 1),     //East
+                new Position(0, -1),    //West
+                new Position(1, 1),     //South-East
+                new Position(-1, 1),    //North-East
+                new Position(1, -1),    //South-West
+                new Position(-1, -1),   //North-West
             };
         }
     }

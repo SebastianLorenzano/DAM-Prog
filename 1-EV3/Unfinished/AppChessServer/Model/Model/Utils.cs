@@ -31,7 +31,7 @@ namespace Model
             return !(p1 == p2);
         }
 
-        public bool isInBoard()
+        public bool IsInBoard()
         {
             return isInBoard(X, Y);
         }
@@ -50,7 +50,10 @@ namespace Model
 
     public class Utils
     {
-
+        public static ColorType GetOpponent(ColorType color)
+        {
+            return ColorType.WHITE == color ? ColorType.BLACK : ColorType.WHITE;
+        }
     }
 }
 

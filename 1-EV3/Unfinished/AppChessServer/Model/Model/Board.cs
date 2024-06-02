@@ -1,9 +1,7 @@
 ﻿
-using System.Data.Entity.Core.Common.CommandTrees;
-using System.Diagnostics;
-using System.Media;
-using System.Runtime.CompilerServices;
+using System.Drawing;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Model
 {
@@ -71,62 +69,111 @@ namespace Model
             return GetPieceWithPosition(position) == null;
         }
 
-        public bool CanPieceMoveTo(Piece piece, Position destinePos)
-        {
-           if (destinePos.isInBoard() && piece.Position != destinePos)
-            {
-                Piece? other = GetPieceWithPosition(destinePos);
-                return other == null || piece.Color != other.Color;
-            }
-            return false;
-        }
-
         public ColorType GetCurrentPlayer()
         {
             if (Turn % 2 == 0)
                 return ColorType.WHITE;
             return ColorType.BLACK;
         }
-        public Piece? GetKing(ColorType color)
+
+        public List<Position> GetPossiblePositionsForPlayer(ColorType color)
         {
-            for (int x = 0; x < WIDTH; x++)
+            var result = new List<Position>();
+            GetPiecePositions().ForEach(pos =>
             {
-                for (int y = 0; y < HEIGHT; y++)
+                var piece = GetPieceWithPosition(pos);
+                if (piece != null && piece.Color == color)
+                    result.AddRange(piece.GetPosiblePositions(this));
+            });
+            return result;
+        }
+
+        public List<Position> GetPiecePositions()
+        {
+            var result = new List<Position>();
+            for (int x = 0; x <= WIDTH; x++)
+            {
+                for (int y = 0; y <= HEIGHT; y++)
                 {
                     var piece = GetPieceWithPosition(x, y);
-                    if (piece != null && piece.Type == PieceType.KING && piece.Color == color)
-                        return piece;
+                    if (piece != null)
+                        result.Add(new Position(x, y));
                 }
             }
+            return result;
+        }
+
+        public Piece? GetKing(ColorType color)
+        {
+            var piecesPos = GetPiecePositions();
+            foreach (var pos in piecesPos)
+            {
+                var piece = GetPieceWithPosition(pos);
+                if (piece != null && piece.Type == PieceType.KING && piece.Color == color)
+                    return piece;
+            }
             return null;
+        }
+
+        public bool CanPieceMoveTo(Piece piece, Position destinePos)
+        {
+            if (destinePos.IsInBoard() && piece.Position != destinePos)
+            {
+                Piece? other = GetPieceWithPosition(destinePos);
+                return (other == null || piece.Color != other.Color);
+            }
+            return false;
+        }
+
+        public List<Position> GetLegalMovements(Piece piece, List<Position> destinePositions)
+        {
+            var result = new List<Position>();
+            if (piece == null || destinePositions == null)
+                return result;
+            
+            foreach (var pos in destinePositions)
+            {
+                if (IsMovementLegal(piece, pos))
+                    result.Add(pos);
+            }
+            return result;
+        }
+        private bool IsMovementLegal(Piece piece, Position destinePos)  
+        {
+            var boardClone = Clone();
+            boardClone.MakeMove(piece.Position, destinePos);
+            return !boardClone.IsKingInCheck(piece.Color);
         }
 
         public bool IsKingInCheck(ColorType color)
         {
             var king = GetKing(color);
-            if (king != null)
+            if (king == null)
+                return false;
+            var possibleEnemyMoves = GetPossiblePositionsForPlayer(Utils.GetOpponent(color));
+            foreach (var pos in possibleEnemyMoves)
             {
-                for (int x = 0; x < WIDTH; x++)
-                {
-                    for (int y = 0; y < HEIGHT; y++)
-                    {
-                        var piece = GetPieceWithPosition(x, y);
-                        if (piece != null && piece.Color != color && piece.CanAttackPosition(king.Position, this))
-                            return true;
-                    }
-                }
+                if (pos.X == king.X && pos.Y == king.Y)
+                    return true;
             }
             return false;
+
         }
 
-        public void MakeMove(Position? selectedPosition, Position position)
+        public void MakeMove(Position? initialPos, Position destinePos)
         {
-            GetPieceWithPosition(selectedPosition)?.SetPosition(position);
+            var p = GetPieceWithPosition(initialPos);
+            if (p != null)
+            {
+                _pieces[p.X, p.Y] = null;
+                p.SetPosition(destinePos);
+                _pieces[p.X, p.Y] = p;
+                Turn++;
+            }
+
         }
 
-
-
-
+       
         public Board Fill()
         {
             #nullable disable
@@ -152,6 +199,23 @@ namespace Model
             AddPiece(Rook.Create(new Position(7, 7), ColorType.WHITE));
             return this;
             #nullable restore
+        }
+
+        public Board Clone()
+        {
+            var result = new Board();
+            foreach (var pos in GetPiecePositions())
+            {
+                var piece = GetPieceWithPosition(pos);
+                if (piece != null)
+                    result.AddPiece(piece.Clone());
+            }
+            return result;
+        }
+
+        public string ToJson()
+        {
+            return JsonSerializer.Serialize(this);
         }
 
 

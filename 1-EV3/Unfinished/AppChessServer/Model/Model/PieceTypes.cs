@@ -1,4 +1,6 @@
 ﻿
+using System.Security.Policy;
+
 namespace Model
 {
 
@@ -17,6 +19,11 @@ namespace Model
             return null;
         }
 
+        public override Piece Clone()
+        {
+            return new Pawn(Position, Color);
+        }
+
         public override List<Position> GetPosiblePositions(Board board)
         {
             return GetPosiblePositions(this, board);
@@ -27,26 +34,37 @@ namespace Model
             var result = new List<Position>();
             for (int x = -1; x <= 1; x++)
             {
-                var position = new Position(p.X + x, p.Y + 1 * (int)p.Color);
+                var position = new Position(p.X + x, p.Y + (1 * (int)p.Color));
                 if (x == 0)
                 {
-                    if (board.CanPieceMoveTo(p, position))
+                    if (board.IsPositionEmpty(position))
                         result.Add(position);
                     continue;
                 }
-                var piece = board.GetPieceWithPosition(position);
-                if (position.isInBoard() && piece != null && piece.Color != p.Color)
+                var other = board.GetPieceWithPosition(position);
+                if (position.IsInBoard() && other != null && other.Color != p.Color)
                     result.Add(position);
             }
             if (p is Pawn pawn)
             {
                 if (pawn.FirstMove)
                 {
-                    result.Add(new Position(p.X, p.Y + 2 * (int)p.Color));
-                    pawn.FirstMove = false;
+                    result.Add(new Position(p.X, p.Y + (2 * (int)p.Color)));
                 }
             }
             return result;
+        }
+
+        public override bool CanAttackOpponentKing(Board board)
+        {
+            var moves = GetPosiblePositions(board);
+            foreach (var move in moves)
+            {
+                var piece = board.GetPieceWithPosition(move);
+                if (piece != null && piece.Type == PieceType.KING && piece.Color != Color && X != move.X)
+                    return true;
+            }
+            return false;
         }
     }
 
@@ -67,6 +85,11 @@ namespace Model
             return null;
         }
 
+        public override Piece Clone()
+        {
+            return new Rook(Position, Color);
+        }
+
         public override List<Position> GetPosiblePositions(Board board)
         {
             return GetPosiblePositions(this, board);
@@ -76,38 +99,34 @@ namespace Model
         {
             var p = piece.Position;
             var result = new List<Position>();
+            var directions = GetRookMoves();
 
-            for (int x = p.X + 1; x < 8; x++)           // Gets positions up
+            foreach (var d in directions)
+                result.AddRange(GetPositionsInDirection(board, piece, d));
+            return result;
+        }
+
+        private static List<Position> GetPositionsInDirection(Board board, Piece piece, Position direction)
+        {
+            var result = new List<Position>();
+            int x = piece.Position.X;
+            int y = piece.Position.Y;
+
+            while (true)
             {
-                var position = new Position(x, p.Y);    
-                if (board.CanPieceMoveTo(piece, position))
-                    result.Add(position);
-                else
+                x += direction.X;
+                y += direction.Y;
+                var newPos = new Position(x, y);
+                if (!newPos.IsInBoard())
                     break;
-            }
-            for (int x = p.X - 1; x >= 0; x--)          // Gets positions down
-            {
-                var position = new Position(x, p.Y);
-                if (board.CanPieceMoveTo(piece, position))
-                    result.Add(position);
+                if (board.GetPieceWithPosition(newPos) == null)
+                    result.Add(newPos);
                 else
+                {
+                    if (board.CanPieceMoveTo(piece, newPos))
+                        result.Add(newPos);
                     break;
-            }
-            for (int y = p.Y + 1; y < 8; y++)           // Gets positions right
-            {
-                var position = new Position(p.X, y);
-                if (board.CanPieceMoveTo(piece, position))
-                    result.Add(position);
-                else
-                    break;
-            }
-            for (int y = p.Y - 1; y >= 0; y--)          // Gets positions left
-            {
-                var position = new Position(p.X, y);
-                if (board.CanPieceMoveTo(piece, position))
-                    result.Add(position);
-                else
-                    break;
+                }
             }
             return result;
         }
@@ -126,6 +145,10 @@ namespace Model
                 return new Knight(startingPosition, color);
             return null;
         }
+        public override Piece Clone()
+        {
+            return new Knight(Position, Color);
+        }
 
         public override List<Position> GetPosiblePositions(Board board)
         {
@@ -138,11 +161,10 @@ namespace Model
             var knightMoves = GetKnightMoves();         // is stored in Piece for organization purposes
             foreach (var move in knightMoves)
             {
-                move.X += p.X;
-                move.Y += p.Y;
+                var pos = new Position(move.X + p.X, move.Y + p.Y);
 
-                if (move.isInBoard())
-                    result.Add(new Position(move.X, move.Y));
+                if (board.CanPieceMoveTo(p, pos))
+                    result.Add(pos);
             }
             return result;
         }
@@ -162,6 +184,11 @@ namespace Model
             return null;
         }
 
+        public override Piece Clone()
+        {
+            return new Bishop(Position, Color);
+        }
+
         public override List<Position> GetPosiblePositions(Board board)
         {
             return GetPosiblePositions(this, board);
@@ -170,22 +197,32 @@ namespace Model
         public static List<Position> GetPosiblePositions(Piece p, Board board)
         {
             var result = new List<Position>();
-            var bishopDirections = GetBishopMoves();        
+            var bishopDirections = GetBishopMoves();
             foreach (var d in bishopDirections)
-            {
-                int dx = d.X;
-                int dy = d.Y;
+                result.AddRange(GetPositionsInDirection(board, p, d));
+            return result;
+        }
 
-                int x = p.X;
-                int y = p.Y;
-                while (true) 
+        private static List<Position> GetPositionsInDirection(Board board, Piece piece, Position direction)
+        {
+            var result = new List<Position>();
+            int x = piece.Position.X;
+            int y = piece.Position.Y;
+
+            while (true)
+            {
+                x += direction.X;
+                y += direction.Y;
+                var newPos = new Position(x, y);
+                if (!newPos.IsInBoard())
+                    break;
+                if (board.GetPieceWithPosition(newPos) == null)
+                    result.Add(newPos);
+                else
                 {
-                    x += dx; 
-                    y += dy;
-                    var newPos = new Position(x, y); 
-                    if (!board.CanPieceMoveTo(p, newPos))
-                        break; 
-                    result.Add(newPos); 
+                    if (board.CanPieceMoveTo(piece, newPos))
+                        result.Add(newPos);
+                    break;
                 }
             }
             return result;
@@ -204,6 +241,11 @@ namespace Model
             if (CanCreatePiece(startingPosition))
                 return new Queen(startingPosition, color);
             return null;
+        }
+
+        public override Piece Clone()
+        {
+            return new Queen(Position, Color);
         }
 
         public override List<Position> GetPosiblePositions(Board board)
@@ -234,6 +276,11 @@ namespace Model
             return null;
         }
 
+        public override Piece Clone()
+        {
+            return new King(Position, Color);
+        }
+
         public override List<Position> GetPosiblePositions(Board board)
         {
             return GetPosiblePositions(this, board);
@@ -242,32 +289,14 @@ namespace Model
         public static List<Position> GetPosiblePositions(Piece piece, Board board)
         {
             var result = new List<Position>();
-            var pos = piece.Position;
-            for (int x = pos.X - 1; x < pos.X + 1; x++)
-                for (int y = pos.Y - 1; y < pos.Y + 1; y++)
-                {
-                    var newPos = new Position(x, y);
-                    if (board.CanPieceMoveTo(piece, newPos))
-                        result.Add(newPos);
-                }
+            var directions = GetKingMoves();
+            foreach (var direction in directions)
+            {
+                var newPos = new Position(piece.Position.X + direction.X, piece.Position.Y + direction.Y);
+                if (board.CanPieceMoveTo(piece, newPos))
+                    result.Add(newPos);
+            }
             return result;
         }
-
-        /*
-        public bool IsInCheck(Board board)
-        {
-            if (board == null)
-                return false;
-
-            for (int i = 0; i < board.Count; i++)
-            {
-                var piece = board.GetPieceWithIndex(i);
-                if (piece != this && piece.CanAttackPosition(Position, board))
-                    return true;
-
-            }
-            return false;
-        }
-        */
     }
 }
