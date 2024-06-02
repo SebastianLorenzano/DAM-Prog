@@ -21,9 +21,28 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
-                <StackPanel Grid.Column="0">
-                    <!-- Menu -->
+
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
+                    <!-- New Game Button -->
+                    <Button Content="New Game" Width="150" Height="50" Margin="0,5"/>
+
+                    <!-- Load Game Button -->
+                    <Button Content="Load Game" Width="150" Height="50" Margin="0,5"/>
+
+                    <!-- Create User Button -->
+                    <Button Content="Create User" Width="150" Height="50" Margin="0,5"/>
+
+                    <!-- Log In Button -->
+                    <Button Content="Log In" Width="150" Height="50" Margin="0,5"/>
+
+                    <!-- Turn TextBlock -->
+                    <TextBlock Text="Turn:" FontSize="16" Margin="0,10" HorizontalAlignment="Right"/>
+
+                    <!-- Goes TextBlock -->
+                    <TextBlock Text="Goes:" FontSize="16" Margin="0,5" HorizontalAlignment="Right"/>
+
+                    <Button Content="Save Game" Width="100" Height="50" Margin="0,5" HorizontalAlignment="Right"/>
                 </StackPanel>
                 <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1"/>
                 <!-- Board -->
