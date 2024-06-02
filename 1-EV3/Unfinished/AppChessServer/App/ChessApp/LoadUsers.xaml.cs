@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ChessApp
 {
     /// <summary>
-    /// Lógica de interacción para AddGame.xaml
+    /// Lógica de interacción para LoadUsers.xaml
     /// </summary>
-    public partial class AddGame : Page
+    public partial class LoadUsers : Window
     {
-        public AddGame()
+        public LoadUsers()
         {
             InitializeComponent();
         }

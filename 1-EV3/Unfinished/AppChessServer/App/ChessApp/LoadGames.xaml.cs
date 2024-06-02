@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace ChessApp
 {
     /// <summary>
-    /// Lógica de interacción para AddUsers.xaml
+    /// Lógica de interacción para LoadGames.xaml
     /// </summary>
-    public partial class AddUsers : Window
+    public partial class LoadGames : Window
     {
-        public AddUsers()
+        public LoadGames()
         {
             InitializeComponent();
         }
