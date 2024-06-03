@@ -24,17 +24,20 @@ namespace Model
 
     public abstract class Piece
     {
-        private Position _position;
-        public Position Position { get => _position; set => SetPosition(value); }
-        [JsonIgnore] public int X => _position.X;
-        [JsonIgnore] public int Y => _position.Y;
+        public Position Position { get; set; }
+        [JsonIgnore] public int X => Position.X;
+        [JsonIgnore] public int Y => Position.Y;
 
         public virtual PieceType Type { get; }
-        public ColorType Color { get; init; }
+        public virtual ColorType Color { get; set; }
 
-        protected Piece(Position position, ColorType color)
+        [JsonConstructor] public Piece()
         {
-            _position = position;
+            
+        }
+        public Piece(Position position, ColorType color)
+        {
+            Position = position;
             Color = color;
         }
 
@@ -46,7 +49,7 @@ namespace Model
         public void SetPosition(Position position)
         {
             if (position != null)
-                _position = position;
+                Position = position;
         }
 
         public abstract List<Position> GetPosiblePositions(Board board); 

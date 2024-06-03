@@ -41,11 +41,11 @@ namespace ChessApp
             long codUser2 = db.GetCodUserWithEmail(textEmail2.Text);
 
 
-            GameDB game = new GameDB()
+            Game game = new Game()
             {
                 codUserWhites = codUser1,
                 codUserBlacks = codUser2,
-                Board = new Board().Fill(),
+                board = new Board().Fill(),
             };
             long result = db.AddGame(game);
             game.codGame = result;
@@ -68,7 +68,7 @@ namespace ChessApp
             Close();
         }
 
-        private void SecondaryWindow_Closing(object sender, CancelEventArgs e)
+        private void AddGames_Closing(object sender, CancelEventArgs e)
         {     
         }
     }

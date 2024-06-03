@@ -8,7 +8,11 @@ namespace Model
     {
         public override PieceType Type => PieceType.PAWN;
         public bool FirstMove { get; set; } = true;
-        private Pawn(Position startingPosition, ColorType color) : base(startingPosition, color)
+        public Pawn()
+        {
+
+        }
+        public Pawn(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
@@ -74,7 +78,11 @@ namespace Model
     public class Rook : Piece
     {
         public override PieceType Type => PieceType.ROOK;
-        private Rook(Position startingPosition, ColorType color) : base(startingPosition, color)
+        public Rook()
+        {
+
+        }
+        public Rook(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
@@ -135,7 +143,11 @@ namespace Model
     public class Knight : Piece
     {
         public override PieceType Type => PieceType.KNIGHT;
-        private Knight(Position startingPosition, ColorType color) : base(startingPosition, color)
+        public Knight()
+        {
+
+        }
+        public Knight(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
@@ -173,7 +185,11 @@ namespace Model
     public class Bishop : Piece
     {
         public override PieceType Type => PieceType.BISHOP;
-        private Bishop(Position startingPosition, ColorType color) : base(startingPosition, color)
+        public Bishop()
+        {
+
+        }
+        public Bishop(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
@@ -232,7 +248,11 @@ namespace Model
     public class Queen : Piece
     {
         public override PieceType Type => PieceType.QUEEN;
-        private Queen(Position startingPosition, ColorType color) : base(startingPosition, color)
+        public Queen()
+        {
+
+        }
+        public Queen(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 
@@ -265,7 +285,8 @@ namespace Model
     {
         public override PieceType Type => PieceType.KING;
 
-        private King(Position startingPosition, ColorType color) : base(startingPosition, color)
+        public King() : base() { }
+        public King(Position startingPosition, ColorType color) : base(startingPosition, color)
         {
         }
 

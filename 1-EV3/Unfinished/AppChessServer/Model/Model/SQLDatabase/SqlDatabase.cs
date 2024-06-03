@@ -1,7 +1,8 @@
 ﻿
 using System.Data.SqlClient;
 using System.Data;
-using System.Text.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace Model
@@ -17,9 +18,9 @@ namespace Model
             this.connectionString = connectionString;
         }
 
-        public static void CreateSimpleton(string connectionString) 
+        public static void CreateSimpleton(string connectionString)
         {
-            if (_database == null && connectionString != null) 
+            if (_database == null && connectionString != null)
             {
                 _database = new SqlDatabase(connectionString);
             }
@@ -170,7 +171,7 @@ namespace Model
                         if (outputParam.Value == null || outputParam.Value == DBNull.Value)
                             return null;
                         string jsonString = outputParam.Value.ToString();
-                        return JsonSerializer.Deserialize<User>(jsonString);
+                        return JsonConvert.DeserializeObject<User>(jsonString);
                     }
                 }
             }
@@ -209,7 +210,7 @@ namespace Model
                         if (outputParam.Value == null || outputParam.Value == DBNull.Value)
                             return null;
                         string jsonString = outputParam.Value.ToString();
-                        return JsonSerializer.Deserialize<User>(jsonString);
+                        return JsonConvert.DeserializeObject<User>(jsonString);
                     }
                 }
             }
@@ -262,20 +263,22 @@ namespace Model
 
         }
 
-        public long AddGame(GameDB game)
+        public long AddGame(Game game)
         {
-            if (game == null || game.codUserWhites == null || game.codUserBlacks == null || game.gameJson == null)
+            if (game == null || game.codUserWhites == null || game.codUserBlacks == null || game.board == null)
                 return -1;
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     using (SqlCommand command = new SqlCommand("AddGame", connection))
-                    {   
+                    {
+                        var jsonBoard = game.board.JsonSerialize();
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@codUserWhites", game.codUserWhites);
                         command.Parameters.AddWithValue("@codUserBlacks", game.codUserBlacks);
-                        command.Parameters.AddWithValue("@gameJson", game.gameJson);
+                        command.Parameters.AddWithValue("@board", jsonBoard);
                         SqlParameter outputParam = new SqlParameter("@codGame", SqlDbType.BigInt) { Direction = ParameterDirection.Output };
                         command.Parameters.Add(outputParam);
 
@@ -332,12 +335,13 @@ namespace Model
             Debug.WriteLine($"Se ha borrado el usuario {id} correctamente");
         }
 
-        public bool UpdateGameJson(long id, GameDB game)
+        public bool UpdateGameJson(long id, Game game)
         {
-            if (id <= 0 || game == null || game.gameJson == null)
+            if (id <= 0 || game == null || game.board == null)
                 return false;
             try
             {
+                var jsonBoard = JsonConvert.SerializeObject(game.board);
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     using (SqlCommand command = new SqlCommand("UpdateGameJson", connection))
@@ -345,7 +349,7 @@ namespace Model
                         command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@codGame", id);
-                        command.Parameters.AddWithValue("@gameJson", game.gameJson);
+                        command.Parameters.AddWithValue("@board", jsonBoard);
 
                         SqlParameter returnValue = new SqlParameter();
                         returnValue.Direction = ParameterDirection.ReturnValue;
@@ -369,10 +373,10 @@ namespace Model
                 Console.WriteLine($"General Error: {ex.Message}");
                 return false;
             }
-            
+
         }
 
-        public GameDB? GetGameWithId(long id)
+        public Game? GetGameWithId(long id)
         {
             if (id <= 0)
                 return null;
@@ -393,7 +397,8 @@ namespace Model
                         if (outputParam.Value == null || outputParam.Value == DBNull.Value)
                             return null;
                         string jsonString = outputParam.Value.ToString();
-                        return JsonSerializer.Deserialize<GameDB>(jsonString);
+                        return Game.Deserialize(jsonString);
+                        
                     }
                 }
             }
@@ -409,7 +414,7 @@ namespace Model
             }
         }
 
-        public List<GameDB> GetGamesWithUserId(long id, int offset, int max)
+        public List<Game> GetGamesWithUserId(long id, int offset, int max)
         {
             if (id <= 0 || offset < 0 || max <= 0)
                 return null;
@@ -432,7 +437,7 @@ namespace Model
                         if (outputParam.Value == null || outputParam.Value == DBNull.Value)
                             return null;
                         string jsonString = outputParam.Value.ToString();
-                        return JsonSerializer.Deserialize<List<GameDB>>(jsonString);
+                        return Game.DeserializeList(jsonString);
                     }
                 }
             }
@@ -448,5 +453,79 @@ namespace Model
             }
         }
 
+        public List<Game> GetGames(int offset, int max)
+        {
+            if (offset < 0 || max <= 0)
+                return null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("GetGames", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@offset", offset);
+                        command.Parameters.AddWithValue("@max", max);
+                        SqlParameter outputParam = new SqlParameter("@gamesJson", SqlDbType.NVarChar, -1) { Direction = ParameterDirection.Output };
+                        command.Parameters.Add(outputParam);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+
+                        if (outputParam.Value == null || outputParam.Value == DBNull.Value)
+                            return null;
+                        string jsonString = outputParam.Value.ToString();
+                        return Game.DeserializeList(jsonString);
+
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"SQL Error: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public int GetGamesCountWithCodUser(long codUser)
+        {
+            if (codUser <= 0)
+                return 0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand("GetGamesCountWithCodUser", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@codUser", codUser);
+                        SqlParameter outputParam = new SqlParameter("@count", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                        command.Parameters.Add(outputParam);
+
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        if (outputParam.Value == DBNull.Value)
+                            return 0;
+                        else
+                            return Convert.ToInt32(outputParam.Value);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"SQL Error: {ex.Message}");
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return -1;
+            }
+        }
     }
 }

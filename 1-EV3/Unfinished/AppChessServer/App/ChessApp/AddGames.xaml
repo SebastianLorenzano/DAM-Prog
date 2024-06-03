@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChessApp"
         mc:Ignorable="d"
         Title="AddGames" Height="302" Width="492"
-        Closing="SecondaryWindow_Closing">
+        Closing="AddGames_Closing">
     <Grid Margin="-181,0,-81,0">
         <TextBox x:Name="textEmail1" HorizontalAlignment="Left" Margin="385,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="160"/>
         <TextBox x:Name="textEmail2" HorizontalAlignment="Left" Margin="385,160,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="160"/>

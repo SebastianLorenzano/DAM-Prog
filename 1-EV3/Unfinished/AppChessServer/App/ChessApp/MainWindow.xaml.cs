@@ -23,27 +23,27 @@ namespace ChessApp
         private readonly Image[,] _images = new Image[8, 8];
         private Rectangle[,] _highlights = new Rectangle[8,8];
 
-        private GameDB game;    // Instance for DB
+        private Game game;    // Instance for DB
         private Position _selectedPosition;
         private List<Position> _possibleMoves = new List<Position>();   // Possible moves for the selected piece
-        private Board Board => game.Board;
+        private Board Board => game.board;
 
-        internal static GameDB SharedGame { get; set;}
+        internal static Game? SharedGame { get; set;}
 
         public MainWindow()
         {
-            game = new GameDB() { codGame = -1, codUserBlacks = -1, codUserWhites = -1, Board = new Board() { Turn = 0 } };
+            game = new Game() { codGame = -1, codUserBlacks = -1, codUserWhites = -1, board = new Board() { Turn = 0 } };
             SqlDatabase.CreateSimpleton(connectionString);
             InitializeComponent();
             InitializeBoard();
             DrawUI();
-            game.Board = new Board().Fill();
+            game.board = new Board().Fill();
             DrawBoard();
         }
 
         public void DrawUI()
         {
-            textTurnNum.Text = "Turn: " + game.Board.Turn;
+            textTurnNum.Text = "Turn: " + game.board.Turn;
             textTurnName.Text = "Goes: " + Board.GetCurrentPlayer();
         }
         public void InitializeBoard()
@@ -76,7 +76,7 @@ namespace ChessApp
             DrawUI();
         }
 
-        internal void SetGame(GameDB game)
+        internal void SetGame(Game game)
         {
            this.game = game;
             DrawBoard();
@@ -174,21 +174,25 @@ namespace ChessApp
                 MessageBox.Show("You must be logged in to create a game");
                 return;
             }
-            MessageBoxResult result = MessageBox.Show("Do you want to save the game?", "Save game", MessageBoxButton.YesNoCancel);
-            if (result == MessageBoxResult.Yes)
-                SaveGameButton_Click(null, null);       // Uploads the game to the DB
-            else if (result == MessageBoxResult.Cancel)
-                return;
+            if (!Board.wasSaved)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to save the game?", "Save game", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                    SaveGameButton_Click(null, null);       // Uploads the game to the DB
+                else if (result == MessageBoxResult.Cancel)
+                    return;
+            }
             AddGames addGamesWindow = new AddGames();
-            addGamesWindow.Closed += addGamesWindow_Closed; // Subscribe to Closed event
+            addGamesWindow.Closed += LoadGameFromOtherWindow; // Subscribe to Closed event
             addGamesWindow.Show();
         }
-        private void addGamesWindow_Closed(object sender, EventArgs e)
+        private void LoadGameFromOtherWindow(object sender, EventArgs e)
         {
             if (SharedGame != null)
             {
                 game = SharedGame;
                 DrawBoard();
+                SharedGame = null;
                 MessageBox.Show("Game was loaded successfully");
             }
             else
@@ -244,7 +248,7 @@ namespace ChessApp
                 else if (result == MessageBoxResult.Cancel)
                     return;
             }
-
+            DrawUserLogout();
         }
 
         private void DrawUserLogin()
@@ -277,10 +281,13 @@ namespace ChessApp
                 MessageBox.Show("You must be logged in to save a game");
                 return;
             }
+            Board.BeforeJson();
+            Board.wasSaved = true;
             if (game.codGame == -1)
                 AddGameToDB();
             else
                 UpdateGameToDB();
+            
         }
 
         private void AddGameToDB()
@@ -292,10 +299,10 @@ namespace ChessApp
             if (result > 0)
             {
                 MessageBox.Show("Game saved successfully");
-                Board.wasSaved = true;
                 return;
             }
             MessageBox.Show("Error saving game");
+            Board.wasSaved = false;
             return;
         }
 
@@ -310,12 +317,13 @@ namespace ChessApp
             if (result)
             {
                 MessageBox.Show("Game saved successfully");
-                Board.wasSaved = true;
+
                 return;
             }
             else
             {
                 MessageBox.Show("Error saving game");
+                Board.wasSaved = false;
                 return;
             }
         }
@@ -327,6 +335,18 @@ namespace ChessApp
                 MessageBox.Show("You must be logged in to load a game");
                 return;
             }
+            if (!Board.wasSaved)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to save the game?", "Save game", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                    SaveGameButton_Click(null, null);       // Uploads the game to the DB
+                else if (result == MessageBoxResult.Cancel)
+                    return;
+            }
+
+            LoadGames loadGamesWindow = new LoadGames(_userLogged);
+            loadGamesWindow.Closed += LoadGameFromOtherWindow; // Subscribe to Closed event
+            loadGamesWindow.Show();
         }
 
 

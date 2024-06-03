@@ -15,10 +15,10 @@ namespace Model
         User? GetUserWithEmailAndPassword(string email, string password);
         
 
-        long AddGame(GameDB game);
+        long AddGame(Game game);
         void RemoveGame(long id);
-        bool UpdateGameJson(long id, GameDB game);
-        GameDB? GetGameWithId(long id);
-        List<GameDB> GetGamesWithUserId(long id, int offset, int max);
+        bool UpdateGameJson(long id, Game game);
+        Game? GetGameWithId(long id);
+        List<Game> GetGamesWithUserId(long id, int offset, int max);
     }
 }

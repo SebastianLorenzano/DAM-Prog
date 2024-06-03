@@ -12,10 +12,17 @@ namespace Test
             SqlDatabase.CreateSimpleton("Server=192.168.56.101,1433;Database=CHESS;User Id=sa;Password=SqlServer123;");
             TestConnection();
             //TestUserDB();
-            TestGameDB();
+            //TestGameDB();
             //TestBoard();
+            TestJson();
 
         }
+
+        public static void TestJson()
+        {
+            
+        }
+
         public static void TestConnection()
         {
             SqlDatabase.Instance.TestConnection();
@@ -49,14 +56,14 @@ namespace Test
         }
 
         public static void TestGameDB()
-        {
+        {/*
             var db = SqlDatabase.Instance;
             var user1 = new User() { userName = "Pepe", email = "gameTest3@example.com", password = "password123" };
             var user2 = new User() { userName = "Pepa", email = "gameTest4@example.com", password = "password456" };
             db.AddUser(user1);
             db.AddUser(user2);
             string gameJson = "Esto es un jsonDeGame";
-            var game1 = new GameDB() { codUserWhites = user1.codUser, codUserBlacks = user2.codUser, Board =  new Board().Fill()};
+            var game1 = new Game() { codUserWhites = user1.codUser, codUserBlacks = user2.codUser, board =  new Board().Fill()};
             var result = db.AddGame(game1);
             Console.WriteLine($"Resultado de AddGame: {result}, codGame: {game1.codGame}");
             var game2 = db.GetGameWithId(game1.codGame);
@@ -64,7 +71,7 @@ namespace Test
                 Console.WriteLine("No se pudo encontrar un game");
             else
                 Console.WriteLine($"codGame: {game2.codGame} codUserWhites: {game2.codUserWhites} codUserBlacks: {game2.codUserBlacks} gameJson: {game2.gameJson}");
-            var resultUpdateGameJson = db.UpdateGameJson(game1.codGame, new GameDB() {Board = new Board().Fill() });
+            var resultUpdateGameJson = db.UpdateGameJson(game1.codGame, new Game() {board = new Board().Fill() });
             if (resultUpdateGameJson)
                 Console.WriteLine($"Resultado de UpdateGameJson: Satisfactorio");
             else
@@ -82,13 +89,14 @@ namespace Test
             Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user3.codUser}");
             result = db.AddUser(user4);
             Console.WriteLine($"Resultado de AddUser: {result}, codUser: {user4.codUser}");
-            var game4 = new GameDB() { codUserWhites = user3.codUser, codUserBlacks = user4.codUser, Board = new Board().Fill() };
+            var game4 = new Game() { codUserWhites = user3.codUser, codUserBlacks = user4.codUser, board = new Board().Fill() };
             result = db.AddGame(game4);
             Console.WriteLine($"Resultado de AddGame: {result}, codGame: {game4.codGame}");
             var resultGetGamesWithUserId1 = db.GetGamesWithUserId(user3.codUser, 0, 5);
             var resultGetGamesWithUserId2 = db.GetGamesWithUserId(user4.codUser, 0, 5);
             Console.WriteLine(resultGetGamesWithUserId1.ToString());
             Console.WriteLine(resultGetGamesWithUserId2.ToString());
+            */
         }
 
         public static void TestBoard()

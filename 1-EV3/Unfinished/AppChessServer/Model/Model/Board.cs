@@ -1,7 +1,8 @@
 ﻿
 using System.Drawing;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json;
 
 namespace Model
 {
@@ -9,12 +10,18 @@ namespace Model
     {
         public const int WIDTH = 7;
         public const int HEIGHT = 7;
-        public bool wasSaved = false;
-        public List<Piece> PiecesList { get; private set; } = new List<Piece>();
-        private Piece[,] _pieces {  get; set; } = new Piece[8, 8];
         public int Count => _pieces.Length;
         public int Turn { get; set; }
+        [JsonProperty] public bool wasSaved { get; set; } = true;
+        [JsonProperty] public List<Piece> PiecesList { get; set; } = new List<Piece>();
+        private Piece[,] _pieces {  get; set; } = new Piece[8, 8];
 
+        
+
+        public Board()
+        {
+
+        }
         public Piece? this[int x, int y]
         {
             get 
@@ -216,21 +223,47 @@ namespace Model
             return result;
         }
 
-        public string ToJson()
+
+
+        public string JsonSerialize()
         {
-            foreach (var piece in _pieces)
+            BeforeJson();
+            var settings = new JsonSerializerSettings()
             {
-                   if (piece != null)
-                    PiecesList.Add(piece);
-            }
-            return JsonSerializer.Serialize(this);
+                Formatting = Formatting.Indented
+            };
+            settings.Converters.Add(new PieceConverter());
+            return JsonConvert.SerializeObject(this, settings);
         }
 
-        public void Deserialize()
+        public void BeforeJson()
         {
-            foreach (var piece in PiecesList)
-               _pieces[piece.X, piece.Y] = piece;
+            if (PiecesList.Count == 0)
+                foreach (var piece in _pieces)
+                {
+                    if (piece != null)
+                        PiecesList.Add(piece);
+                }
+        }
+
+        public void AfterJson()
+        {
+
+           foreach (var piece in PiecesList)
+                _pieces[piece.X, piece.Y] = piece;
             PiecesList.Clear();
         }
+
+        public static Board JsonDeserialize(string json)
+        {
+
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new PieceConverter());
+            var result = JsonConvert.DeserializeObject<Board>(json, settings);
+            result.AfterJson();
+            return result;
+
+    }
+         
     }
 }

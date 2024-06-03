@@ -19,7 +19,7 @@ CREATE TABLE GAMES (
     codGame         BIGINT IDENTITY,
     codUserWhites   BIGINT,
     codUserBlacks   BIGINT,
-    gameJson        VARCHAR(MAX)
+    board           VARCHAR(MAX)
 
     CONSTRAINT PK_GAMES PRIMARY KEY (codGame)
 )
@@ -155,9 +155,9 @@ GO
 --------------------------
 GO
 
-SELECT * FROM GAMES
+
 GO
-CREATE OR ALTER PROCEDURE AddGame(@codUserWhites BIGINT, @codUserBlacks BIGINT,  @gameJson VARCHAR(MAX), @codGame BIGINT OUT)
+CREATE OR ALTER PROCEDURE AddGame(@codUserWhites BIGINT, @codUserBlacks BIGINT,  @board VARCHAR(MAX), @codGame BIGINT OUT)
 AS
 BEGIN
     IF @codUserWhites IS NULL OR NOT EXISTS (SELECT 1 FROM USERS WHERE codUser = @codUserWhites)
@@ -166,29 +166,32 @@ BEGIN
     IF @codUserBlacks IS NULL OR NOT EXISTS (SELECT 1 FROM USERS WHERE codUser = @codUserBlacks)
         RETURN -2
     
-    IF @gameJson IS NULL
+    IF @board IS NULL
         RETURN -3
 
     SET @codGame = NULL
-    INSERT INTO GAMES (codUserWhites, codUserBlacks, gameJson)
-			VALUES (@codUserWhites, @codUserBlacks, @gameJson)
+    INSERT INTO GAMES (codUserWhites, codUserBlacks, board)
+			VALUES (@codUserWhites, @codUserBlacks, @board)
 
     SET @codGame = SCOPE_IDENTITY()
 END
 
 GO
 DECLARE @result BIGINT, @codGame BIGINT
-/*
-EXEC @result = AddGame 1, 2, 'Este es mi json', @codGame OUT
+
+EXEC @result = AddGame 1, 1, 'Este es mi json', @codGame OUT
 IF @result <> 0
 BEGIN
     PRINT 'El procedimiento no se ha realizado correctamente'
     RETURN
 END
 PRINT 'El procedimiento se ha realizado correctamente'
-*/
 
+SELECT * FROM GAMES
 SELECT * FROM USERS
+DELETE FROM GAMES
+
+
 
 GO
 -------------------------
@@ -222,17 +225,18 @@ END
 
 GO
 ----------
-CREATE OR ALTER PROCEDURE UpdateGameJson(@codGame BIGINT, @gameJson VARCHAR(MAX))
+CREATE OR ALTER PROCEDURE UpdateGameJson(@codGame BIGINT, @board  VARCHAR(MAX))
 AS
 BEGIN
     IF @codGame <= 0
         RETURN -1
 
-    IF @gameJson IS NULL
+    IF @board IS NULL
         RETURN -2
 
     UPDATE GAMES
-       SET gameJson = @gameJson
+       SET board = @board
+   
      WHERE codGame = @codGame
 
 END
@@ -250,9 +254,42 @@ BEGIN
 END
 
 GO
-
-------------
+--------------
 GO
+
+
+CREATE OR ALTER PROCEDURE GetGamesCountWithCodUser(@codUser BIGINT, @count int OUT)
+AS
+BEGIN
+    IF @codUser <= 0 OR NOT EXISTS(SELECT 1 FROM USERS WHERE codUser = @codUser)
+        RETURN -1
+    
+    SELECT @count = (SELECT COUNT(1) 
+                       FROM GAMES 
+                      WHERE codUserWhites = @codUser
+                        OR  codUserBlacks = @codUser)
+END
+
+GO
+
+DECLARE @result INT, @codUser BIGINT = 33, @count INT 
+EXEC @result = GetGamesCountWithCodUser @codUser, @count OUT
+IF @result <> 0
+BEGIN
+    PRINT 'El procedimiento no se ha realizado correctamente'
+    RETURN
+END
+PRINT 'El procedimiento se ha realizado correctamente'
+PRINT @count
+
+
+
+GO
+--------------
+GO
+
+
+
 CREATE OR ALTER PROCEDURE GetGamesWithCodUser(@codUser BIGINT, @offset INT, @max INT, @jsonGames VARCHAR(MAX) OUT)
 AS
 BEGIN
@@ -275,9 +312,43 @@ END
 
 
 
-
+GO
 ------------
+GO
 
+CREATE OR ALTER PROCEDURE GetGames(@offset INT, @max INT, @gamesJson VARCHAR(MAX) OUT)
+AS
+BEGIN
+    IF @offset < 0 OR @max <= 0
+        RETURN -1
+    SET @gamesJson = NULL
+
+    SELECT @gamesJson = (SELECT *       
+                           FROM GAMES
+                          ORDER BY codGame
+                         OFFSET @offset ROW
+                          FETCH NEXT @max ROWS ONLY
+                            FOR JSON AUTO)
+END
+
+GO
+-------------------------
+GO
+/*
+DECLARE @offset INT = 0, @max INT = 30, @gamesJson VARCHAR(MAX), @result INT
+
+EXEC @result = GetGames @offset, @max, @gamesJson OUT
+IF @result <> 0
+BEGIN
+    PRINT 'El procedimiento no se ha realizado correctamente'
+    RETURN
+END
+PRINT 'El procedimiento se ha realizado correctamente'
+SELECT @gamesJson
+*/
+
+GO
+--------------------------
 
 GO
 
@@ -293,4 +364,22 @@ BEGIN
        SET userName = @userName
      WHERE codUser = @codUser
 END
+
+
+
+INSERT INTO GAMES
+SELECT GAMES.codUserWhites, codUserBlacks, board
+  FROM GAMES
+ WHERE codUserWhites = 36
+
+
+SELECT * FROM GAMES
+
+
+
+GO
+DECLARE @codUser BIGINT
+SELECT @codUser = codUser FROM USERS where email = 'admin'
+
+SELECT * FROM GAMES WHERE codUserWhites = @codUser
 

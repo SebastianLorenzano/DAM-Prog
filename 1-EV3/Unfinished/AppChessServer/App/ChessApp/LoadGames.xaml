@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessApp"
         mc:Ignorable="d"
-        Title="LoadGames" Height="450" Width="800">
+        Title="LoadGames" Height="450" Width="800"
+        Closing="LoadGames_Closing">
     <Grid>
-        
+        <Button x:Name="buttonLeftArrow" Content="←" HorizontalAlignment="Left" Margin="643,10,0,0"  VerticalAlignment="Top" FontSize="20" Height="30" Click="ButtonLeftArrow_Clicked"/>
+        <Button x:Name="buttonRightArrow" Content="→" HorizontalAlignment="Left" Margin="700,10,0,0" VerticalAlignment="Top" FontSize="20" Height="30" Click="ButtonRightArrow_Clicked"/>
+        <StackPanel>
+            <TextBox Name="FilterTextBox" Width="200" Margin="10" TextChanged="FilterTextBox_TextChanged"/>
+            <ListView ItemsSource="{Binding GameView}" Margin="10" Name="GameListView" SelectionChanged="GameListView_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Game Code" DisplayMemberBinding="{Binding codGame}" Width="100"/>
+                        <GridViewColumn Header="White Player Code" DisplayMemberBinding="{Binding codUserWhites}" Width="100"/>
+                        <GridViewColumn Header="Black Player Code" DisplayMemberBinding="{Binding codUserBlacks}" Width="100"/>
+                        <GridViewColumn Header="Game JSON" DisplayMemberBinding="{Binding board}" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        <Label Name="labelCount" Content="" HorizontalAlignment="Left" Margin="674,12,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
