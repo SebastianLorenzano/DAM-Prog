@@ -119,7 +119,7 @@ namespace ChessApp
         {
             _possibleMoves.Clear();
             var piece = Board.GetPieceWithPosition(position);
-            if (piece == null)
+            if (piece == null || piece.Color != Board.GetCurrentPlayer())
                 return;
             var possibleMoves = piece.GetPosiblePositions(Board);
             var legalMoves = Board.GetLegalMovements(piece, possibleMoves);
