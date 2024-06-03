@@ -1,7 +1,5 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+
 namespace Model
 {
     public class Game
@@ -31,7 +29,8 @@ namespace Model
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new PieceConverter());
-            return JsonConvert.DeserializeObject<List<Game>>(json, settings);
+            List<GameSerialized> list = JsonConvert.DeserializeObject<List<GameSerialized>>(json, settings);
+            return GameSerialized.Deserialize(list);
         }
     }
 
@@ -66,12 +65,12 @@ namespace Model
             }
             return result;
         }
-        
+
         public Game Deserialize()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new PieceConverter());
-            var boardDeserialized = JsonConvert.DeserializeObject<Board>(board, settings);
+            var boardDeserialized = Board.JsonDeserialize(board);
             return new Game()
             {
                 codGame = codGame,
@@ -81,7 +80,7 @@ namespace Model
             };
 
         }
-        
+
         public static List<Game> Deserialize(List<GameSerialized> list)
         {
             var result = new List<Game>();
@@ -92,11 +91,8 @@ namespace Model
             return result;
 
         }
-        
-
-
-
-
     }
+
+
 }
 

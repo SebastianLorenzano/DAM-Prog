@@ -1,7 +1,4 @@
-﻿
-using System.Security.Policy;
-
-namespace Model
+﻿namespace Model
 {
 
     public class Pawn : Piece

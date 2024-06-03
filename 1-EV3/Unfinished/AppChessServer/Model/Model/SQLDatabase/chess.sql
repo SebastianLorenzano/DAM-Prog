@@ -187,6 +187,7 @@ BEGIN
 END
 PRINT 'El procedimiento se ha realizado correctamente'
 
+GO
 SELECT * FROM GAMES
 SELECT * FROM USERS
 DELETE FROM GAMES

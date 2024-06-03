@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Model
+﻿namespace Model
 {
     public class User
     {
@@ -11,12 +9,4 @@ namespace Model
         public DateTime dateRegister { get; set; } = DateTime.Now;
     }
 
-    public class PieceDB
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public ColorType Color { get; set; }
-        public PieceType Type { get; set; }
-
-    }
 }

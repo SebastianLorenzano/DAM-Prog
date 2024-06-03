@@ -1,7 +1,5 @@
-﻿
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Data;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Diagnostics;
 

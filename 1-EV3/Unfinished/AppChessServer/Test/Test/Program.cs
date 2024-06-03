@@ -1,6 +1,4 @@
 ﻿using Model;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace Test

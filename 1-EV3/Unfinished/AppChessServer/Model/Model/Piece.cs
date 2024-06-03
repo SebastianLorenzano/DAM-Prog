@@ -1,7 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Model
 {
@@ -19,7 +16,7 @@ namespace Model
     public enum ColorType
     {
         WHITE = -1,
-        BLACK = 1         
+        BLACK = 1
     }
 
     public abstract class Piece
@@ -31,9 +28,10 @@ namespace Model
         public virtual PieceType Type { get; }
         public virtual ColorType Color { get; set; }
 
-        [JsonConstructor] public Piece()
+        [JsonConstructor]
+        public Piece()
         {
-            
+
         }
         public Piece(Position position, ColorType color)
         {
@@ -52,8 +50,8 @@ namespace Model
                 Position = position;
         }
 
-        public abstract List<Position> GetPosiblePositions(Board board); 
-        public abstract Piece Clone();                                    
+        public abstract List<Position> GetPosiblePositions(Board board);
+        public abstract Piece Clone();
         public virtual bool CanAttackOpponentKing(Board board)
         {
             var moves = GetPosiblePositions(board);
@@ -62,7 +60,7 @@ namespace Model
                 var piece = board.GetPieceWithPosition(move);
                 if (piece != null && piece.Type == PieceType.KING)
                     return true;
-            }   
+            }
             return false;
         }
 
@@ -115,6 +113,41 @@ namespace Model
                 new Position(-1, 1),    //North-East
                 new Position(1, -1),    //South-West
                 new Position(-1, -1),   //North-West
+            };
+        }
+
+        public PieceDB ToPieceDB()
+        {
+            return new PieceDB()
+            {
+                X = X,
+                Y = Y,
+                Color = Color,
+                Type = Type
+            };
+
+        }
+    }
+    public class PieceDB
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public ColorType Color { get; set; }
+        public PieceType Type { get; set; }
+
+
+        public Piece? ToPiece()
+        {
+
+            return Type switch
+            {
+                PieceType.PAWN => new Pawn(new Position(X, Y), Color),
+                PieceType.ROOK => new Rook(new Position(X, Y), Color),
+                PieceType.KNIGHT => new Knight(new Position(X, Y), Color),
+                PieceType.BISHOP => new Bishop(new Position(X, Y), Color),
+                PieceType.QUEEN => new Queen(new Position(X, Y), Color),
+                PieceType.KING => new King(new Position(X, Y), Color),
+                _ => null
             };
         }
     }

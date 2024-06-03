@@ -1,8 +1,4 @@
-﻿
-using System.Drawing;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Model
 {
@@ -13,7 +9,7 @@ namespace Model
         public int Count => _pieces.Length;
         public int Turn { get; set; }
         [JsonProperty] public bool wasSaved { get; set; } = true;
-        [JsonProperty] public List<Piece> PiecesList { get; set; } = new List<Piece>();
+        [JsonProperty] public List<PieceDB> PiecesList { get; set; } = new List<PieceDB>();
         private Piece[,] _pieces {  get; set; } = new Piece[8, 8];
 
         
@@ -228,12 +224,7 @@ namespace Model
         public string JsonSerialize()
         {
             BeforeJson();
-            var settings = new JsonSerializerSettings()
-            {
-                Formatting = Formatting.Indented
-            };
-            settings.Converters.Add(new PieceConverter());
-            return JsonConvert.SerializeObject(this, settings);
+            return JsonConvert.SerializeObject(this);
         }
 
         public void BeforeJson()
@@ -242,7 +233,7 @@ namespace Model
                 foreach (var piece in _pieces)
                 {
                     if (piece != null)
-                        PiecesList.Add(piece);
+                        PiecesList.Add(piece.ToPieceDB());
                 }
         }
 
@@ -250,7 +241,7 @@ namespace Model
         {
 
            foreach (var piece in PiecesList)
-                _pieces[piece.X, piece.Y] = piece;
+                _pieces[piece.X, piece.Y] = piece.ToPiece();
             PiecesList.Clear();
         }
 

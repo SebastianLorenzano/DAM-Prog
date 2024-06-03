@@ -71,7 +71,7 @@ namespace ChessApp
             {
                 dataView.Filter = item =>
                 {
-                    if (item is Game game)
+                    if (item is GameSerialized game)
                     {
                         return game.codGame.ToString().Contains(FilterTextBox.Text);
                     }
@@ -83,13 +83,14 @@ namespace ChessApp
 
         private void GameListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (GameListView.SelectedItem is Game game)
+            if (GameListView.SelectedItem is GameSerialized game)
             {
                 MessageBoxResult result = MessageBox.Show($"Game Code: {game.codGame}\nWhite Player Code: {game.codUserWhites}\nBlack Player Code: {game.codUserBlacks}\n " +
                     $"Do you want to load this game?", "Load Game", MessageBoxButton.YesNoCancel);
                 if (result == MessageBoxResult.Yes)
                 {
-                    MainWindow.SharedGame = game;
+                    var gameDeserialized = game.Deserialize();
+                    MainWindow.SharedGame = gameDeserialized;
                     Close();
                 }
                 else if (result == MessageBoxResult.Cancel)
@@ -97,9 +98,6 @@ namespace ChessApp
 
             }
         }
-
-
-
 
         private void LoadGames_Closing(object sender, CancelEventArgs e)
         {
